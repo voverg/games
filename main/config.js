@@ -1,5 +1,5 @@
 const titles = [
-  'mortgage@Ипотечный калькулятор',
+  'clicker@Игра Clicker',
 ];
 
 function getData(list) {
