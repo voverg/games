@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Description">
+  <meta name="description" content="Игра Змеелизация, написанная на HTML5, CSS и чистом JavaScript.">
   <meta name="keywords" content="html, css, javascript">
   <!-- <meta name="og:image" content="../main/img/zmeelization.png"> -->
   <title>Zmeelization</title>
@@ -14,16 +14,18 @@
 <body>
   <header class="header">
     <h1 class="header__title">Змеелизация</h1>
-    <p class="header__description">description</p>
+    <p class="header__description">Выбери режим игры и начинай!</p>
   </header>
 
-  <main class="main"></main>
+  <main class="main">
+    <canvas id="my-canvas"></canvas>
+  </main>
 
   <footer class="footer">
     <p class="footer__text">Created by <a href="https://github.com/voverg" class="footer__link" rel="noopener noreferrer" target="_blank">Voverg</a></p>
   </footer>
 
 
-  <script src="js/index.js"></script>
+  <script src="js/index.js" type="module"></script>
 </body>
 </html>
