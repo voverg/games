@@ -12,17 +12,29 @@ export class Sprites {
         path: 'img/sprites/cell.png'
       },
       {
+        name: 'snakeHead',
+        elem: null,
+        path: 'img/sprites/snake-head.png'
+      },
+      {
         name: 'snakeBody',
         elem: null,
         path: 'img/sprites/snake-body.png'
-      }
+      },
+      {
+        name: 'food',
+        elem: null,
+        path: 'img/sprites/food.png'
+      },
     ];
     this.length = this.sprites.length;
 
-    this._init();
+    this._load()
   }
 
-  _init() {
+  init() {}
+
+  _load() {
     this.sprites.forEach((sprite) => {
       sprite.elem = this.create(sprite.name);
     });

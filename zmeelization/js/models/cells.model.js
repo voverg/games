@@ -26,9 +26,9 @@ export class Cells {
     };
   }
 
-  init(canvas, sprites) {
-    this.canvas = canvas;
-    this.sprites = sprites;
+  init(components, models) {
+    this.canvas = components.canvas;
+    this.sprites = models.sprites;
 
     this._createCells()
   }
@@ -46,19 +46,23 @@ export class Cells {
       row,
       col,
       elem: this.sprites.getElem('cell'),
-      offsetX: (this.canvas.width - this.size * this.sprites.getWidth('cell')) / 2,
-      offsetY: (this.canvas.height - this.size * this.sprites.getHeight('cell')) / 2,
+      // offsetX: (this.canvas.width - this.size * this.sprites.getWidth('cell')) / 2,
+      // offsetY: (this.canvas.height - this.size * this.sprites.getHeight('cell')) / 2,
+      offsetX: 0,
+      offsetY: 0,
+      id: `${row + 1}:${col + 1}`,
+      hasFood: false,
     }
 
     return new Cell(cellProps);
   }
 
-  forEach(callback) {
-    this.cells.forEach(callback);
-  }
-
   get(row, col) {
     return this.cells.find((cell) => cell.row === row && cell.col === col);
+  }
+
+  getByIndex(index) {
+    return this.cells[index];
   }
 
   getNext(prevCell, goto) {
@@ -66,6 +70,18 @@ export class Cells {
     const col = prevCell.col + this.direction[goto].col;
 
     return this.get(row, col);
+  }
+
+  get length() {
+    return this.cells.length;
+  }
+
+  forEach(callback) {
+    this.cells.forEach(callback);
+  }
+
+  filter(fn) {
+    return this.cells.filter(fn);
   }
 
 }

@@ -5,8 +5,10 @@ export class Canvas {
 
     this._width = 0;
     this._height = 0;
-    this.canvas.width = 640;
-    this.canvas.height = 360;
+    this.size = 15;
+    this.cellSize = 19;
+    this.canvas.width = this.size * this.cellSize;
+    this.canvas.height = this.size * this.cellSize;
 
     this.dimensions = {
       max: {
@@ -19,8 +21,10 @@ export class Canvas {
       }
     }
 
-    this._initDemensions();
+    // this._initDemensions();
   }
+
+  init() {}
 
   _initDemensions() {
     const data = {

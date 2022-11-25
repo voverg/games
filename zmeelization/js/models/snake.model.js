@@ -1,14 +1,13 @@
 export class SnakeModel {
   constructor() {
-    this.cells = [];
+    this.cells = null;
     this.snakes = [];
 
-    this.moving = false;
     this.direction = 'up';
   }
 
-  init(cells) {
-    this.cells = cells;
+  init( _, models ) {
+    this.cells = models.cells;
     const startCells = [
       {row: 7, col: 7},
       {row: 8, col: 7}
@@ -20,47 +19,24 @@ export class SnakeModel {
     });
   }
 
-  start(key) {
-    switch (key) {
-      case 'ArrowUp':
-        this.direction = 'up';
-        break;
-      case 'ArrowDown':
-        this.direction = 'down';
-        break;
-      case 'ArrowLeft':
-        this.direction = 'left';
-        break;
-      case 'ArrowRight':
-        this.direction = 'right';
-        break;
-      case 'Space':
-        this.pause();
-        break;
-    }
-    // this.moving = true;
+  hasCell(cell) {
+    return this.snakes.find((item) => item.id === cell.id);
   }
 
-  pause() {
-    this.moving = this.moving ? false : true;
+  get length() {
+    return this.snakes.length;
   }
 
-  move() {
-    if (!this.moving) {
-      return;
-    }
-
-    const snakeHead = this.snakes[0];
-    const nextCell = this.cells.getNext(snakeHead, this.direction);
-
-    if (nextCell) {
-      this.snakes.unshift(nextCell);
-      this.snakes.pop();
-    }
+  forEach(fn) {
+    this.snakes.forEach(fn);
   }
 
-  forEach(callback) {
-    this.snakes.forEach(callback);
+  unshift(elem) {
+    this.snakes.unshift(elem);
+  }
+
+  pop() {
+    this.snakes.pop();
   }
 
 }
