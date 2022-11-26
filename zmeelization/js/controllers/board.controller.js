@@ -1,56 +1,76 @@
+import {Cell} from '../components/cell.js';
+import {Utils} from '../utils/utils.js';
+
 export class BoardController {
   constructor() {
+    this.canvas = null;
+
+    this.sprites = null;
     this.cells = null;
     this.snakes = null;
-    this.food = null;
+
+    this.score = 0;
   }
 
   init( components, models ) {
-    Object.keys(models).forEach((key) => {
-      models[key].init(components, models);
-    });
-
-    Object.keys(components).forEach((key) => {
-      components[key].init(components, models);
-    });
-
+    this.canvas = components.canvas;
+    this.sprites = models.sprites;
     this.cells = models.cells;
     this.snakes = models.snake;
-    this.food = models.food;
 
-    this.food.create();
+    this._createCells();
+    this._createSnake();
+    this._createFood();
   }
 
-  start(key) {
-    switch (key) {
-      case 'ArrowUp':
-        this.snakes.direction = 'up';
-        break;
-      case 'ArrowDown':
-        this.snakes.direction = 'down';
-        break;
-      case 'ArrowLeft':
-        this.snakes.direction = 'left';
-        break;
-      case 'ArrowRight':
-        this.snakes.direction = 'right';
-        break;
-      case 'Space':
-        this.pause();
-        break;
+  _createCells() {
+    for (let row = 0; row < this.cells.size; row++) {
+      for (let col = 0; col < this.cells.size; col++) {
+        this.cells.push(this._createCell(row, col));
+      }
     }
   }
 
-  pause() {
-    this.moving = this.moving ? false : true;
+  _createCell(row, col) {
+    const cellProps = {
+      row,
+      col,
+      elem: this.sprites.getElem('cell'),
+      offsetX: 0,
+      offsetY: 0,
+      id: `${row + 1}:${col + 1}`,
+      hasFood: false,
+      canvas: this.canvas,
+    }
+
+    return new Cell(cellProps);
+  }
+
+  _createSnake() {
+    const startCells = [
+      {row: 7, col: 7},
+      {row: 8, col: 7}
+    ];
+
+    startCells.forEach((startCell) => {
+      const cell = this.cells.get(startCell.row, startCell.col);
+      this.snakes.push(cell);
+    });
+  }
+
+  _createFood() {
+    const avalableCells = this.cells.filter((cell) => !this.snakes.hasCell(cell));
+    const randomIndex = Utils.random(0, avalableCells.length - 1);
+    const foodCell = avalableCells[randomIndex];
+    this.cells.forEach((cell) => cell.hasFood = cell.id === foodCell.id ? true : false);
   }
 
   move() {
-    if (!this.moving) {
+    if (!this.snakes.moving) {
       return;
     }
 
-    const snakeHead = this.snakes.snakes[0];
+    const snakeHead = this.snakes.getByIndex(0);
     const nextCell = this.cells.getNext(snakeHead, this.snakes.direction);
 
     if (nextCell) {
@@ -58,7 +78,8 @@ export class BoardController {
       if (!nextCell.hasFood) {
         this.snakes.pop();
       } else {
-        this.food.create();
+        this._createFood();
+        this.score += 1;
       }
     }
   }

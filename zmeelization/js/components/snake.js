@@ -1,12 +1,10 @@
 export class Snake {
   constructor() {
-    this.canvas = null;
     this.sprites = null;
     this.snakes = null;
   }
 
-  init(components, models) {
-    this.canvas = components.canvas;
+  init( _, models ) {
     this.sprites = models.sprites;
     this.snakes = models.snake;
   }
@@ -14,9 +12,12 @@ export class Snake {
   render() {
     this.snakes.forEach((cell, index) => {
       if (index === 0) {
-        this.canvas.drawImage(this.sprites.getElem('snakeHead'), cell.x, cell.y);
+        const sprite = this.sprites.getElem('snakeHead');
+        const deg = this.snakes.headAngle[this.snakes.direction];
+        cell.rotate(sprite, deg);
+        // cell.render(sprite); // cell.rotate contains render method
       } else {
-        this.canvas.drawImage(this.sprites.getElem('snakeBody'), cell.x, cell.y);
+        cell.render(this.sprites.getElem('snakeBody'));
       }
     });
   }

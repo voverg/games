@@ -1,9 +1,9 @@
 import {Sprites} from './models/sprites.model.js';
 import {Cells} from './models/cells.model.js';
 import {SnakeModel} from './models/snake.model.js';
-import {FoodModel} from './models/food.model.js';
 
 import {BoardController} from './controllers/board.controller.js';
+import {Event} from './controllers/event.controller.js';
 
 import {Canvas} from './components/canvas.js';
 import {Board} from './components/board.js';
@@ -15,16 +15,16 @@ export class Game {
       canvas: new Canvas(),
       board: new Board(),
       snake: new Snake(),
-    }
+    };
     this.models = {
       sprites: new Sprites(),
       cells: new Cells(),
       snake: new SnakeModel(),
-      food: new FoodModel(),
-    }
+    };
     this.controllers = {
       board: new BoardController(),
-    }
+      event: new Event(),
+    };
   }
 
   _preload(callback) {
@@ -43,21 +43,24 @@ export class Game {
     });
   }
 
-  _create() {
-    // Creat game controllers
-    this.controllers.board.init(this.components, this.models);
-    // Geme events
-    window.addEventListener('keydown', (event) => {
-      this.controllers.board.start(event.code);
+  _init() {
+    // Init components
+    Object.keys(this.components).forEach((key) => {
+      this.components[key].init(this.components, this.models);
+    });
+    // Init controllers
+    Object.keys(this.controllers).forEach((key) => {
+      this.controllers[key].init(this.components, this.models);
     });
   }
 
   _render() {
     window.requestAnimationFrame(() => {
       this.components.canvas.clearAll();
-      // this.canvas.drawImage(this.sprites.getElem('background'), 0, 0);
-      this.components.board.render();
-      this.components.snake.render();
+      // Render components
+      Object.keys(this.components).forEach((key) => {
+        this.components[key].render();
+      });
     });
   }
 
@@ -67,7 +70,7 @@ export class Game {
   }
 
   run() {
-    this._create();
+    this._init();
 
     setInterval(() => {
       this._update();

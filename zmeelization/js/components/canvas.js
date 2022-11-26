@@ -26,6 +26,8 @@ export class Canvas {
 
   init() {}
 
+  render() {}
+
   _initDemensions() {
     const data = {
       maxWidth: this.dimensions.max.width,
@@ -79,4 +81,5 @@ export class Canvas {
   get height() {
     return this.canvas.height;
   }
+
 }
