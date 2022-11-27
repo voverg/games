@@ -37,13 +37,25 @@ export class Game {
     });
   }
 
-  start() {
+  load() {
     this._preload(() => {
+      this._init();
+      this.start();
       this.run();
     });
   }
 
-  _create() {
+  start() {
+    this.models.cells.setDefault();
+    this.models.snake.setDefault();
+
+    this.controllers.board.createCells();
+    this.controllers.board.createSnake();
+    this.controllers.board.createFood();
+    this.controllers.board.createBomb();
+  }
+
+  _init() {
     // Init components
     Object.keys(this.components).forEach((key) => {
       this.components[key].init(this.components, this.models);
@@ -70,7 +82,6 @@ export class Game {
   }
 
   run() {
-    this._create();
     // Game update interval
     this.gameInterval = setInterval(() => {
       this._update();

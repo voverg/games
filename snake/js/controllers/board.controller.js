@@ -16,10 +16,10 @@ export class BoardController {
     this.cells = models.cells;
     this.snakes = models.snake;
 
-    this.createCells();
-    this.createSnake();
-    this.createFood();
-    this.createBomb();
+    // this.createCells();
+    // this.createSnake();
+    // this.createFood();
+    // this.createBomb();
   }
 
   createCells() {
@@ -46,12 +46,7 @@ export class BoardController {
   }
 
   createSnake() {
-    const startCells = [
-      {row: 7, col: 7},
-      {row: 8, col: 7}
-    ];
-
-    startCells.forEach((startCell) => {
+    this.snakes.startCells.forEach((startCell) => {
       const cell = this.cells.get(startCell.row, startCell.col);
       this.snakes.push(cell);
     });
