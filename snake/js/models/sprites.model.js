@@ -1,6 +1,10 @@
-export class Sprites {
+import { Model } from '../core/model.js';
+
+export class Sprites extends Model {
   constructor() {
-    this.sprites = [
+    super();
+
+    this.arr = [
       {
         name: 'background',
         elem: null,
@@ -32,7 +36,6 @@ export class Sprites {
         path: 'img/sprites/bomb.png'
       },
     ];
-    this.length = this.sprites.length;
 
     this._load()
   }
@@ -40,7 +43,7 @@ export class Sprites {
   init() {}
 
   _load() {
-    this.sprites.forEach((sprite) => {
+    this.arr.forEach((sprite) => {
       sprite.elem = this.create(sprite.name);
     });
   }
@@ -53,7 +56,7 @@ export class Sprites {
   }
 
   get(name) {
-    return this.sprites.find((spriteItem) => spriteItem.name === name);
+    return this.arr.find((spriteItem) => spriteItem.name === name);
   }
 
   getElem(name) {
@@ -66,9 +69,5 @@ export class Sprites {
 
   getHeight(name) {
     return this.getElem(name).height;
-  }
-
-  forEach(callback) {
-    this.sprites.forEach(callback);
   }
 }

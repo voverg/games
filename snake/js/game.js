@@ -1,4 +1,5 @@
 import {Sprites} from './models/sprites.model.js';
+import {Sounds} from './models/sounds.model.js';
 import {Cells} from './models/cells.model.js';
 import {SnakeModel} from './models/snake.model.js';
 
@@ -18,6 +19,7 @@ export class Game {
     };
     this.models = {
       sprites: new Sprites(),
+      sounds: new Sounds(),
       cells: new Cells(),
       snake: new SnakeModel(),
     };
@@ -28,13 +30,24 @@ export class Game {
   }
 
   _preload(callback) {
-    this.models.sprites.forEach((sprite, index) => {
-      sprite.elem.addEventListener('load', () => {
-        if (index >= this.models.sprites.length - 1) {
-          callback();
-        }
-      });
+    const sourceLen = this.models.sprites.length + this.models.sounds.length;
+    let index = 0;
+
+    const onAssetLoad = () => {
+      index++;
+      if (index >= sourceLen) {
+        callback();
+      }
+    };
+
+    this.models.sprites.forEach((sprite) => {
+      sprite.elem.addEventListener('load', onAssetLoad);
     });
+
+    this.models.sounds.forEach((sound) => {
+      sound.elem.addEventListener('canplaythrough', onAssetLoad, {once: true});
+    });
+
   }
 
   load() {
