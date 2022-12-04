@@ -15,6 +15,7 @@ export class BoardController {
     this.sprites = models.sprites;
     this.cells = models.cells;
     this.snakes = models.snake;
+    this.sounds = models.sounds;
 
     // this.createCells();
     // this.createSnake();

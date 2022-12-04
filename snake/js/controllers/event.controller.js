@@ -5,6 +5,7 @@ export class Event {
 
   init(components, models) {
     this.snakes = models.snake;
+    this.sounds = models.sounds;
 
     window.addEventListener('keydown', (event) => {
       this.keyEvent(event.code)
@@ -28,11 +29,25 @@ export class Event {
       case 'Space':
         this.pause();
         break;
+      case 'KeyS':
+        this.sound();
+        break;
     }
   }
 
   pause() {
     this.snakes.moving = this.snakes.moving ? false : true;
+  }
+
+  sound() {
+    this.sounds.isSound = this.sounds.isSound ? false : true;
+
+    if (this.sounds.isSound) {
+      this.sounds.loop('theme');
+      this.sounds.play('theme');
+    } else {
+      this.sounds.pause('theme');
+    }
   }
 
 }

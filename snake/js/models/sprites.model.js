@@ -6,11 +6,6 @@ export class Sprites extends Model {
 
     this.arr = [
       {
-        name: 'background',
-        elem: null,
-        path: 'img/sprites/background.png'
-      },
-      {
         name: 'cell',
         elem: null,
         path: 'img/sprites/cell.png'

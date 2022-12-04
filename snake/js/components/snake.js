@@ -14,7 +14,7 @@ export class Snake {
       if (index === 0) {
         const sprite = this.sprites.getElem('snakeHead');
         const deg = this.snakes.headAngle[this.snakes.direction];
-        cell.rotate(sprite, deg);
+        cell.renderRotate(sprite, deg);
         // cell.render(sprite); // cell.rotate contains render method
       } else {
         cell.render(this.sprites.getElem('snakeBody'));

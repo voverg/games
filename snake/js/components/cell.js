@@ -24,7 +24,7 @@ export class Cell {
     this.y = this.size * this.row + this.offsetY;
   }
 
-  rotate(sprite, deg) {
+  renderRotate(sprite, deg) {
     const rad = deg * Math.PI / 180;
     const halfSize = sprite.width / 2;
 

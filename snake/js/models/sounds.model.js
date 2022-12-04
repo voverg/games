@@ -16,11 +16,13 @@ export class Sounds extends Model {
         path: 'sound/food.mp3',
       },
       {
-        name: 'bomb',
+        name: 'gameOver',
         elem: null,
-        path: 'sound/bomb.mp3',
+        path: 'sound/game-over.mp3',
       },
     ];
+
+    this.isSound = false;
 
     this._load()
   }
@@ -46,5 +48,25 @@ export class Sounds extends Model {
 
   getElem(name) {
     return this.get(name).elem;
+  }
+
+  play(name) {
+    const elem = this.getElem(name);
+    elem.play();
+  }
+
+  pause(name) {
+    const elem = this.getElem(name);
+    elem.pause();
+  }
+
+  autoplay(name) {
+    const elem = this.getElem(name);
+    elem.setAttribute('autoplay', true);
+  }
+
+  loop(name) {
+    const elem = this.getElem(name);
+    elem.setAttribute('loop', true);
   }
 }

@@ -39,11 +39,11 @@ export class Game {
         callback();
       }
     };
-
+    // Preload sprites
     this.models.sprites.forEach((sprite) => {
       sprite.elem.addEventListener('load', onAssetLoad);
     });
-
+    // Preload sounds
     this.models.sounds.forEach((sound) => {
       sound.elem.addEventListener('canplaythrough', onAssetLoad, {once: true});
     });
@@ -112,6 +112,10 @@ export class Game {
       return;
     }
 
+    // if (this.models.sounds.isSound) {
+    //   this.models.sounds.loop('theme');
+    // }
+
     const snakeHead = this.models.snake.getByIndex(0);
     const nextCell = this.models.cells.getNext(snakeHead, this.models.snake.direction);
 
@@ -119,9 +123,11 @@ export class Game {
       this.stop();
     } else {
       this.models.snake.unshift(nextCell);
+
       if (nextCell.type !== 'food') {
         this.models.snake.pop();
       } else {
+        this.models.sounds.play('food');
         this.controllers.board.createFood();
         this.models.snake.score += 1;
       }
@@ -129,6 +135,7 @@ export class Game {
   }
 
   stop() {
+    this.models.sounds.play('gameOver');
     clearInterval(this.gameInterval);
     clearInterval(this.bombInterval);
     alert(`The game is over. Your score is ${this.models.snake.score}`);

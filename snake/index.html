@@ -12,16 +12,55 @@
   <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
-  <header class="header">
+  <header class="header container">
+    <div class="score">
+      <span class="score__title">Очки: </span>
+      <span class="score__value">0</span>
+    </div>
     <h1 class="header__title">Змейка</h1>
-    <!-- <p class="header__description">Выбери режим игры и начинай!</p> -->
+    <div class="high-score">
+      <span class="high-score__title">Рекорд: </span>
+      <span class="high-score__value">0</span>
+    </div>
   </header>
 
-  <main class="main">
+  <main class="main container">
     <canvas id="my-canvas"></canvas>
+    <div class="controls">
+      <div class="info">
+        <div class="help">
+          <button class="help__btn btn">?</button>
+          <span class="help__text">&nbsp;Помощь</span>
+        </div>
+        <div class="level">
+          <span class="level__title">Уровень: </span>
+          <span class="level__value">1</span>
+        </div>
+      </div>
+
+      <div class="play">
+        <button class="play__game btn">Старт</button>
+        <button class="play__sound btn">Музыка</button>
+      </div>
+
+      <div class="arrows">
+        <div class="arrow-up">
+          <button class="btn arrow__btn up__btn"></button>
+        </div>
+        <div class="arrow-left">
+          <button class="btn arrow__btn left__btn"></button>
+        </div>
+        <div class="arrow-right">
+          <button class="btn arrow__btn right__btn"></button>
+        </div>
+        <div class="arrow-down">
+          <button class="btn arrow__btn down__btn"></button>
+        </div>
+      </div>
+    </div>
   </main>
 
-  <footer class="footer">
+  <footer class="footer container">
     <p class="footer__text">Created by <a href="https://github.com/voverg" class="footer__link" rel="noopener noreferrer" target="_blank">Voverg</a></p>
   </footer>
 
