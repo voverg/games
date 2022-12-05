@@ -9,9 +9,22 @@ import {Event} from './controllers/event.controller.js';
 import {Canvas} from './components/canvas.js';
 import {Board} from './components/board.js';
 import {Snake} from './components/snake.js';
+import {Header} from './components/header.js';
+import {Controls} from './components/controls.js';
+
+import { Store } from './core/store.js';
+import { Actions } from './utils/actions.js';
 
 export class Game {
   constructor() {
+    this.store = new Store();
+    this.actions = new Actions(this.store);
+
+    this.staticComponents = {
+      header: new Header(),
+      controls: new Controls(),
+    }
+
     this.components = {
       canvas: new Canvas(),
       board: new Board(),
@@ -59,8 +72,8 @@ export class Game {
   }
 
   start() {
-    this.models.cells.setDefault();
-    this.models.snake.setDefault();
+    // this.models.cells.setDefault();
+    // this.models.snake.setDefault();
 
     this.controllers.board.createCells();
     this.controllers.board.createSnake();
@@ -69,13 +82,18 @@ export class Game {
   }
 
   _init() {
-    // Init components
+    // Init and render static components
+    Object.keys(this.staticComponents).forEach((key) => {
+      this.staticComponents[key].init(this.components, this.models, this.store);
+      this.staticComponents[key].render();
+    });
+    // Init dynamic components
     Object.keys(this.components).forEach((key) => {
-      this.components[key].init(this.components, this.models);
+      this.components[key].init(this.components, this.models, this.store);
     });
     // Init controllers
     Object.keys(this.controllers).forEach((key) => {
-      this.controllers[key].init(this.components, this.models);
+      this.controllers[key].init(this.components, this.models, this.store, this.actions);
     });
   }
 
@@ -120,7 +138,7 @@ export class Game {
     const nextCell = this.models.cells.getNext(snakeHead, this.models.snake.direction);
 
     if (!nextCell || this.models.snake.hasCell(nextCell) || nextCell.type === 'bomb') {
-      this.stop();
+      // this.stop();
     } else {
       this.models.snake.unshift(nextCell);
 
@@ -130,6 +148,7 @@ export class Game {
         this.models.sounds.play('food');
         this.controllers.board.createFood();
         this.models.snake.score += 1;
+        this.actions.setScore(this.models.snake.score);
       }
     }
   }

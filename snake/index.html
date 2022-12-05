@@ -6,58 +6,17 @@
   <meta name="description" content="Игра Змеелизация, написанная на HTML5, CSS и чистом JavaScript.">
   <meta name="keywords" content="html, css, javascript">
   <!-- <meta name="og:image" content="../main/img/zmeelization.png"> -->
-  <title>Zmeelization</title>
+  <title>Snake</title>
   <link rel="shortcut icon" href="../main/favicon.png" type="image/x-icon">
   <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" /> -->
   <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
-  <header class="header container">
-    <div class="score">
-      <span class="score__title">Очки: </span>
-      <span class="score__value">0</span>
-    </div>
-    <h1 class="header__title">Змейка</h1>
-    <div class="high-score">
-      <span class="high-score__title">Рекорд: </span>
-      <span class="high-score__value">0</span>
-    </div>
-  </header>
+  <header class="header container"></header>
 
   <main class="main container">
     <canvas id="my-canvas"></canvas>
-    <div class="controls">
-      <div class="info">
-        <div class="help">
-          <button class="help__btn btn">?</button>
-          <span class="help__text">&nbsp;Помощь</span>
-        </div>
-        <div class="level">
-          <span class="level__title">Уровень: </span>
-          <span class="level__value">1</span>
-        </div>
-      </div>
-
-      <div class="play">
-        <button class="play__game btn">Старт</button>
-        <button class="play__sound btn">Музыка</button>
-      </div>
-
-      <div class="arrows">
-        <div class="arrow-up">
-          <button class="btn arrow__btn up__btn"></button>
-        </div>
-        <div class="arrow-left">
-          <button class="btn arrow__btn left__btn"></button>
-        </div>
-        <div class="arrow-right">
-          <button class="btn arrow__btn right__btn"></button>
-        </div>
-        <div class="arrow-down">
-          <button class="btn arrow__btn down__btn"></button>
-        </div>
-      </div>
-    </div>
+    <div class="controls"></div>
   </main>
 
   <footer class="footer container">

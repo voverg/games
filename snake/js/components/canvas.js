@@ -12,8 +12,8 @@ export class Canvas {
 
     this.dimensions = {
       max: {
-        width: 640,
-        height: 360
+        width: 500,
+        height: 500,
       },
       min: {
         width: 300,
@@ -21,7 +21,7 @@ export class Canvas {
       }
     }
 
-    // this._initDemensions();
+    this._initDemensions();
   }
 
   init() {}
@@ -29,6 +29,11 @@ export class Canvas {
   render() {}
 
   _initDemensions() {
+    const $header = document.querySelector('.header');
+    const $footer = document.querySelector('.footer');
+    const $main = document.querySelector('.main');
+    const $controls = document.querySelector('.controls');
+
     const data = {
       maxWidth: this.dimensions.max.width,
       maxHeight: this.dimensions.max.height,
@@ -36,16 +41,31 @@ export class Canvas {
       minHeight: this.dimensions.min.height,
       realWidth: window.innerWidth,
       realHeight: window.innerHeight,
+      headerHeight: $header.clientHeight,
+      footerHeight: $footer.clientHeight,
+      controlsWidth: $controls.clientWidth,
     }
 
-    if (data.realWidth/data.realHeight > data.maxWidth/data.maxHeight) {
-      this._fitWidth(data);
+    if (data.realWidth < data.realHeight) {
+      this.fitWidth(data);
     } else {
-      this._fitHeight(data);
+      this.fitHeight(data);
     }
 
-    this.canvas.width = this._width;
-    this.canvas.height = this._height;
+    this.canvas.style.width = `${this._width}px`;
+    this.canvas.style.height = `${this._height}px`;
+  }
+
+  fitWidth(data) {
+    const width = data.realWidth - 50;
+    this._width = width > data.maxWidth ? data.maxWidth : width;
+    this._height = this._width;
+  }
+
+  fitHeight(data) {
+    const height = data.realHeight - data.headerHeight - data.footerHeight - 50;
+    this._height = height > data.maxHeight ? data.maxHeight : height;
+    this._width = this._height;
   }
 
   _fitWidth(data) {
