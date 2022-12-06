@@ -178,9 +178,9 @@ body {
 
 /* -----Canvas----- */
 #my-canvas {
-  aspect-ratio: 1/1;
+  /*aspect-ratio: 1/1;*/
   width: 500px;
-  /*height: 500px;*/
+  height: 500px;
   max-width: 500px;
   max-height: 500px;
   display: block;
