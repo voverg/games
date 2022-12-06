@@ -90,7 +90,7 @@ export class Game {
 
     this._setHighscoreToStore();
     this._setLevelToStore();
-    this._onSoundTheme();
+    // this._onSoundTheme();
   }
 
   _setHighscoreToStore() {
@@ -148,6 +148,9 @@ export class Game {
     }
 
     const state = this.store.getState();
+    if (!state.sound) {
+      this._onSoundTheme();
+    }
     const snakeHead = this.models.snake.getByIndex(0);
     const nextCell = this.models.cells.getNext(snakeHead, this.models.snake.direction);
     const condition = !nextCell || this.models.snake.hasCell(nextCell) || nextCell.type === 'bomb';
