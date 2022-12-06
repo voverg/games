@@ -4,13 +4,12 @@ export class Event {
     this.snakes = null;
     this.sounds = null;
 
-    this.$controls = document.querySelector('.controls');
-
     this.events = {
       ArrowUp: 'up',
       ArrowDown: 'down',
       ArrowLeft: 'left',
       ArrowRight: 'right',
+      Escape: 'close',
       Space: 'move',
       KeyS: 'sound',
       up: 'up',
@@ -20,6 +19,8 @@ export class Event {
       move: 'move',
       sound: 'sound',
       help: 'help',
+      close: 'close',
+      finish: 'finish',
     };
   }
 
@@ -33,8 +34,7 @@ export class Event {
       this.checkEvent(event.code)
     });
 
-    this.$controls.addEventListener('click', (event) => {
-      event.preventDefault();
+    document.addEventListener('click', (event) => {
       const target = event.target;
       this.checkEvent(target.dataset.type);
     });
@@ -61,7 +61,13 @@ export class Event {
         this.handleSound();
         break;
       case 'help':
-        this.showHelp();
+        this.showHelpModal();
+        break;
+      case 'finish':
+        this.startNewGame();
+        break;
+      case 'close':
+        this.closeModal();
         break;
     }
   }
@@ -83,8 +89,18 @@ export class Event {
     }
   }
 
-  showHelp() {
+  showHelpModal() {
     this.actions.setModal(true);
+    this.actions.setModalContent('help');
+  }
+
+  startNewGame() {
+    this.actions.setModal(false);
+    window.location.reload();
+  }
+
+  closeModal() {
+    this.actions.setModal(false);
   }
 
 }

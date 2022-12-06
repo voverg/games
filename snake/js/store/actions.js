@@ -7,8 +7,8 @@ export class Actions {
     this.store.dispatch({ type: 'general', payload: {'score': value} });
   }
 
-  setHiscore() {
-    this.store.dispatch({ type: 'general', payload: {'highScore': 0} });
+  setHiscore(value) {
+    this.store.dispatch({ type: 'general', payload: {'highScore': value} });
   }
 
   setMoving(value) {
@@ -19,11 +19,19 @@ export class Actions {
     this.store.dispatch({ type: 'general', payload: {'sound': value} });
   }
 
-  setLevel() {
-    this.store.dispatch({ type: 'general', payload: {'level': 1} });
+  setLevel(value) {
+    this.store.dispatch({ type: 'general', payload: {'level': value} });
   }
 
   setModal(value) {
     this.store.dispatch({ type: 'general', payload: {'showModal': value} });
+  }
+
+  setModalContent(value) {
+    this.store.dispatch({ type: 'general', payload: {'modalContent': value} });
+  }
+
+  setWin(value) {
+    this.store.dispatch({ type: 'general', payload: {'win': value} });
   }
 }

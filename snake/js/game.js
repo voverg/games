@@ -11,9 +11,11 @@ import {Board} from './components/board.js';
 import {Snake} from './components/snake.js';
 import {Header} from './components/header.js';
 import {Controls} from './components/controls.js';
+import {Modal} from './components/modal.js';
 
-import { Store } from './core/store.js';
-import { Actions } from './utils/actions.js';
+import { Store } from './store/store.js';
+import { Actions } from './store/actions.js';
+import { Service } from './utils/service.js';
 
 export class Game {
   constructor() {
@@ -23,6 +25,7 @@ export class Game {
     this.staticComponents = {
       header: new Header(),
       controls: new Controls(),
+      modal: new Modal(),
     }
 
     this.components = {
@@ -66,19 +69,8 @@ export class Game {
   load() {
     this._preload(() => {
       this._init();
-      this.start();
       this.run();
     });
-  }
-
-  start() {
-    // this.models.cells.setDefault();
-    // this.models.snake.setDefault();
-
-    this.controllers.board.createCells();
-    this.controllers.board.createSnake();
-    this.controllers.board.createFood();
-    this.controllers.board.createBomb();
   }
 
   _init() {
@@ -95,6 +87,27 @@ export class Game {
     Object.keys(this.controllers).forEach((key) => {
       this.controllers[key].init(this.components, this.models, this.store, this.actions);
     });
+
+    this._setHighscoreToStore();
+    this._setLevelToStore();
+    this._onSoundTheme();
+  }
+
+  _setHighscoreToStore() {
+    let highScore = Service.get('snake-highscore');
+    highScore = highScore ? highScore : 0;
+    this.actions.setHiscore(highScore);
+  }
+
+  _setLevelToStore() {
+    let level = Service.get('snake-level');
+    level = level ? level : 1;
+    this.actions.setLevel(level);
+  }
+
+  _onSoundTheme() {
+    const $sound = document.querySelector('.play__sound');
+    $sound.click();
   }
 
   _render() {
@@ -118,11 +131,15 @@ export class Game {
       this._update();
     }, 150);
     // Bomb update interval
-    this.bombInterval = setInterval(() => {
-      if (this.models.snake.moving) {
-        this.controllers.board.createBomb();
-      }
-    }, 3000);
+    if (this.store.getState().level >= 2) {
+      this.bombInterval = setInterval(() => {
+        const state = this.store.getState();
+
+        if (this.models.snake.moving) {
+            this.controllers.board.createBomb(state.level -1);
+        }
+      }, 3000);
+    }
   }
 
   move() {
@@ -130,15 +147,17 @@ export class Game {
       return;
     }
 
-    // if (this.models.sounds.isSound) {
-    //   this.models.sounds.loop('theme');
-    // }
-
+    const state = this.store.getState();
     const snakeHead = this.models.snake.getByIndex(0);
     const nextCell = this.models.cells.getNext(snakeHead, this.models.snake.direction);
+    const condition = !nextCell || this.models.snake.hasCell(nextCell) || nextCell.type === 'bomb';
 
-    if (!nextCell || this.models.snake.hasCell(nextCell) || nextCell.type === 'bomb') {
-      // this.stop();
+    if (condition) {
+      this.stop();
+    } else if (state.score >= 20) {
+      Service.set('snake-level', state.level + 1);
+      this.actions.setWin(true);
+      this.stop();
     } else {
       this.models.snake.unshift(nextCell);
 
@@ -157,8 +176,14 @@ export class Game {
     this.models.sounds.play('gameOver');
     clearInterval(this.gameInterval);
     clearInterval(this.bombInterval);
-    alert(`The game is over. Your score is ${this.models.snake.score}`);
-    window.location.reload();
+    // Show game over modal
+    this.actions.setModal(true);
+    this.actions.setModalContent('finish');
+    // Set highScore to localStorage
+    const state = this.store.getState();
+    let highScore = state.score > state.highScore ? state.score : state.highScore;
+    highScore = state.win ? 0 : highScore;
+    Service.set('snake-highscore', highScore);
   }
 
 }

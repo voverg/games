@@ -17,9 +17,9 @@ export class BoardController {
     this.snakes = models.snake;
     this.sounds = models.sounds;
 
-    // this.createCells();
-    // this.createSnake();
-    // this.createFood();
+    this.createCells();
+    this.createSnake();
+    this.createFood();
     // this.createBomb();
   }
 
@@ -53,23 +53,28 @@ export class BoardController {
     });
   }
 
-  createFood() {
-    this._createCellObject('food');
+  createFood(amount = 1) {
+    this._createCellObject('food', amount);
   }
 
-  createBomb() {
-    this._createCellObject('bomb');
+  createBomb(amount = 1) {
+    this._createCellObject('bomb', amount);
   }
 
-  _createCellObject(type) {
-    // Clear type of the current cell if exict
-    const typedCell = this.cells.find((cell) => cell.type === type);
-    if (typedCell) {
-      typedCell.type = false;
+  _createCellObject(type, amount = 1) {
+    // Clear type of the current cell if exist
+    for (let i = 0; i < amount; i++) {
+      const typedCell = this.cells.find((cell) => cell.type === type);
+      if (typedCell) {
+        typedCell.type = false;
+      }
     }
+    
     // Get random avalable cell and set its type
-    const cell = this._getAvalableCell();
-    cell.type = type;
+    for (let i = 0; i < amount; i++) {
+      const cell = this._getAvalableCell();
+      cell.type = type;
+    }
   }
 
   _getAvalableCell() {

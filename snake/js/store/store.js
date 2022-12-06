@@ -6,7 +6,9 @@ export class Store {
       moving: false,
       sound: false,
       showModal: false,
+      modalContent: 'help',
       level: 1,
+      win: false,
     };
     this.state = rootReducer(this.initialState, {type: '__init__'});
     this.subscribers = [];

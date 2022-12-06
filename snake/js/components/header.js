@@ -29,7 +29,7 @@ export class Header {
         <span class="score__title">Очки: </span>
         <span class="score__value">${score}</span>
       </div>
-      <h1 class="header__title">Змейка</h1>
+      <h1 class="header__title" data-type="tmp">Змейка</h1>
       <div class="high-score">
         <span class="high-score__title">Рекорд: </span>
         <span class="high-score__value">${highScore}</span>
