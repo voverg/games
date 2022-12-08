@@ -34,4 +34,12 @@ export class Actions {
   setWin(value) {
     this.store.dispatch({ type: 'general', payload: {'win': value} });
   }
+
+  setSnakeSpeed(value) {
+    this.store.dispatch({ type: 'general', payload: {'snakeSpeed': value} });
+  }
+
+  setBombSpeed(value) {
+    this.store.dispatch({ type: 'general', payload: {'bombSpeed': value} });
+  }
 }

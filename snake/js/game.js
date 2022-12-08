@@ -5,6 +5,7 @@ import {SnakeModel} from './models/snake.model.js';
 
 import {BoardController} from './controllers/board.controller.js';
 import {Event} from './controllers/event.controller.js';
+import { Service } from './controllers/service.controller.js';
 
 import {Canvas} from './components/canvas.js';
 import {Board} from './components/board.js';
@@ -15,11 +16,11 @@ import {Modal} from './components/modal.js';
 
 import { Store } from './store/store.js';
 import { Actions } from './store/actions.js';
-import { Service } from './utils/service.js';
 
 export class Game {
   constructor() {
     this.store = new Store();
+    this.state = null;
     this.actions = new Actions(this.store);
 
     this.staticComponents = {
@@ -42,6 +43,7 @@ export class Game {
     this.controllers = {
       board: new BoardController(),
       event: new Event(),
+      service: new Service(),
     };
   }
 
@@ -88,21 +90,27 @@ export class Game {
       this.controllers[key].init(this.components, this.models, this.store, this.actions);
     });
 
-    this._setHighscoreToStore();
-    this._setLevelToStore();
-    // this._onSoundTheme();
+    this.controllers.service.setHighscoreToStore();
+    this.controllers.service.setLevelToStore();
+
+    this.state = this.store.getState();
+    this.store.subscribe(() => {
+      this.state = this.store.getState();
+    });
+
+    this._setSnakeSpeedToStore();
+    this._setBombSpeedToStore();
+    this.controllers.board.createBomb(this.state.level - 1);
   }
 
-  _setHighscoreToStore() {
-    let highScore = Service.get('snake-highscore');
-    highScore = highScore ? highScore : 0;
-    this.actions.setHiscore(highScore);
+  _setSnakeSpeedToStore() {
+    const snakeSpeed = Math.floor(600 - this.state.level * 50);
+    this.actions.setSnakeSpeed(snakeSpeed);
   }
 
-  _setLevelToStore() {
-    let level = Service.get('snake-level');
-    level = level ? level : 1;
-    this.actions.setLevel(level);
+  _setBombSpeedToStore() {
+    const bombSpeed = Math.floor(10000 - this.state.level * 500);
+    this.actions.setBombSpeed(bombSpeed);
   }
 
   _onSoundTheme() {
@@ -129,26 +137,23 @@ export class Game {
     // Game update interval
     this.gameInterval = setInterval(() => {
       this._update();
-    }, 150);
+    }, this.state.snakeSpeed);
     // Bomb update interval
-    if (this.store.getState().level >= 2) {
+    if (this.state.level >= 2) {
       this.bombInterval = setInterval(() => {
-        const state = this.store.getState();
-
-        if (this.models.snake.moving) {
-            this.controllers.board.createBomb(state.level -1);
+        if (this.state.moving) {
+            this.controllers.board.createBomb(this.state.level - 1);
         }
-      }, 3000);
+      }, this.state.bombSpeed);
     }
   }
 
   move() {
-    if (!this.models.snake.moving) {
+    if (!this.state.moving) {
       return;
     }
 
-    const state = this.store.getState();
-    if (!state.sound) {
+    if (!this.state.sound) {
       this._onSoundTheme();
     }
     const snakeHead = this.models.snake.getByIndex(0);
@@ -157,8 +162,8 @@ export class Game {
 
     if (condition) {
       this.stop();
-    } else if (state.score >= 5) {
-      Service.set('snake-level', state.level + 1);
+    } else if (this.state.score >= 5) {
+      this.controllers.service.set('snake-level', this.state.level + 1);
       this.actions.setWin(true);
       this.stop();
     } else {
@@ -176,9 +181,7 @@ export class Game {
   }
 
   stop() {
-    const state = this.store.getState();
-    const sound = state.win ? 'levelUp' : 'gameOver';
-    this.models.sounds.play(sound);
+    this.playFinishSound();
 
     clearInterval(this.gameInterval);
     clearInterval(this.bombInterval);
@@ -186,9 +189,15 @@ export class Game {
     this.actions.setModal(true);
     this.actions.setModalContent('finish');
     // Set highScore to localStorage
-    let highScore = state.score > state.highScore ? state.score : state.highScore;
-    highScore = state.win ? 0 : highScore;
-    Service.set('snake-highscore', highScore);
+    let highScore = this.state.score > this.state.highScore ? this.state.score : this.state.highScore;
+    highScore = this.state.win ? 0 : highScore;
+    this.controllers.service.set('snake-highscore', highScore);
+  }
+
+  playFinishSound() {
+    this._onSoundTheme();
+    const sound = this.state.win ? 'levelUp' : 'gameOver';
+    this.models.sounds.play(sound);
   }
 
 }

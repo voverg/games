@@ -9,6 +9,8 @@ export class Store {
       modalContent: 'help',
       level: 1,
       win: false,
+      snakeSpeed: 600,
+      bombSpeed: 10000,
     };
     this.state = rootReducer(this.initialState, {type: '__init__'});
     this.subscribers = [];
