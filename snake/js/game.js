@@ -159,7 +159,7 @@ export class Game {
 
     let snakeHead = this.models.snake.getByIndex(0);
     let nextCell = this.models.cells.getNext(snakeHead, this.models.snake.direction);
-
+    // If level < 4 the snake moves through the game walls
     if (!nextCell && this.state.level < 4) {
       const directionObj = {up: 'row', down: 'row', left: 'col', right: 'col'};
       const directionValues = {up: 1, down: -1, left: 1, right: -1};
