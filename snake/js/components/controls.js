@@ -23,15 +23,19 @@ export class Controls {
   createContent() {
     const playClass = this.state.moving ? 'play__game btn btn__pushed' : 'play__game btn';
     const playText = this.state.moving ? 'Пауза II' : 'Старт &#9658;';
+    const playTitle = this.state.moving ? 'Остановить' : 'Запустить';
+
     const soundClass = this.state.sound ? 'play__sound btn btn__pushed' : 'play__sound btn';
+    const soundTitle = this.state.sound ? 'Выключить' : 'Включить';
     const soundText = this.state.sound ? 'Музыка II' : 'Музыка &#9658;';
+
     const level = this.state.level;
 
     return `
       <div class="info">
         <div class="help" data-type="help">
           <button class="help__btn btn" data-type="help">?</button>
-          <span class="help__text" data-type="help">&nbsp;Помощь</span>
+          <span class="help__text" data-type="help" title="Правила игры">&nbsp;Помощь</span>
         </div>
         <div class="level">
           <span class="level__title">Уровень: </span>
@@ -40,9 +44,9 @@ export class Controls {
       </div>
 
       <div class="play">
-        <button class="btn new-game__btn" data-type="finish">Новая игра</button>
-        <button class="${playClass}" data-type="move">${playText}</button>
-        <button class="${soundClass}" data-type="sound">${soundText}</button>
+        <button class="${playClass}" data-type="move" title="${playTitle} игру">${playText}</button>
+        <button class="${soundClass}" data-type="sound" title="${soundTitle} музыку">${soundText}</button>
+        <button class="btn new-game__btn" data-type="finish" title="Начать новую игру">Новая игра</button>
       </div>
 
       <div class="arrows">
