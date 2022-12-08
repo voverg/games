@@ -157,7 +157,7 @@ export class Game {
 
     if (condition) {
       this.stop();
-    } else if (state.score >= 20) {
+    } else if (state.score >= 5) {
       Service.set('snake-level', state.level + 1);
       this.actions.setWin(true);
       this.stop();
@@ -176,14 +176,16 @@ export class Game {
   }
 
   stop() {
-    this.models.sounds.play('gameOver');
+    const state = this.store.getState();
+    const sound = state.win ? 'levelUp' : 'gameOver';
+    this.models.sounds.play(sound);
+
     clearInterval(this.gameInterval);
     clearInterval(this.bombInterval);
     // Show game over modal
     this.actions.setModal(true);
     this.actions.setModalContent('finish');
     // Set highScore to localStorage
-    const state = this.store.getState();
     let highScore = state.score > state.highScore ? state.score : state.highScore;
     highScore = state.win ? 0 : highScore;
     Service.set('snake-highscore', highScore);

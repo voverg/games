@@ -20,6 +20,11 @@ export class Sounds extends Model {
         elem: null,
         path: 'sound/game-over.mp3',
       },
+      {
+        name: 'levelUp',
+        elem: null,
+        path: 'sound/level-up.mp3',
+      },
     ];
 
     this.isSound = false;
