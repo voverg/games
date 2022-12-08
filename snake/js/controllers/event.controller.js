@@ -90,6 +90,7 @@ export class Event {
   }
 
   showHelpModal() {
+    this.pauseMove();
     this.actions.setModal(true);
     this.actions.setModalContent('help');
   }
