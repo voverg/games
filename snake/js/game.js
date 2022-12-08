@@ -159,15 +159,15 @@ export class Game {
 
     let snakeHead = this.models.snake.getByIndex(0);
     let nextCell = this.models.cells.getNext(snakeHead, this.models.snake.direction);
-    // If level < 4 the snake moves through the game walls
-    if (!nextCell && this.state.level < 4) {
-      const directionObj = {up: 'row', down: 'row', left: 'col', right: 'col'};
-      const directionValues = {up: 1, down: -1, left: 1, right: -1};
-      const direction = directionObj[this.models.snake.direction];
-      const directionVal = directionValues[this.models.snake.direction];
-      snakeHead[direction] += directionVal * this.models.cells.size;
-      nextCell = this.models.cells.getNext(snakeHead, this.models.snake.direction);
-    }
+    // If level less then 4 the snake moves through the game walls
+    // if (!nextCell && this.state.level < 4) {
+    //   const directionObj = {up: 'row', down: 'row', left: 'col', right: 'col'};
+    //   const directionValues = {up: 1, down: -1, left: 1, right: -1};
+    //   const direction = directionObj[this.models.snake.direction];
+    //   const directionVal = directionValues[this.models.snake.direction];
+    //   snakeHead[direction] += directionVal * this.models.cells.size;
+    //   nextCell = this.models.cells.getNext(snakeHead, this.models.snake.direction);
+    // }
 
     const condition = !nextCell || this.models.snake.hasCell(nextCell) || nextCell.type === 'bomb';
 
