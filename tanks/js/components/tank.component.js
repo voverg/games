@@ -1,6 +1,10 @@
 export class Tank {
-  constructor(canvas) {
-    this.canvas = canvas;
+  constructor() {
+    this.canvas = null;
+  }
+
+  init(controllers) {
+    this.canvas = controllers.canvas;
   }
 
   render() {

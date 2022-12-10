@@ -1,7 +1,8 @@
-export class Event {
+import { Controller } from './controller.js';
+
+export class Event extends Controller {
   constructor() {
-    this.store = null;
-    this.actions = null;
+    super();
 
     this.events = {
       ArrowUp: 'up',
@@ -23,24 +24,21 @@ export class Event {
     };
   }
 
-  init(store, actions) {
-    this.store = store;
-    this.actions = actions;
+  init(props) {
+    super.init(props);
 
     this.store.subscribe(() => {
       this.state = this.store.getState();
     });
 
-    document.addEventListener('keydown', (event) => {
-      event.preventDefault();
-      this.actions.setMoving(true);
-      this.checkEvent(event.code)
-    });
-
     document.addEventListener('keyup', (event) => {
       event.preventDefault();
-      this.actions.setMoving(false);
-      this.checkEvent(event.code)
+      this.checkEvent(event.code, 'keyup');
+    });
+
+    document.addEventListener('keydown', (event) => {
+      event.preventDefault();
+      this.checkEvent(event.code, 'keydown');
     });
 
     document.addEventListener('click', (event) => {
@@ -49,19 +47,27 @@ export class Event {
     });
   }
 
-  checkEvent(event) {
+  checkEvent(event, keyEventType = '') {
+    const arrowEvents = new Set(['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight']);
+
+    if (arrowEvents.has(event)) {
+      const movingValue = keyEventType === 'keydown' ? true : false;
+      this.actions.setMoving(movingValue);
+    }
+
     if (event && event in this.events) {
-      this.handleEvent(this.events[event]);
+      const eventType = this.events[event];
+      this.handleEvent(eventType);
     }
   }
 
-  handleEvent(event) {
-    switch (event.toLowerCase()) {
+  handleEvent(eventType) {
+    switch (eventType.toLowerCase()) {
       case 'up':
       case 'down':
       case 'left':
       case 'right':
-        this.actions.setTankDirection(event);
+        this.actions.setTankDirection(eventType);
         break;
       case 'move':
         this.pauseMove();

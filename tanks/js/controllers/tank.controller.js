@@ -1,41 +1,45 @@
-export class TankController {
+import { Controller } from './controller.js';
+
+export class TankController extends Controller {
   constructor() {
-    this.store = null;
-    this.actions = null;
-    this.step = 3;
+    super();
+    this.step = 1;
     this.coords = {};
 
     this.directions = {
       up: (obj) => ( {x: obj.x, y: obj.y - this.step} ),
+      right:(obj) => ( {x: obj.x + this.step, y: obj.y} ),
       down:(obj) => ( {x: obj.x, y: obj.y + this.step} ),
       left: (obj) => ( {x: obj.x - this.step, y: obj.y} ),
-      right:(obj) => ( {x: obj.x + this.step, y: obj.y} ),
     };
   }
 
-  init(store, actions) {
-    this.store = store;
-    this.state = store.getState();
-    this.actions = actions;
+  init(props) {
+    super.init(props);
 
     this.store.subscribe(() => {
       this.state = this.store.getState();
     });
   }
 
-  move(canvas) {
+  move(canvasBorders) {
     if (this.state.moving) {
       const direction = this.state.tankDirection;
-      this.setCoords(direction, canvas);
+      this.setCoords(direction, canvasBorders);
       this.actions.setTankCoords(this.coords);
     }
   }
 
-  setCoords(direction, canvas) {
-    const boardWidth = canvas.width - 30;
-    const boardHeight = canvas.height - 30;
-    console.log(boardHeight, boardWidth);
+  setCoords(direction, canvasBorders) {
+    const boardWidth = canvasBorders.width;
+    const boardHeight = canvasBorders.height;
+    // console.log(boardHeight, boardWidth);
     let currentCoords = this.state.tankCoords;
+    // console.log(currentCoords);
+    // if (currentCoords.x <= 0 || currentCoords.y <= 0 || currentCoords.x >= boardWidth || currentCoords.x >= boardHeight) {
+    //   this.coords = currentCoords;
+    //   return;
+    // }
 
     if (currentCoords.x <= 0) {
       currentCoords = {x: 0, y: currentCoords.y};

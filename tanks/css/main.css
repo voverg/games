@@ -40,6 +40,8 @@ body {
 }
 
 .canvas {
+  width: 70vw;
+  height: 80vh;
   margin: 0 auto;
   border: 1px solid yellow;
 }
