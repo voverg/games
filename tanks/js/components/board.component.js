@@ -3,8 +3,8 @@ export class Board {
     this.canvas = null;
   }
 
-  init(controllers, models) {
-    this.canvas = controllers.canvas;
+  init(canvas, models) {
+    this.canvas = canvas;
     this.grid = models.grid;
   }
 

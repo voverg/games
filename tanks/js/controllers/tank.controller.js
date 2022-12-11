@@ -3,7 +3,8 @@ import { Controller } from './controller.js';
 export class TankController extends Controller {
   constructor() {
     super();
-    this.step = 1;
+    this.size = 0;
+    this.step = 2;
     this.coords = {};
 
     this.directions = {
@@ -16,42 +17,60 @@ export class TankController extends Controller {
 
   init(props) {
     super.init(props);
+    this.coords = this.store.getState().tankCoords;
+    this.size = this.sources.sprite.unit_size;
 
     this.store.subscribe(() => {
       this.state = this.store.getState();
     });
   }
 
-  move(canvasBorders) {
+  move() {
     if (this.state.moving) {
       const direction = this.state.tankDirection;
-      this.setCoords(direction, canvasBorders);
+      const newCoords = this.getNewCoords(direction);
+
+      this.coords = newCoords;
       this.actions.setTankCoords(this.coords);
     }
   }
 
-  setCoords(direction, canvasBorders) {
-    const boardWidth = canvasBorders.width;
-    const boardHeight = canvasBorders.height;
-    // console.log(boardHeight, boardWidth);
-    let currentCoords = this.state.tankCoords;
-    // console.log(currentCoords);
-    // if (currentCoords.x <= 0 || currentCoords.y <= 0 || currentCoords.x >= boardWidth || currentCoords.x >= boardHeight) {
-    //   this.coords = currentCoords;
-    //   return;
-    // }
+  getNewCoords(direction) {
+    const currentCoords = this.state.tankCoords;
+    let newCoords = this.directions[direction](currentCoords);
+    this.setSideCoords(newCoords);
+    // Check if the wall border got
+    const wall = this.models.grid.getWall();
+    const collide = wall.filter((cell) => {
+      if (this.upSide < cell.downSide &&
+          this.rightSide > cell.leftSide &&
+          this.downSide > cell.upSide &&
+          this.leftSide < cell.rightSide
+        ) {
+        return true;
+      }
+    });
 
-    if (currentCoords.x <= 0) {
-      currentCoords = {x: 0, y: currentCoords.y};
-    } else if (currentCoords.y <= 0) {
-      currentCoords = {x: currentCoords.x, y: 0};
-    } else if (currentCoords.x >= boardWidth) {
-      currentCoords = {x: boardWidth, y: currentCoords.y};
-    } else if (currentCoords.y >= boardHeight) {
-      currentCoords = {x: currentCoords.x, y: boardHeight};
+    if (collide.length) {
+      newCoords = currentCoords;
     }
+    // Check if the canvas border got
+    const borderWidth = 384;
+    const borderHeight = 416;
 
-    this.coords = this.directions[direction](currentCoords);
+    newCoords.x = Math.max(0, newCoords.x);
+    newCoords.x = Math.min(newCoords.x, borderWidth);
+    newCoords.y = Math.max(0, newCoords.y);
+    newCoords.y = Math.min(newCoords.y, borderHeight);
+
+    return newCoords;
+  }
+
+  setSideCoords(coords) {
+    this.upSide = coords.y;
+    this.rightSide = coords.x + this.size;
+    this.downSide = coords.y + this.size;
+    this.leftSide = coords.x;
   }
 
 }

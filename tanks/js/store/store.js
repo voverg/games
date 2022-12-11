@@ -5,7 +5,7 @@ export class Store {
       highScore: 0,
       moving: false,
       tankDirection: 'up',
-      tankCoords: {x: 192, y: 384},
+      tankCoords: {x: 128, y: 384},
       unit_size: 32,
       sound: false,
       showModal: false,

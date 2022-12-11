@@ -3,8 +3,8 @@ export class Tank {
     this.canvas = null;
   }
 
-  init(controllers) {
-    this.canvas = controllers.canvas;
+  init(canvas, models) {
+    this.canvas = canvas;
   }
 
   render() {

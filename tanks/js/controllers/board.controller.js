@@ -35,12 +35,13 @@ export class BoardController extends Controller {
     const cellProps = {
       row,
       col,
+      canvas: this.canvas,
       type: types[type],
       size: this.sources.sprite.tile_size,
       id: `${row + 1}:${col + 1}`,
     };
 
-    return this.cell.create(cellProps);
+    return new Cell(cellProps);
   }
 
 }

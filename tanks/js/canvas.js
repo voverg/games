@@ -1,16 +1,18 @@
-import { Controller } from './controller.js';
-
-export class Canvas extends Controller {
+export class Canvas {
   constructor() {
-    super();
     this.canvas = document.querySelector('.canvas');
     this.ctx = this.canvas.getContext('2d');
+
+    this.store = null;
+    this.sprite = null;
+    this.levels = null;
   }
 
-  init(props) {
-    super.init(props);
-    this.sprite = this.sources.sprite;
-    this.levels = this.models.levels;
+  init( {store, models, sources} ) {
+    this.store = store;
+    this.state = store.getState();
+    this.sprite = sources.sprite;
+    this.levels = models.levels;
 
     this.canvas.width = this.levels.map[0].length * this.sprite.tile_size;
     this.canvas.height = this.levels.map.length * this.sprite.tile_size;
