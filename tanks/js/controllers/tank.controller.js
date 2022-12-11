@@ -19,10 +19,52 @@ export class TankController extends Controller {
     super.init(props);
     this.coords = this.store.getState().tankCoords;
     this.size = this.sources.sprite.unit_size;
+    this.prevDirection = this.state.tankDirection;
 
     this.store.subscribe(() => {
       this.state = this.store.getState();
+      this.test();
     });
+  }
+
+  // FIXME
+  test() {
+    this.direction = this.state.tankDirection;
+
+    if (this.direction !== this.prevDirection) {
+      const size = 16;
+      const index_x = this.coords.x % size;
+      const index_y = this.coords.y % size;
+
+      const coords = {};
+      let rest_x = 0;
+      let rest_y = 0
+
+      if (index_x !== 0) {
+        rest_x = index_x < size / 2 ? index_x : size - index_x;
+      }
+
+      if (index_y !== 0) {
+        rest_y = index_y < size / 2 ? index_y : size - index_y;
+      }
+
+      switch (this.prevDirection) {
+        case 'up':
+        case 'down':
+          coords.x = this.coords.x;
+          coords.y = this.coords.y + rest_y;
+          break;
+        case 'right':
+        case 'left':
+          coords.x = this.coords.x - rest_x;
+          coords.y = this.coords.y;
+          break;
+      }
+
+      this.prevDirection = this.direction;
+      this.coords = coords;
+      this.actions.setTankCoords(this.coords);
+    }
   }
 
   move() {
@@ -38,20 +80,20 @@ export class TankController extends Controller {
   getNewCoords(direction) {
     const currentCoords = this.state.tankCoords;
     let newCoords = this.directions[direction](currentCoords);
-    this.setSideCoords(newCoords);
+    const sides = this.getSideCoords(newCoords);
     // Check if the wall border got
     const wall = this.models.grid.getWall();
-    const collide = wall.filter((cell) => {
-      if (this.upSide < cell.downSide &&
-          this.rightSide > cell.leftSide &&
-          this.downSide > cell.upSide &&
-          this.leftSide < cell.rightSide
+    const collision = wall.filter((cell) => {
+      if (sides.upSide < cell.downSide &&
+          sides.rightSide > cell.leftSide &&
+          sides.downSide > cell.upSide &&
+          sides.leftSide < cell.rightSide
         ) {
         return true;
       }
     });
 
-    if (collide.length) {
+    if (collision.length) {
       newCoords = currentCoords;
     }
     // Check if the canvas border got
@@ -66,11 +108,15 @@ export class TankController extends Controller {
     return newCoords;
   }
 
-  setSideCoords(coords) {
-    this.upSide = coords.y;
-    this.rightSide = coords.x + this.size;
-    this.downSide = coords.y + this.size;
-    this.leftSide = coords.x;
+  getSideCoords(coords) {
+    const sides = {
+      upSide: coords.y,
+      rightSide: coords.x + this.size,
+      downSide: coords.y + this.size,
+      leftSide: coords.x,
+      }
+
+    return sides;
   }
 
 }

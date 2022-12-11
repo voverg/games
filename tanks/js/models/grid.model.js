@@ -11,4 +11,9 @@ export class Grid {
     const wall = this.arr.filter((cell) => cell.type);
     return wall;
   }
+
+  getEmpty() {
+    const empty = this.arr.filter((cell) => !cell.type);
+    return empty;
+  }
 }
