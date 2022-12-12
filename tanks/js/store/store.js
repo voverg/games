@@ -6,6 +6,7 @@ export class Store {
       moving: false,
       tankDirection: 'up',
       tankCoords: {x: 128, y: 384},
+      tankShoot: false,
       unit_size: 32,
       sound: false,
       showModal: false,

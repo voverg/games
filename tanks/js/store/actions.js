@@ -23,6 +23,10 @@ export class Actions {
     this.store.dispatch({ type: 'general', payload: {'tankCoords': obj} });
   }
 
+  setTankShoot(value) {
+    this.store.dispatch({ type: 'general', payload: {'tankShoot': value} });
+  }
+
   setSound(value) {
     this.store.dispatch({ type: 'general', payload: {'sound': value} });
   }

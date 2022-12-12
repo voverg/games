@@ -3,6 +3,7 @@ import { Controller } from './controller.js';
 export class Event extends Controller {
   constructor() {
     super();
+    this.arrowEvents = new Set(['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight']);
 
     this.events = {
       ArrowUp: 'up',
@@ -10,7 +11,7 @@ export class Event extends Controller {
       ArrowLeft: 'left',
       ArrowRight: 'right',
       Escape: 'close',
-      Space: 'move',
+      Space: 'shoot',
       KeyS: 'sound',
       up: 'up',
       down: 'down',
@@ -33,7 +34,9 @@ export class Event extends Controller {
 
     document.addEventListener('keyup', (event) => {
       event.preventDefault();
-      this.checkEvent(event.code, 'keyup');
+      if (this.arrowEvents.has(event.code)) {
+        this.checkEvent(event.code, 'keyup');
+      }
     });
 
     document.addEventListener('keydown', (event) => {
@@ -48,13 +51,12 @@ export class Event extends Controller {
   }
 
   checkEvent(event, keyEventType = '') {
-    const arrowEvents = new Set(['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight']);
-
-    if (arrowEvents.has(event)) {
+    // Check if arrow key keydown or keyup
+    if (this.arrowEvents.has(event)) {
       const movingValue = keyEventType === 'keydown' ? true : false;
       this.actions.setMoving(movingValue);
     }
-
+    // Check if event in this.events
     if (event && event in this.events) {
       const eventType = this.events[event];
       this.handleEvent(eventType);
@@ -68,6 +70,9 @@ export class Event extends Controller {
       case 'left':
       case 'right':
         this.actions.setTankDirection(eventType);
+        break;
+      case 'shoot':
+        this.shoot();
         break;
       case 'move':
         this.pauseMove();
@@ -85,6 +90,10 @@ export class Event extends Controller {
         this.closeModal();
         break;
     }
+  }
+
+  shoot() {
+    this.actions.setTankShoot(true);
   }
 
   pauseMove() {

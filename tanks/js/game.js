@@ -5,6 +5,7 @@ import { Grid } from './models/grid.model.js';
 
 import { Board } from './components/board.component.js';
 import { Tank } from './components/tank.component.js';
+import { Bullet } from './components/bullet.component.js';
 
 import { Event } from './controllers/event.controller.js';
 import { BoardController } from './controllers/board.controller.js';
@@ -39,6 +40,7 @@ export class Game {
     this.components = {
       board: new Board(),
       tank: new Tank(),
+      bullet: new Bullet(),
     };
 
     this.loop = this.loop.bind(this);
@@ -84,7 +86,7 @@ export class Game {
     requestAnimationFrame(this.loop);
   }
 
-  move() {
+  update() {
     this.controllers.tank.move();
   }
 
@@ -97,7 +99,7 @@ export class Game {
   }
 
   loop() {
-    this.move();
+    this.update();
     this.render();
 
     requestAnimationFrame(this.loop);

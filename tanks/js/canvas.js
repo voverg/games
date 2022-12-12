@@ -36,6 +36,18 @@ export class Canvas {
     });
   }
 
+  drawBullet({direction, x, y}) {
+    this.drawObj({
+      sprite: this.sprite.getElem(),
+      spriteOffsetX: this.sprite.bulletMap[direction].x,
+      spriteOffsetY: this.sprite.bulletMap[direction].y,
+      width: this.sprite.tile_size,
+      height: this.sprite.tile_size,
+      x: x,
+      y: y,
+    });
+  }
+
   drawCell(x, y, type) {
     this.drawObj({
       sprite: this.sprite.getElem(),

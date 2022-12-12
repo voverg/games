@@ -22,6 +22,8 @@ export class BoardController extends Controller {
   }
 
   createGrid() {
+    this.grid.cellSize = this.sources.sprite.tile_size;
+    
     this.levels.map.forEach((row, rowIndex) => {
       row.forEach((type, colIndex) => {
         const cell = this._createCell(rowIndex, colIndex, type);
