@@ -1,5 +1,5 @@
 import { Controller } from './controller.js';
-import { Bullet } from '../components/bullet.component.js';
+import { Utils } from '../utils/utils.js';
 
 export class TankController extends Controller {
   constructor() {
@@ -33,12 +33,13 @@ export class TankController extends Controller {
 
   setShoot() {
     if (!this.state.tankShoot) return;
-    const bullet = this.components.bullet;
-    bullet.create({
-      direction: this.direction,
+
+    const bullet = new this.entities.Bullet({
+      direction: this.state.tankDirection,
       x: this.coords.x,
       y: this.coords.y,
     });
+    this.models.bullet.addBullet(bullet);
 
     this.actions.setTankShoot(false);
   }
@@ -99,21 +100,13 @@ export class TankController extends Controller {
   getNewCoords(direction) {
     const currentCoords = this.state.tankCoords;
     let newCoords = this.directions[direction](currentCoords);
-    const sides = this.getSideCoords(newCoords);
-    // Check if the wall border got
+    const sides = Utils.getSideCoords(newCoords, this.unit_size);
+    // Check if the wall hitting
     // It uses 16 tiles of the wall tank(4 tiles) and around
     const wall = this.models.grid.getLocalTankWall(this.coords);
-    const collision = wall.filter((cell) => {
-      if (sides.upSide < cell.downSide &&
-          sides.rightSide > cell.leftSide &&
-          sides.downSide > cell.upSide &&
-          sides.leftSide < cell.rightSide
-        ) {
-        return true;
-      }
-    });
+    const collisions = wall.filter((cell) => Utils.isCollision(cell, sides));
 
-    if (collision.length) {
+    if (collisions.length) {
       newCoords = currentCoords;
     }
     // Check if the canvas border got
@@ -126,17 +119,6 @@ export class TankController extends Controller {
     newCoords.y = Math.min(newCoords.y, borderHeight);
 
     return newCoords;
-  }
-
-  getSideCoords(coords) {
-    const sides = {
-      upSide: coords.y,
-      rightSide: coords.x + this.unit_size,
-      downSide: coords.y + this.unit_size,
-      leftSide: coords.x,
-      }
-
-    return sides;
   }
 
 }

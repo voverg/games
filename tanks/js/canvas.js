@@ -41,8 +41,8 @@ export class Canvas {
       sprite: this.sprite.getElem(),
       spriteOffsetX: this.sprite.bulletMap[direction].x,
       spriteOffsetY: this.sprite.bulletMap[direction].y,
-      width: this.sprite.tile_size,
-      height: this.sprite.tile_size,
+      width: this.sprite.bullet_size,
+      height: this.sprite.bullet_size,
       x: x,
       y: y,
     });

@@ -1,5 +1,4 @@
 import { Controller } from './controller.js';
-import { Cell } from '../components/cell.component.js';
 
 export class BoardController extends Controller {
   constructor() {
@@ -12,7 +11,6 @@ export class BoardController extends Controller {
     super.init(props);
     this.levels = this.models.levels;
     this.grid = this.models.grid;
-    this.cell = this.components.cell;
 
     this.store.subscribe(() => {
       this.state = this.store.getState();
@@ -43,7 +41,7 @@ export class BoardController extends Controller {
       id: `${row + 1}:${col + 1}`,
     };
 
-    return new Cell(cellProps);
+    return new this.entities.Cell(cellProps);
   }
 
 }

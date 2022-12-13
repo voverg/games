@@ -1,15 +1,20 @@
 import { Sprite } from './sources/sprite.js';
 
+import { Cell } from './entities/cell.js';
+import { Bullet } from './entities/bullet.js';
+
 import { Levels } from './models/levels.model.js';
 import { Grid } from './models/grid.model.js';
+import { BulletModel } from './models/bullet.model.js';
 
 import { Board } from './components/board.component.js';
 import { Tank } from './components/tank.component.js';
-import { Bullet } from './components/bullet.component.js';
+import { BulletComponent } from './components/bullet.component.js';
 
 import { Event } from './controllers/event.controller.js';
 import { BoardController } from './controllers/board.controller.js';
 import { TankController } from './controllers/tank.controller.js';
+import { BulletController } from './controllers/bullet.controller.js';
 
 import { Store } from './store/store.js';
 import { Actions } from './store/actions.js';
@@ -26,21 +31,25 @@ export class Game {
       sprite: new Sprite(),
     };
 
+    this.entities = {Cell, Bullet};
+
     this.models = {
       levels: new Levels(),
       grid: new Grid(),
+      bullet: new BulletModel(),
     };
 
     this.controllers = {
       event: new Event(),
       board: new BoardController(),
       tank: new TankController(),
+      bullet: new BulletController(),
     };
 
     this.components = {
       board: new Board(),
       tank: new Tank(),
-      bullet: new Bullet(),
+      bullet: new BulletComponent(),
     };
 
     this.loop = this.loop.bind(this);
@@ -72,6 +81,7 @@ export class Game {
     Object.keys(this.controllers).forEach((key) => {
       this.controllers[key].init({
         sources: this.sources,
+        entities: this.entities,
         store: this.store,
         actions: this.actions,
         canvas: this.canvas,
@@ -88,6 +98,7 @@ export class Game {
 
   update() {
     this.controllers.tank.move();
+    this.controllers.bullet.move();
   }
 
   render() {

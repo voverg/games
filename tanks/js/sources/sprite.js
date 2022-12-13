@@ -5,6 +5,7 @@ export class Sprite {
 
     this.unit_size = 32;
     this.tile_size = 16;
+    this.bullet_size = 8;
 
     this.wallMap = {
       brick: {x: 8 * this.unit_size, y: 4 * this.unit_size},
