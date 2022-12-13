@@ -48,6 +48,18 @@ export class Canvas {
     });
   }
 
+  drawEnemy({direction, x, y}) {
+    this.drawObj({
+      sprite: this.sprite.getElem(),
+      spriteOffsetX: this.sprite.enemyMap[direction].x,
+      spriteOffsetY: this.sprite.enemyMap[direction].y,
+      width: this.sprite.unit_size,
+      height: this.sprite.unit_size,
+      x: x,
+      y: y,
+    });
+  }
+
   drawCell(x, y, type) {
     this.drawObj({
       sprite: this.sprite.getElem(),

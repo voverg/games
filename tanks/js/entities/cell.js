@@ -6,13 +6,19 @@ constructor(props) {
     this.col = props.col;
     this.type = props.type;
     this.id = props.id;
+    this.life = 0;
+    this.lifeMap = {
+      'brick': 1,
+      'tile': 3,
+    };
 
-    this._setCoordinates();
+    this.init();
   }
 
-  _setCoordinates() {
+  init() {
     this.x = this.size * this.col;
     this.y = this.size * this.row;
+    this.life = this.lifeMap[this.type];
     
     this.upSide = this.y;
     this.rightSide = this.x + this.size;

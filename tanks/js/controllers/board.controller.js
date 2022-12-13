@@ -17,11 +17,10 @@ export class BoardController extends Controller {
     });
 
     this.createGrid();
+    this.createEnemy();
   }
 
   createGrid() {
-    this.grid.cellSize = this.sources.sprite.tile_size;
-    
     this.levels.map.forEach((row, rowIndex) => {
       row.forEach((type, colIndex) => {
         const cell = this._createCell(rowIndex, colIndex, type);
@@ -42,6 +41,19 @@ export class BoardController extends Controller {
     };
 
     return new this.entities.Cell(cellProps);
+  }
+
+  createEnemy() {
+    const enemy = new this.entities.Enemy({
+      canvas: this.canvas,
+      direction: 'left',
+      size: this.sources.sprite.unit_size,
+      type: 'enemy',
+      x: this.canvas.width - this.sources.sprite.unit_size,
+      y: 0,
+    });
+
+    this.models.enemy.addEnemy(enemy);
   }
 
 }

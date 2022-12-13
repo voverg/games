@@ -19,30 +19,38 @@ export class BulletController extends Controller {
   move() {
     this.models.bullet.getAll().forEach((bullet) => {
       const coords = this.changeCoords(bullet.direction, bullet.x, bullet.y, bullet.step);
-      // bullet.x = coords.x;
-      // bullet.y = coords.y;
-
+      bullet.x = coords.x;
+      bullet.y = coords.y;
       // Check if the wall hitting
-      const sides = Utils.getSideCoords(coords, this.bullet_size);
-      const wall = this.models.grid.getLocalBulletWall({x: coords.x, y: coords.y});
-      const collisions = wall.filter((cell) => Utils.isCollision(cell, sides));
-      // console.log('collisions: ', collisions);
-      if (collisions.length) {
-        this.models.bullet.removeBullet(bullet.id);
-        collisions.forEach((collision) => {
-          if (collision.type === 'tile') return;
-          this.models.grid.removeCell(collision.id);
-        });
-      }
-
-      // Check if the canvas border got
+      this.collite(bullet, coords);
+      // Check if the canvas border hitting
       if (this.isBorder(coords)) {
         this.models.bullet.removeBullet(bullet.id);
       }
-
-      bullet.x = coords.x;
-      bullet.y = coords.y;
     });
+  }
+
+  collite(bullet, coords) {
+    const sides = Utils.getSideCoords(coords, this.bullet_size);
+    // Wall collisions
+    const wall = this.models.grid.getLocalBulletWall({x: coords.x, y: coords.y});
+    const collisions = wall.filter((cell) => Utils.isCollision(cell, sides));
+
+    if (collisions.length) {
+      this.models.bullet.removeBullet(bullet.id);
+      collisions.forEach((collision) => {
+        this.models.grid.decreaseLife(collision.id);
+      });
+    }
+
+    // Enemy collisions
+    const enemies = this.models.enemy.getLocalBulletEnemy({x: coords.x, y: coords.y});
+    if (enemies.length) {
+      this.models.bullet.removeBullet(bullet.id);
+      enemies.forEach((enemy) => {
+        this.models.enemy.decreaseLife(enemy.id);
+      });
+    }
   }
 
   changeCoords(direction, x, y, step) {

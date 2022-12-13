@@ -2,18 +2,22 @@ import { Sprite } from './sources/sprite.js';
 
 import { Cell } from './entities/cell.js';
 import { Bullet } from './entities/bullet.js';
+import { Enemy } from './entities/enemy.js';
 
 import { Levels } from './models/levels.model.js';
 import { Grid } from './models/grid.model.js';
 import { BulletModel } from './models/bullet.model.js';
+import { EnemyModel } from './models/enemy.model.js';
 
 import { Board } from './components/board.component.js';
 import { Tank } from './components/tank.component.js';
 import { BulletComponent } from './components/bullet.component.js';
+import { EnemyComponent } from './components/enemy.component.js';
 
 import { Event } from './controllers/event.controller.js';
 import { BoardController } from './controllers/board.controller.js';
 import { TankController } from './controllers/tank.controller.js';
+import { EnemyController } from './controllers/enemy.controller.js';
 import { BulletController } from './controllers/bullet.controller.js';
 
 import { Store } from './store/store.js';
@@ -31,12 +35,13 @@ export class Game {
       sprite: new Sprite(),
     };
 
-    this.entities = {Cell, Bullet};
+    this.entities = {Cell, Bullet, Enemy};
 
     this.models = {
       levels: new Levels(),
       grid: new Grid(),
       bullet: new BulletModel(),
+      enemy: new EnemyModel(),
     };
 
     this.controllers = {
@@ -44,12 +49,14 @@ export class Game {
       board: new BoardController(),
       tank: new TankController(),
       bullet: new BulletController(),
+      enemy: new EnemyController(),
     };
 
     this.components = {
       board: new Board(),
       tank: new Tank(),
       bullet: new BulletComponent(),
+      enemy: new EnemyComponent(),
     };
 
     this.loop = this.loop.bind(this);
@@ -99,6 +106,7 @@ export class Game {
   update() {
     this.controllers.tank.move();
     this.controllers.bullet.move();
+    this.controllers.enemy.move();
   }
 
   render() {

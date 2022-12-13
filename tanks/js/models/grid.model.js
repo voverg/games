@@ -1,7 +1,7 @@
 export class Grid {
   constructor() {
     this.arr = [];
-    this.cellSize = 0;
+    this.cellSize = 16;
   }
 
   addCell(cell) {
@@ -10,6 +10,15 @@ export class Grid {
 
   removeCell(id) {
     this.arr = this.arr.filter((cell) => cell.id !== id);
+  }
+
+  decreaseLife(id) {
+    const cell = this.arr.find((item) => item.id === id);
+    cell.life -= 1;
+    
+    if (cell.life <= 0) {
+      this.removeCell(cell.id);
+    }
   }
 
   getWall() {

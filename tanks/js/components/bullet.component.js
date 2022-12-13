@@ -13,11 +13,7 @@ export class BulletComponent {
 
     const bullets = this.models.bullet.getAll();
     bullets.forEach((bullet) => {
-      this.canvas.drawBullet({
-        direction: bullet.direction,
-        x: bullet.x,
-        y: bullet.y,
-      });
+      bullet.render();
     });
   }
 }

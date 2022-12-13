@@ -1,7 +1,7 @@
 import { Controller } from './controller.js';
 import { Utils } from '../utils/utils.js';
 
-export class TankController extends Controller {
+export class EnemyController extends Controller {
   constructor() {
     super();
     this.size = null;
@@ -27,13 +27,11 @@ export class TankController extends Controller {
     this.store.subscribe(() => {
       this.state = this.store.getState();
       this.changeDirection();
-      this.setShoot();
+      // this.setShoot();
     });
   }
 
   setShoot() {
-    if (!this.state.tankShoot) return;
-
     const bullet = new this.entities.Bullet({
       canvas: this.canvas,
       direction: this.state.tankDirection,
@@ -41,8 +39,6 @@ export class TankController extends Controller {
       y: this.coords.y,
     });
     this.models.bullet.addBullet(bullet);
-
-    this.actions.setTankShoot(false);
   }
 
   // FIXME
@@ -81,18 +77,18 @@ export class TankController extends Controller {
 
       this.prevDirection = this.direction;
       this.coords = coords;
-      this.actions.setTankCoords(this.coords);
+      // this.actions.setTankCoords(this.coords);
     }
   }
 
   move() {
-    if (this.state.moving) {
-      const direction = this.state.tankDirection;
-      const newCoords = this.getNewCoords(direction);
+    this.models.enemy.getAll().forEach((enemy) => {
+      // console.log(enemy);
+    });
+    // const newCoords = this.getNewCoords(direction);
 
-      this.coords = newCoords;
-      this.actions.setTankCoords(this.coords);
-    }
+    // this.coords = newCoords;
+    // this.actions.setTankCoords(this.coords);
   }
 
   getNewCoords(direction) {
