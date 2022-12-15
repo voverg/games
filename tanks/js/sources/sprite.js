@@ -11,7 +11,7 @@ export class Sprite {
       brick: {x: 8 * this.unit_size, y: 4 * this.unit_size},
       tile: {x: 8 * this.unit_size, y: 4.5 * this.unit_size},
     };
-    this.tankMap = {
+    this.playerMap = {
       up: {x: 0 * this.unit_size, y: 0 * this.unit_size},
       right: {x: 2 * this.unit_size, y: 0 * this.unit_size},
       down: {x: 4 * this.unit_size, y: 0 * this.unit_size},

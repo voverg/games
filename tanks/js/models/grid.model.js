@@ -1,4 +1,4 @@
-export class Grid {
+export class GridModel {
   constructor() {
     this.arr = [];
     this.cellSize = 16;
@@ -12,9 +12,9 @@ export class Grid {
     this.arr = this.arr.filter((cell) => cell.id !== id);
   }
 
-  decreaseLife(id) {
+  decreaseHealth(id, count = 1) {
     const cell = this.arr.find((item) => item.id === id);
-    cell.life -= 1;
+    cell.life -= count;
     
     if (cell.life <= 0) {
       this.removeCell(cell.id);

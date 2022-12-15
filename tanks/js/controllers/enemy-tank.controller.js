@@ -1,7 +1,7 @@
 import { Controller } from './controller.js';
 import { Utils } from '../utils/utils.js';
 
-export class EnemyController extends Controller {
+export class EnemyTankController extends Controller {
   constructor() {
     super();
     this.size = null;

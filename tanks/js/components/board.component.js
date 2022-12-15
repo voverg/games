@@ -1,4 +1,4 @@
-export class Board {
+export class BoardComponent {
   constructor() {
     this.canvas = null;
   }

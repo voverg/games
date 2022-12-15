@@ -1,4 +1,4 @@
-export class Tank {
+export class PlayerComponent {
   constructor() {
     this.canvas = null;
   }
@@ -8,6 +8,6 @@ export class Tank {
   }
 
   render() {
-    this.canvas.drawTank();
+    this.canvas.drawPlayer();
   }
 }

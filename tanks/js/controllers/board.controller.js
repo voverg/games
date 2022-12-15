@@ -17,6 +17,7 @@ export class BoardController extends Controller {
     });
 
     this.createGrid();
+    this.createPlayer();
     this.createEnemy();
   }
 
@@ -43,17 +44,38 @@ export class BoardController extends Controller {
     return new this.entities.Cell(cellProps);
   }
 
-  createEnemy() {
-    const enemy = new this.entities.Enemy({
+  createPlayer() {
+    const player = new this.entities.Tank({
       canvas: this.canvas,
+      spriteMap: 'playerMap',
+      direction: 'up',
+      isMoving: false,
+      size: this.sources.sprite.unit_size,
+      type: 'player',
+      step: 2,
+      x: 128,
+      y: 384,
+    });
+
+    this.models.player.addTank(player);
+  }
+
+  createEnemy() {
+    const enemy = new this.entities.Tank({
+      canvas: this.canvas,
+      spriteMap: 'enemyMap',
       direction: 'left',
+      isMoving: true,
       size: this.sources.sprite.unit_size,
       type: 'enemy',
+      step: 2,
       x: this.canvas.width - this.sources.sprite.unit_size,
       y: 0,
     });
 
-    this.models.enemy.addEnemy(enemy);
+    this.models.enemy.addTank(enemy);
   }
+
+  update() {}
 
 }

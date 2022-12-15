@@ -1,7 +1,7 @@
 import { Controller } from './controller.js';
 import { Utils } from '../utils/utils.js';
 
-export class TankController extends Controller {
+export class PlayerTankController extends Controller {
   constructor() {
     super();
     this.size = null;
@@ -37,6 +37,10 @@ export class TankController extends Controller {
     const bullet = new this.entities.Bullet({
       canvas: this.canvas,
       direction: this.state.tankDirection,
+      spriteMap: 'bulletMap',
+      type: 'bullet:player',
+      power: 1,
+      step: 4,
       x: this.coords.x,
       y: this.coords.y,
     });

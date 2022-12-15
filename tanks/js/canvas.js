@@ -22,13 +22,13 @@ export class Canvas {
     });
   }
 
-  drawTank() {
+  drawPlayer() {
     const direction = this.state.tankDirection;
 
     this.drawObj({
       sprite: this.sprite.getElem(),
-      spriteOffsetX: this.sprite.tankMap[direction].x,
-      spriteOffsetY: this.sprite.tankMap[direction].y,
+      spriteOffsetX: this.sprite.playerMap[direction].x,
+      spriteOffsetY: this.sprite.playerMap[direction].y,
       width: this.sprite.unit_size,
       height: this.sprite.unit_size,
       x: this.state.tankCoords.x,
@@ -36,11 +36,11 @@ export class Canvas {
     });
   }
 
-  drawBullet({direction, x, y}) {
+  drawBullet({direction, x, y, spriteMap}) {
     this.drawObj({
       sprite: this.sprite.getElem(),
-      spriteOffsetX: this.sprite.bulletMap[direction].x,
-      spriteOffsetY: this.sprite.bulletMap[direction].y,
+      spriteOffsetX: this.sprite[spriteMap][direction].x,
+      spriteOffsetY: this.sprite[spriteMap][direction].y,
       width: this.sprite.bullet_size,
       height: this.sprite.bullet_size,
       x: x,
@@ -48,11 +48,11 @@ export class Canvas {
     });
   }
 
-  drawEnemy({direction, x, y}) {
+  drawTank({direction, x, y, spriteMap}) {
     this.drawObj({
       sprite: this.sprite.getElem(),
-      spriteOffsetX: this.sprite.enemyMap[direction].x,
-      spriteOffsetY: this.sprite.enemyMap[direction].y,
+      spriteOffsetX: this.sprite[spriteMap][direction].x,
+      spriteOffsetY: this.sprite[spriteMap][direction].y,
       width: this.sprite.unit_size,
       height: this.sprite.unit_size,
       x: x,

@@ -1,23 +1,23 @@
 import { Sprite } from './sources/sprite.js';
-
+// Entities
 import { Cell } from './entities/cell.js';
 import { Bullet } from './entities/bullet.js';
-import { Enemy } from './entities/enemy.js';
-
-import { Levels } from './models/levels.model.js';
-import { Grid } from './models/grid.model.js';
+import { Tank } from './entities/tank.js';
+// Models
+import { LevelsModel } from './models/levels.model.js';
+import { GridModel } from './models/grid.model.js';
 import { BulletModel } from './models/bullet.model.js';
-import { EnemyModel } from './models/enemy.model.js';
-
-import { Board } from './components/board.component.js';
-import { Tank } from './components/tank.component.js';
-import { BulletComponent } from './components/bullet.component.js';
+import { TankModel } from './models/tank.model.js';
+// Components
+import { BoardComponent } from './components/board.component.js';
+import { PlayerComponent } from './components/player.component.js';
 import { EnemyComponent } from './components/enemy.component.js';
-
-import { Event } from './controllers/event.controller.js';
+import { BulletComponent } from './components/bullet.component.js';
+// Controllers
+import { EventController } from './controllers/event.controller.js';
 import { BoardController } from './controllers/board.controller.js';
-import { TankController } from './controllers/tank.controller.js';
-import { EnemyController } from './controllers/enemy.controller.js';
+import { PlayerTankController } from './controllers/player-tank.controller.js';
+import { EnemyTankController } from './controllers/enemy-tank.controller.js';
 import { BulletController } from './controllers/bullet.controller.js';
 
 import { Store } from './store/store.js';
@@ -35,28 +35,29 @@ export class Game {
       sprite: new Sprite(),
     };
 
-    this.entities = {Cell, Bullet, Enemy};
+    this.entities = {Cell, Tank, Bullet};
 
     this.models = {
-      levels: new Levels(),
-      grid: new Grid(),
+      levels: new LevelsModel(),
+      grid: new GridModel(),
+      player: new TankModel(),
+      enemy: new TankModel(),
       bullet: new BulletModel(),
-      enemy: new EnemyModel(),
     };
 
     this.controllers = {
-      event: new Event(),
+      event: new EventController(),
       board: new BoardController(),
-      tank: new TankController(),
-      bullet: new BulletController(),
-      enemy: new EnemyController(),
+      playerTank: new PlayerTankController(),
+      playerBullet: new BulletController(),
+      enemyTank: new EnemyTankController(),
     };
 
     this.components = {
-      board: new Board(),
-      tank: new Tank(),
-      bullet: new BulletComponent(),
+      board: new BoardComponent(),
+      player: new PlayerComponent(),
       enemy: new EnemyComponent(),
+      bullet: new BulletComponent(),
     };
 
     this.loop = this.loop.bind(this);
@@ -104,9 +105,10 @@ export class Game {
   }
 
   update() {
-    this.controllers.tank.move();
-    this.controllers.bullet.move();
-    this.controllers.enemy.move();
+    this.controllers.board.update();
+    this.controllers.playerTank.move();
+    this.controllers.playerBullet.move();
+    this.controllers.enemyTank.move();
   }
 
   render() {

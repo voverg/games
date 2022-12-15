@@ -38,17 +38,17 @@ export class BulletController extends Controller {
 
     if (collisions.length) {
       this.models.bullet.removeBullet(bullet.id);
-      collisions.forEach((collision) => {
-        this.models.grid.decreaseLife(collision.id);
+      collisions.forEach((cell) => {
+        this.models.grid.decreaseHealth(cell.id, bullet.power);
       });
     }
 
     // Enemy collisions
-    const enemies = this.models.enemy.getLocalBulletEnemy({x: coords.x, y: coords.y});
+    const enemies = this.models.enemy.getLocalBulletTank({x: coords.x, y: coords.y});
     if (enemies.length) {
       this.models.bullet.removeBullet(bullet.id);
       enemies.forEach((enemy) => {
-        this.models.enemy.decreaseLife(enemy.id);
+        this.models.enemy.decreaseHealth(enemy.id);
       });
     }
   }

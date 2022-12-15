@@ -1,4 +1,4 @@
-export class Levels {
+export class LevelsModel {
   constructor() {
     this.map = [
       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],

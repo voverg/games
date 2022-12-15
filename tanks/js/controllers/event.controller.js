@@ -1,6 +1,6 @@
 import { Controller } from './controller.js';
 
-export class Event extends Controller {
+export class EventController extends Controller {
   constructor() {
     super();
     this.arrowEvents = new Set(['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight']);
