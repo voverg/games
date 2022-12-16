@@ -54,7 +54,8 @@ export class EventController extends Controller {
     // Check if arrow key keydown or keyup
     if (this.arrowEvents.has(event)) {
       const movingValue = keyEventType === 'keydown' ? true : false;
-      this.actions.setMoving(movingValue);
+      const tank = this.models.player.arr[0];
+      tank.isMoving = movingValue;
     }
     // Check if event in this.events
     if (event && event in this.events) {
@@ -69,7 +70,8 @@ export class EventController extends Controller {
       case 'down':
       case 'left':
       case 'right':
-        this.actions.setTankDirection(eventType);
+        const tank = this.models.player.arr[0];
+        tank.direction = eventType;
         break;
       case 'shoot':
         this.shoot();
@@ -93,7 +95,8 @@ export class EventController extends Controller {
   }
 
   shoot() {
-    this.actions.setTankShoot(true);
+    const tank = this.models.player.arr[0];
+    tank.shoot = true;
   }
 
   pauseMove() {

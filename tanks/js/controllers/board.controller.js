@@ -18,7 +18,8 @@ export class BoardController extends Controller {
 
     this.createGrid();
     this.createPlayer();
-    this.createEnemy();
+    this.createEnemy(this.canvas.width - this.sources.sprite.unit_size, 0);
+    // this.createEnemy((this.canvas.width - this.sources.sprite.unit_size) / 2, 0);
   }
 
   createGrid() {
@@ -53,6 +54,7 @@ export class BoardController extends Controller {
       size: this.sources.sprite.unit_size,
       type: 'player',
       step: 2,
+      shoot: false,
       x: 128,
       y: 384,
     });
@@ -60,7 +62,7 @@ export class BoardController extends Controller {
     this.models.player.addTank(player);
   }
 
-  createEnemy() {
+  createEnemy(x, y) {
     const enemy = new this.entities.Tank({
       canvas: this.canvas,
       spriteMap: 'enemyMap',
@@ -69,13 +71,19 @@ export class BoardController extends Controller {
       size: this.sources.sprite.unit_size,
       type: 'enemy',
       step: 2,
-      x: this.canvas.width - this.sources.sprite.unit_size,
-      y: 0,
+      shoot: false,
+      x: x,
+      y: y,
     });
 
     this.models.enemy.addTank(enemy);
   }
 
-  update() {}
+  update() {
+    if (!this.models.enemy.length) {
+      this.createEnemy(this.canvas.width - this.sources.sprite.unit_size, 0);
+      this.models.enemy.arr.forEach((enemy) => enemy.shoot = true);
+    }
+  }
 
 }

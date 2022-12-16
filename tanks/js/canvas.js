@@ -22,19 +22,19 @@ export class Canvas {
     });
   }
 
-  drawPlayer() {
-    const direction = this.state.tankDirection;
+  // drawPlayer() {
+  //   const direction = this.state.tankDirection;
 
-    this.drawObj({
-      sprite: this.sprite.getElem(),
-      spriteOffsetX: this.sprite.playerMap[direction].x,
-      spriteOffsetY: this.sprite.playerMap[direction].y,
-      width: this.sprite.unit_size,
-      height: this.sprite.unit_size,
-      x: this.state.tankCoords.x,
-      y: this.state.tankCoords.y,
-    });
-  }
+  //   this.drawObj({
+  //     sprite: this.sprite.getElem(),
+  //     spriteOffsetX: this.sprite.playerMap[direction].x,
+  //     spriteOffsetY: this.sprite.playerMap[direction].y,
+  //     width: this.sprite.unit_size,
+  //     height: this.sprite.unit_size,
+  //     x: this.state.tankCoords.x,
+  //     y: this.state.tankCoords.y,
+  //   });
+  // }
 
   drawBullet({direction, x, y, spriteMap}) {
     this.drawObj({

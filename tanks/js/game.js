@@ -18,7 +18,7 @@ import { EventController } from './controllers/event.controller.js';
 import { BoardController } from './controllers/board.controller.js';
 import { PlayerTankController } from './controllers/player-tank.controller.js';
 import { EnemyTankController } from './controllers/enemy-tank.controller.js';
-import { BulletController } from './controllers/bullet.controller.js';
+import { PlayerBulletController } from './controllers/player-bullet.controller.js';
 
 import { Store } from './store/store.js';
 import { Actions } from './store/actions.js';
@@ -49,7 +49,7 @@ export class Game {
       event: new EventController(),
       board: new BoardController(),
       playerTank: new PlayerTankController(),
-      playerBullet: new BulletController(),
+      playerBullet: new PlayerBulletController(),
       enemyTank: new EnemyTankController(),
     };
 
@@ -107,8 +107,10 @@ export class Game {
   update() {
     this.controllers.board.update();
     this.controllers.playerTank.move();
+    this.controllers.playerTank.shoot();
     this.controllers.playerBullet.move();
     this.controllers.enemyTank.move();
+    this.controllers.enemyTank.shoot();
   }
 
   render() {

@@ -11,22 +11,6 @@ export class Actions {
     this.store.dispatch({ type: 'general', payload: {'highScore': value} });
   }
 
-  setMoving(value) {
-    this.store.dispatch({ type: 'general', payload: {'moving': value} });
-  }
-
-  setTankDirection(value) {
-    this.store.dispatch({ type: 'general', payload: {'tankDirection': value} });
-  }
-
-  setTankCoords(obj) {
-    this.store.dispatch({ type: 'general', payload: {'tankCoords': obj} });
-  }
-
-  setTankShoot(value) {
-    this.store.dispatch({ type: 'general', payload: {'tankShoot': value} });
-  }
-
   setSound(value) {
     this.store.dispatch({ type: 'general', payload: {'sound': value} });
   }

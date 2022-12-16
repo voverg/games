@@ -4,123 +4,128 @@ import { Utils } from '../utils/utils.js';
 export class PlayerTankController extends Controller {
   constructor() {
     super();
-    this.size = null;
-    this.tile_size = null;
-    this.step = 2;
-    this.coords = {};
 
     this.directions = {
-      up: (obj) => ( {x: obj.x, y: obj.y - this.step} ),
-      right:(obj) => ( {x: obj.x + this.step, y: obj.y} ),
-      down:(obj) => ( {x: obj.x, y: obj.y + this.step} ),
-      left: (obj) => ( {x: obj.x - this.step, y: obj.y} ),
+      up: (coords, step) => ( {x: coords.x, y: coords.y - step} ),
+      right:(coords, step) => ( {x: coords.x + step, y: coords.y} ),
+      down:(coords, step) => ( {x: coords.x, y: coords.y + step} ),
+      left: (coords, step) => ( {x: coords.x - step, y: coords.y} ),
     };
   }
 
   init(props) {
     super.init(props);
-    this.coords = this.store.getState().tankCoords;
-    this.unit_size = this.sources.sprite.unit_size;
-    this.tile_size = this.sources.sprite.tile_size;
-    this.prevDirection = this.state.tankDirection;
 
     this.store.subscribe(() => {
       this.state = this.store.getState();
-      this.changeDirection();
-      this.setShoot();
     });
   }
 
-  setShoot() {
-    if (!this.state.tankShoot) return;
-
+  setShoot(player) {
     const bullet = new this.entities.Bullet({
       canvas: this.canvas,
-      direction: this.state.tankDirection,
+      direction: player.direction,
       spriteMap: 'bulletMap',
       type: 'bullet:player',
       power: 1,
       step: 4,
-      x: this.coords.x,
-      y: this.coords.y,
+      x: player.x,
+      y: player.y,
     });
     this.models.bullet.addBullet(bullet);
-
-    this.actions.setTankShoot(false);
   }
 
-  // FIXME
-  changeDirection() {
-    this.direction = this.state.tankDirection;
-
-    if (this.direction !== this.prevDirection) {
-      const size = this.tile_size;
-      const coords = {};
-
-      const index_x = this.coords.x % size;
-      const index_y = this.coords.y % size;
-      let rest_x = 0;
-      let rest_y = 0
-
-      if (index_x !== 0) {
-        rest_x = index_x < size / 2 ? index_x : size - index_x;
-      }
-
-      if (index_y !== 0) {
-        rest_y = index_y < size / 2 ? index_y : size - index_y;
-      }
-
-      switch (this.prevDirection) {
-        case 'up':
-        case 'down':
-          coords.x = this.coords.x;
-          coords.y = this.coords.y + rest_y;
-          break;
-        case 'right':
-        case 'left':
-          coords.x = this.coords.x - rest_x;
-          coords.y = this.coords.y;
-          break;
-      }
-
-      this.prevDirection = this.direction;
-      this.coords = coords;
-      this.actions.setTankCoords(this.coords);
-    }
+  shoot() {
+    this.models.player.getAll().forEach((player) => {
+      if (!player.shoot) return;
+      this.setShoot(player);
+      player.shoot = false;
+    });
   }
 
   move() {
-    if (this.state.moving) {
-      const direction = this.state.tankDirection;
-      const newCoords = this.getNewCoords(direction);
+    this.models.player.getAll().forEach((player) => {
+      if (!player.isMoving) return;
 
-      this.coords = newCoords;
-      this.actions.setTankCoords(this.coords);
-    }
+      let newCoords = this.getNewCoords(player);
+      player.x = newCoords.x;
+      player.y = newCoords.y;
+      newCoords = this.changeDirection({x: player.x, y: player.y}, player);
+      player.x = newCoords.x;
+      player.y = newCoords.y;
+    });
   }
 
-  getNewCoords(direction) {
-    const currentCoords = this.state.tankCoords;
-    let newCoords = this.directions[direction](currentCoords);
-    const sides = Utils.getSideCoords(newCoords, this.unit_size);
-    // Check if the wall hitting
-    // It uses 16 tiles of the wall tank(4 tiles) and around
-    const wall = this.models.grid.getLocalTankWall(this.coords);
-    const collisions = wall.filter((cell) => Utils.isCollision(cell, sides));
-
-    if (collisions.length) {
-      newCoords = currentCoords;
-    }
-    // Check if the canvas border got
-    const borderWidth = this.canvas.width - this.unit_size; // 384
-    const borderHeight = this.canvas.height - this.unit_size; // 416
-
-    newCoords.x = Math.max(0, newCoords.x);
-    newCoords.x = Math.min(newCoords.x, borderWidth);
-    newCoords.y = Math.max(0, newCoords.y);
-    newCoords.y = Math.min(newCoords.y, borderHeight);
+  getNewCoords(player) {
+    const spriteSize = player.size;
+    const currentCoords = {x: player.x, y: player.y};
+    let newCoords = this.directions[player.direction](currentCoords, player.step);
+    newCoords = this.collite(currentCoords, newCoords, spriteSize, player);
 
     return newCoords;
+  }
+
+  setSides(player, sides) {
+    player.upSide = sides.upSide;
+    player.rightSide = sides.rightSide;
+    player.downSide = sides.downSide;
+    player.leftSide = sides.leftSide;
+  }
+
+  collite(currentCoords, newCoords, spriteSize, player) {
+    const sides = Utils.getSideCoords(newCoords, spriteSize);
+    this.setSides(player, sides);
+    // Wall collisions
+    const wall = this.models.grid.getLocalTankWall(currentCoords);
+    const wallCollisions = wall.filter((cell) => Utils.isCollision(cell, sides));
+    // Enemy collisions
+    const enemies = this.models.enemy.getLocalTanks(currentCoords, player.size + 5);
+    // Border collisions
+    const borderWidth = this.canvas.width - spriteSize; // 384
+    const borderHeight = this.canvas.height - spriteSize; // 416
+    const borderCollision = Utils.isBorder(newCoords, borderWidth, borderHeight);
+    // Collision conditions
+    const collisions = [wallCollisions.length, enemies.length, borderCollision];
+    if (Utils.hasCollisions(collisions)) {
+      return currentCoords;
+    }
+
+    return newCoords;
+  }
+
+  changeDirection(coords, player) {
+    const direction = player.direction;
+    if (player.direction === player.prevDirection) return coords;
+
+    const size = this.sources.sprite.tile_size;
+    const index_x = coords.x % size;
+    const index_y = coords.y % size;
+    let rest_x = 0;
+    let rest_y = 0
+
+    if (index_x !== 0) {
+      rest_x = index_x < size / 2 ? index_x : size - index_x;
+    }
+
+    if (index_y !== 0) {
+      rest_y = index_y < size / 2 ? index_y : size - index_y;
+    }
+
+    switch (player.prevDirection) {
+      case 'up':
+      case 'down':
+        coords.x = coords.x;
+        coords.y = coords.y + rest_y;
+        break;
+      case 'right':
+      case 'left':
+        coords.x = coords.x - rest_x;
+        coords.y = coords.y;
+        break;
+    }
+
+    player.prevDirection = player.direction;
+    return coords;
   }
 
 }

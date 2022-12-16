@@ -4,115 +4,112 @@ import { Utils } from '../utils/utils.js';
 export class EnemyTankController extends Controller {
   constructor() {
     super();
-    this.size = null;
-    this.tile_size = null;
-    this.step = 2;
-    this.coords = {};
+    this.setSoot = this.setShoot.bind(this);
 
     this.directions = {
-      up: (obj) => ( {x: obj.x, y: obj.y - this.step} ),
-      right:(obj) => ( {x: obj.x + this.step, y: obj.y} ),
-      down:(obj) => ( {x: obj.x, y: obj.y + this.step} ),
-      left: (obj) => ( {x: obj.x - this.step, y: obj.y} ),
+      up: (coords, step) => ( {x: coords.x, y: coords.y - step} ),
+      right:(coords, step) => ( {x: coords.x + step, y: coords.y} ),
+      down:(coords, step) => ( {x: coords.x, y: coords.y + step} ),
+      left: (coords, step) => ( {x: coords.x - step, y: coords.y} ),
     };
   }
 
   init(props) {
     super.init(props);
-    this.coords = this.store.getState().tankCoords;
-    this.unit_size = this.sources.sprite.unit_size;
-    this.tile_size = this.sources.sprite.tile_size;
-    this.prevDirection = this.state.tankDirection;
 
     this.store.subscribe(() => {
       this.state = this.store.getState();
-      this.changeDirection();
-      // this.setShoot();
     });
   }
 
-  setShoot() {
+  setShoot (enemy) {
     const bullet = new this.entities.Bullet({
       canvas: this.canvas,
-      direction: this.state.tankDirection,
-      x: this.coords.x,
-      y: this.coords.y,
+      direction: enemy.direction,
+      spriteMap: 'bulletMap',
+      type: 'bullet:enemy',
+      power: 1,
+      step: 4,
+      x: enemy.x,
+      y: enemy.y,
     });
     this.models.bullet.addBullet(bullet);
   }
 
-  // FIXME
-  changeDirection() {
-    this.direction = this.state.tankDirection;
-
-    if (this.direction !== this.prevDirection) {
-      const size = this.tile_size;
-      const coords = {};
-
-      const index_x = this.coords.x % size;
-      const index_y = this.coords.y % size;
-      let rest_x = 0;
-      let rest_y = 0
-
-      if (index_x !== 0) {
-        rest_x = index_x < size / 2 ? index_x : size - index_x;
-      }
-
-      if (index_y !== 0) {
-        rest_y = index_y < size / 2 ? index_y : size - index_y;
-      }
-
-      switch (this.prevDirection) {
-        case 'up':
-        case 'down':
-          coords.x = this.coords.x;
-          coords.y = this.coords.y + rest_y;
-          break;
-        case 'right':
-        case 'left':
-          coords.x = this.coords.x - rest_x;
-          coords.y = this.coords.y;
-          break;
-      }
-
-      this.prevDirection = this.direction;
-      this.coords = coords;
-      // this.actions.setTankCoords(this.coords);
-    }
+  shoot() {
+    this.models.enemy.getAll().forEach((enemy) => {
+      if (!enemy.shoot) return;
+      this.setShoot(enemy);
+      enemy.shoot = false;
+    });
   }
 
   move() {
     this.models.enemy.getAll().forEach((enemy) => {
-      // console.log(enemy);
+      const newCoords = this.getNewCoords(enemy);
+      enemy.x = newCoords.x;
+      enemy.y = newCoords.y;
     });
-    // const newCoords = this.getNewCoords(direction);
-
-    // this.coords = newCoords;
-    // this.actions.setTankCoords(this.coords);
   }
 
-  getNewCoords(direction) {
-    const currentCoords = this.state.tankCoords;
-    let newCoords = this.directions[direction](currentCoords);
-    const sides = Utils.getSideCoords(newCoords, this.unit_size);
-    // Check if the wall hitting
-    // It uses 16 tiles of the wall tank(4 tiles) and around
-    const wall = this.models.grid.getLocalTankWall(this.coords);
-    const collisions = wall.filter((cell) => Utils.isCollision(cell, sides));
-
-    if (collisions.length) {
-      newCoords = currentCoords;
-    }
-    // Check if the canvas border got
-    const borderWidth = this.canvas.width - this.unit_size; // 384
-    const borderHeight = this.canvas.height - this.unit_size; // 416
-
-    newCoords.x = Math.max(0, newCoords.x);
-    newCoords.x = Math.min(newCoords.x, borderWidth);
-    newCoords.y = Math.max(0, newCoords.y);
-    newCoords.y = Math.min(newCoords.y, borderHeight);
+  getNewCoords(enemy) {
+    const spriteSize = enemy.size;
+    const currentCoords = {x: enemy.x, y: enemy.y};
+    let newCoords = this.directions[enemy.direction](currentCoords, enemy.step);
+    newCoords = this.collite(currentCoords, newCoords, spriteSize, enemy);
 
     return newCoords;
+  }
+
+  setSides(enemy, sides) {
+    enemy.upSide = sides.upSide;
+    enemy.rightSide = sides.rightSide;
+    enemy.downSide = sides.downSide;
+    enemy.leftSide = sides.leftSide;
+  }
+
+  collite(currentCoords, newCoords, spriteSize, enemy) {
+    const sides = Utils.getSideCoords(newCoords, spriteSize);
+    this.setSides(enemy, sides);
+    // Wall collisions
+    const wall = this.models.grid.getLocalTankWall(currentCoords);
+    const wallCollisions = wall.filter((cell) => Utils.isCollision(cell, sides));
+    // Player collisions
+    const players = this.models.player.getLocalTanks(currentCoords);
+    const playerCollisions = players.filter((player) => Utils.isCollision(player, sides));
+    // Enemy collisions
+    const enemies = this.models.enemy.getLocalTanks(currentCoords, enemy.id);
+    const enemyCollisions = enemies.filter((enemy) => Utils.isCollision(enemy, sides));
+    // Border collisions
+    const borderWidth = this.canvas.width - spriteSize; // 384
+    const borderHeight = this.canvas.height - spriteSize; // 416
+    const borderCollision = Utils.isBorder(newCoords, borderWidth, borderHeight);
+    // Collisions conditions
+    const collisions = [wallCollisions.length, playerCollisions.length, enemyCollisions.length, borderCollision];
+    if (Utils.hasCollisions(collisions)) {
+      this.changeDirection(currentCoords, enemy);
+      return currentCoords;
+    }
+
+    return newCoords;
+  }
+
+  changeDirection(coords, enemy) {
+    let directions = ['up', 'right', 'down', 'left'];
+    directions = directions.filter((direction) => direction !== enemy.direction);
+    const randomDirection = this.newDirection(enemy.direction, directions.length - 1);
+    enemy.direction = directions[randomDirection];
+
+    return coords;
+  }
+
+  newDirection(direction, length) {
+    const randomDirection = Utils.random(0, length);
+    if (randomDirection === direction) {
+      this.newDirection(direction);
+    }
+
+    return randomDirection;
   }
 
 }

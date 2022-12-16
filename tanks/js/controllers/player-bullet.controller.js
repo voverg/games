@@ -1,7 +1,7 @@
 import { Controller } from './controller.js';
 import { Utils } from '../utils/utils.js';
 
-export class BulletController extends Controller {
+export class PlayerBulletController extends Controller {
   constructor() {
     super();
     this.bullet_size = null;
@@ -17,39 +17,40 @@ export class BulletController extends Controller {
   }
 
   move() {
-    this.models.bullet.getAll().forEach((bullet) => {
+    this.models.bullet.getPlayerBullets().forEach((bullet) => {
       const coords = this.changeCoords(bullet.direction, bullet.x, bullet.y, bullet.step);
       bullet.x = coords.x;
       bullet.y = coords.y;
-      // Check if the wall hitting
+      // Handle collisions
       this.collite(bullet, coords);
-      // Check if the canvas border hitting
-      if (this.isBorder(coords)) {
-        this.models.bullet.removeBullet(bullet.id);
-      }
     });
   }
 
   collite(bullet, coords) {
     const sides = Utils.getSideCoords(coords, this.bullet_size);
     // Wall collisions
-    const wall = this.models.grid.getLocalBulletWall({x: coords.x, y: coords.y});
-    const collisions = wall.filter((cell) => Utils.isCollision(cell, sides));
+    const wall = this.models.grid.getLocalBulletWall(coords);
+    const wallCollisions = wall.filter((cell) => Utils.isCollision(cell, sides));
 
-    if (collisions.length) {
+    if (wallCollisions.length) {
       this.models.bullet.removeBullet(bullet.id);
-      collisions.forEach((cell) => {
+      wallCollisions.forEach((cell) => {
         this.models.grid.decreaseHealth(cell.id, bullet.power);
       });
     }
 
     // Enemy collisions
-    const enemies = this.models.enemy.getLocalBulletTank({x: coords.x, y: coords.y});
-    if (enemies.length) {
+    const enemies = this.models.enemy.getLocalTanks(coords);
+    const enemyCollisions = enemies.filter((enemy) => Utils.isCollision(enemy, sides));
+    if (enemyCollisions.length) {
       this.models.bullet.removeBullet(bullet.id);
       enemies.forEach((enemy) => {
         this.models.enemy.decreaseHealth(enemy.id);
       });
+    }
+    // Border collisions
+    if (Utils.isBorder(coords, this.canvas.width, this.canvas.height)) {
+      this.models.bullet.removeBullet(bullet.id);
     }
   }
 
@@ -70,21 +71,6 @@ export class BulletController extends Controller {
     }
 
     return {x, y};
-  }
-
-  isBorder(coords) {
-    // const borderWidth = this.canvas.width - this.bullet_size; // 384
-    // const borderHeight = this.canvas.height - this.bullet_size; // 416
-    const borderWidth = this.canvas.width;
-    const borderHeight = this.canvas.height;
-
-    if (coords.x <= 0 ||
-        coords.x >= borderWidth ||
-        coords.y <= 0 ||
-        coords.y >= borderHeight
-        ) {
-      return true;
-    }
   }
 
 }

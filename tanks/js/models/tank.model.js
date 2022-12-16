@@ -35,6 +35,25 @@ export class TankModel {
     }
   }
 
+  getLocalTanks(coords, id = '') {
+    const size = 32 + 5;
+    const {x, y} = coords;
+
+    const tanks = this.arr.filter((tank) => {
+      if (tank.type &&
+          tank.id !== id &&
+          tank.x > x - size &&
+          tank.x < x + size &&
+          tank.y > y - size &&
+          tank.y < y + size
+        ) {
+        return true;
+      }
+    });
+
+    return tanks;
+  }
+
   getLocalBulletTank({x, y}) {
     const size = 16;
 

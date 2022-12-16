@@ -17,8 +17,32 @@ export class Utils {
           sides.leftSide < cell.rightSide
         ) {
       return true;
-    } else {
-      return false;
     }
   }
+
+  static isBorder(coords, width, height) {
+    if (coords.x < 0 ||
+        coords.x > width ||
+        coords.y < 0 ||
+        coords.y > height
+      ) {
+      return true;
+    }
+  }
+
+  static hasCollisions(collisions) {
+    for (let collision of collisions) {
+      if (collision) {
+        return true;
+      }
+    }
+  }
+
+  static random(min = 0, max = 1) {
+    const result = Math.floor(Math.random() * (max + 1 - min)) + min;
+
+    return result;
+  }
+
+
 }

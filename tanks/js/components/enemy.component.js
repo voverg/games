@@ -11,8 +11,8 @@ export class EnemyComponent {
   render() {
     if (!this.models.enemy.length) return;
 
-    const bullets = this.models.enemy.getAll();
-    bullets.forEach((enemy) => {
+    const enemies = this.models.enemy.getAll();
+    enemies.forEach((enemy) => {
       enemy.render();
     });
   }
