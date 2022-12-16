@@ -1,5 +1,5 @@
 export class Tank {
-  constructor({canvas, direction, step, shoot, spriteMap, isMoving, x, y, type, size}) {
+  constructor({canvas, direction, step, shoot, spriteMap, isMoving, x, y, type, size, life}) {
     this.canvas = canvas;
     this.direction = direction;
     this.prevDirection = direction;
@@ -7,6 +7,7 @@ export class Tank {
     this.isMoving = isMoving;
     this.size = size;
     this.type = type;
+    this.life = life;
     this.id = null;
     this.step = step;
     this.shoot = shoot;

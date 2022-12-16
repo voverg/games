@@ -20,6 +20,12 @@ export class EnemyTankController extends Controller {
     this.store.subscribe(() => {
       this.state = this.store.getState();
     });
+
+    const bulletInterval = setInterval(() => {
+      this.models.enemy.getAll().forEach((enemy) => {
+        enemy.shoot = true;
+      });
+    }, 1000);
   }
 
   setShoot (enemy) {

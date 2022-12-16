@@ -1,7 +1,7 @@
 import { Controller } from './controller.js';
 import { Utils } from '../utils/utils.js';
 
-export class PlayerBulletController extends Controller {
+export class EnemyBulletController extends Controller {
   constructor() {
     super();
     this.bullet_size = null;
@@ -17,7 +17,7 @@ export class PlayerBulletController extends Controller {
   }
 
   move() {
-    this.models.bullet.getPlayerBullets().forEach((bullet) => {
+    this.models.bullet.getEnemyBullets().forEach((bullet) => {
       const coords = this.changeCoords(bullet.direction, bullet.x, bullet.y, bullet.step);
       bullet.x = coords.x;
       bullet.y = coords.y;
@@ -35,7 +35,7 @@ export class PlayerBulletController extends Controller {
 
   collite(bullet, coords) {
     const sides = Utils.getSideCoords(coords, this.bullet_size);
-    this.setSides(bullet, sides);
+    this.setSides(bullet, coords);
     // Wall collisions
     const wall = this.models.grid.getLocalBulletWall(coords);
     const wallCollisions = wall.filter((cell) => Utils.isCollision(cell, sides));
@@ -47,19 +47,19 @@ export class PlayerBulletController extends Controller {
       });
     }
 
-    // Enemy collisions
-    const enemies = this.models.enemy.getLocalTanks(coords);
-    const enemyCollisions = enemies.filter((enemy) => Utils.isCollision(enemy, sides));
-    if (enemyCollisions.length) {
+    // Player collisions
+    const players = this.models.player.getLocalTanks(coords);
+    const playerCollisions = players.filter((player) => Utils.isCollision(player, sides));
+    if (playerCollisions.length) {
       this.models.bullet.removeBullet(bullet.id);
-      enemies.forEach((enemy) => {
-        this.models.enemy.decreaseHealth(enemy.id);
+      players.forEach((player) => {
+        this.models.player.decreaseHealth(player.id);
       });
     }
 
-    // Enemy bullet collision
-    const enemyBullets = this.models.bullet.getEnemyBullets();
-    const bulletCollisions = enemyBullets.filter((bullet) => Utils.isCollision(bullet, sides));
+    // Player bullet collision
+    const playerBullets = this.models.bullet.getPlayerBullets();
+    const bulletCollisions = playerBullets.filter((bullet) => Utils.isCollision(bullet, sides));
     if (bulletCollisions.length) {
       this.models.bullet.removeBullet(bullet.id);
     }

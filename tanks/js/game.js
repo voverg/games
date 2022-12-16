@@ -1,3 +1,4 @@
+// Sources
 import { Sprite } from './sources/sprite.js';
 // Entities
 import { Cell } from './entities/cell.js';
@@ -19,6 +20,7 @@ import { BoardController } from './controllers/board.controller.js';
 import { PlayerTankController } from './controllers/player-tank.controller.js';
 import { EnemyTankController } from './controllers/enemy-tank.controller.js';
 import { PlayerBulletController } from './controllers/player-bullet.controller.js';
+import { EnemyBulletController } from './controllers/enemy-bullet.controller.js';
 
 import { Store } from './store/store.js';
 import { Actions } from './store/actions.js';
@@ -51,6 +53,7 @@ export class Game {
       playerTank: new PlayerTankController(),
       playerBullet: new PlayerBulletController(),
       enemyTank: new EnemyTankController(),
+      enemyBullet: new EnemyBulletController(),
     };
 
     this.components = {
@@ -111,6 +114,7 @@ export class Game {
     this.controllers.playerBullet.move();
     this.controllers.enemyTank.move();
     this.controllers.enemyTank.shoot();
+    this.controllers.enemyBullet.move();
   }
 
   render() {

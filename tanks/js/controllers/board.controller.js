@@ -20,6 +20,9 @@ export class BoardController extends Controller {
     this.createPlayer();
     this.createEnemy(this.canvas.width - this.sources.sprite.unit_size, 0);
     // this.createEnemy((this.canvas.width - this.sources.sprite.unit_size) / 2, 0);
+    // const enemyInterval = setInterval(() => {
+    //   this.createEnemy(this.canvas.width - this.sources.sprite.unit_size, 0);
+    // }, 3000);
   }
 
   createGrid() {
@@ -53,6 +56,7 @@ export class BoardController extends Controller {
       isMoving: false,
       size: this.sources.sprite.unit_size,
       type: 'player',
+      life: 1,
       step: 2,
       shoot: false,
       x: 128,
@@ -70,6 +74,7 @@ export class BoardController extends Controller {
       isMoving: true,
       size: this.sources.sprite.unit_size,
       type: 'enemy',
+      life: 1,
       step: 2,
       shoot: false,
       x: x,
@@ -82,7 +87,10 @@ export class BoardController extends Controller {
   update() {
     if (!this.models.enemy.length) {
       this.createEnemy(this.canvas.width - this.sources.sprite.unit_size, 0);
-      this.models.enemy.arr.forEach((enemy) => enemy.shoot = true);
+    }
+
+    if (!this.models.player.length) {
+      this.createPlayer();
     }
   }
 
