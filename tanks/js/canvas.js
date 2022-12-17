@@ -6,6 +6,8 @@ export class Canvas {
     this.store = null;
     this.sprite = null;
     this.levels = null;
+
+    this.drawObj = this.drawObj.bind(this);
   }
 
   init( {store, models, sources} ) {
@@ -21,20 +23,6 @@ export class Canvas {
       this.state = this.store.getState();
     });
   }
-
-  // drawPlayer() {
-  //   const direction = this.state.tankDirection;
-
-  //   this.drawObj({
-  //     sprite: this.sprite.getElem(),
-  //     spriteOffsetX: this.sprite.playerMap[direction].x,
-  //     spriteOffsetY: this.sprite.playerMap[direction].y,
-  //     width: this.sprite.unit_size,
-  //     height: this.sprite.unit_size,
-  //     x: this.state.tankCoords.x,
-  //     y: this.state.tankCoords.y,
-  //   });
-  // }
 
   drawBullet({direction, x, y, spriteMap}) {
     this.drawObj({
@@ -67,6 +55,18 @@ export class Canvas {
       spriteOffsetY: this.sprite.wallMap[type].y,
       width: this.sprite.tile_size,
       height: this.sprite.tile_size,
+      x: x,
+      y: y,
+    });
+  }
+
+  drawExplosion({x, y, spriteMap, index}) {
+    this.drawObj({
+      sprite: this.sprite.getElem(),
+      spriteOffsetX: this.sprite[spriteMap][index].x,
+      spriteOffsetY: this.sprite[spriteMap][index].y,
+      width: this.sprite.unit_size,
+      height: this.sprite.unit_size,
       x: x,
       y: y,
     });

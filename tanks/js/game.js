@@ -2,18 +2,21 @@
 import { Sprite } from './sources/sprite.js';
 // Entities
 import { Cell } from './entities/cell.js';
-import { Bullet } from './entities/bullet.js';
 import { Tank } from './entities/tank.js';
+import { Bullet } from './entities/bullet.js';
+import { Explosion } from './entities/explosion.js';
 // Models
 import { LevelsModel } from './models/levels.model.js';
 import { GridModel } from './models/grid.model.js';
-import { BulletModel } from './models/bullet.model.js';
 import { TankModel } from './models/tank.model.js';
+import { BulletModel } from './models/bullet.model.js';
+import { ExplosionModel } from './models/explosion.model.js';
 // Components
 import { BoardComponent } from './components/board.component.js';
 import { PlayerComponent } from './components/player.component.js';
 import { EnemyComponent } from './components/enemy.component.js';
 import { BulletComponent } from './components/bullet.component.js';
+import { ExplosionComponent } from './components/explosion.component.js';
 // Controllers
 import { EventController } from './controllers/event.controller.js';
 import { BoardController } from './controllers/board.controller.js';
@@ -37,7 +40,7 @@ export class Game {
       sprite: new Sprite(),
     };
 
-    this.entities = {Cell, Tank, Bullet};
+    this.entities = {Cell, Tank, Bullet, Explosion};
 
     this.models = {
       levels: new LevelsModel(),
@@ -45,6 +48,7 @@ export class Game {
       player: new TankModel(),
       enemy: new TankModel(),
       bullet: new BulletModel(),
+      explosion: new ExplosionModel(),
     };
 
     this.controllers = {
@@ -61,6 +65,7 @@ export class Game {
       player: new PlayerComponent(),
       enemy: new EnemyComponent(),
       bullet: new BulletComponent(),
+      explosion: new ExplosionComponent(),
     };
 
     this.loop = this.loop.bind(this);

@@ -19,11 +19,14 @@ export class BoardController extends Controller {
     this.createGrid();
     this.createPlayer();
     this.createEnemy(this.canvas.width - this.sources.sprite.unit_size, 0);
+
     // this.createEnemy((this.canvas.width - this.sources.sprite.unit_size) / 2, 0);
     // const enemyInterval = setInterval(() => {
     //   this.createEnemy(this.canvas.width - this.sources.sprite.unit_size, 0);
     // }, 3000);
   }
+
+  
 
   createGrid() {
     this.levels.map.forEach((row, rowIndex) => {

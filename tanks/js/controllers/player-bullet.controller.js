@@ -41,7 +41,8 @@ export class PlayerBulletController extends Controller {
     const wallCollisions = wall.filter((cell) => Utils.isCollision(cell, sides));
 
     if (wallCollisions.length) {
-      this.models.bullet.removeBullet(bullet.id);
+      this.destroyBullet(bullet);
+
       wallCollisions.forEach((cell) => {
         this.models.grid.decreaseHealth(cell.id, bullet.power);
       });
@@ -51,7 +52,8 @@ export class PlayerBulletController extends Controller {
     const enemies = this.models.enemy.getLocalTanks(coords);
     const enemyCollisions = enemies.filter((enemy) => Utils.isCollision(enemy, sides));
     if (enemyCollisions.length) {
-      this.models.bullet.removeBullet(bullet.id);
+      this.destroyBullet(bullet);
+
       enemies.forEach((enemy) => {
         this.models.enemy.decreaseHealth(enemy.id);
       });
@@ -61,13 +63,41 @@ export class PlayerBulletController extends Controller {
     const enemyBullets = this.models.bullet.getEnemyBullets();
     const bulletCollisions = enemyBullets.filter((bullet) => Utils.isCollision(bullet, sides));
     if (bulletCollisions.length) {
-      this.models.bullet.removeBullet(bullet.id);
+      this.destroyBullet(bullet);
     }
 
     // Border collisions
     if (Utils.isBorder(coords, this.canvas.width, this.canvas.height)) {
-      this.models.bullet.removeBullet(bullet.id);
+      this.destroyBullet(bullet);
     }
+  }
+
+  destroyBullet(bullet) {
+    this.models.bullet.removeBullet(bullet.id);
+    this.createExplosion({
+      x: bullet.x,
+      y: bullet.y,
+      type: 'bullet',
+      direction: bullet.direction,
+    });
+  }
+
+  createExplosion({x, y, type, direction}) {
+    const coordsOffset = {
+      up: {x: -16, y: -8},
+      right: {x: -16, y: -8},
+      down: {x: -16, y: -24},
+      left: {x: -8, y: -16},
+    };
+
+    const explosion = new this.entities.Explosion({
+      canvas: this.canvas,
+      type: type,
+      x: x + coordsOffset[direction].x,
+      y: y + coordsOffset[direction].y,
+    });
+
+    this.models.explosion.add(explosion);
   }
 
   changeCoords(direction, x, y, step) {

@@ -29,6 +29,15 @@ export class Sprite {
       down: {x: 4 * this.unit_size, y: 4 * this.unit_size},
       left: {x: 6 * this.unit_size, y: 4 * this.unit_size},
     };
+    this.tankExplosion = [
+      {x: 19 * this.unit_size, y: 2 * this.unit_size},
+      {x: 21 * this.unit_size, y: 2 * this.unit_size},
+    ];
+    this.bulletExplosion = [
+      {x: 16 * this.unit_size, y: 2 * this.unit_size},
+      {x: 17 * this.unit_size, y: 2 * this.unit_size},
+      {x: 18 * this.unit_size, y: 2 * this.unit_size},
+    ];
   }
 
   async load() {
