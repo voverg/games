@@ -40,6 +40,8 @@ export class PlayerTankController extends Controller {
     this.models.player.getAll().forEach((player) => {
       if (!player.shoot) return;
       this.setShoot(player);
+      const shootSound = this.sources.sound.getElem('shoot');
+      shootSound.play();
       player.shoot = false;
     });
   }

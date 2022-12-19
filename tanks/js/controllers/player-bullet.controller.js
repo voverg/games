@@ -41,6 +41,7 @@ export class PlayerBulletController extends Controller {
     const wallCollisions = wall.filter((cell) => Utils.isCollision(cell, sides));
 
     if (wallCollisions.length) {
+      this.sources.sound.getElem('explosionWall').play();
       this.destroyBullet(bullet);
 
       wallCollisions.forEach((cell) => {
@@ -52,6 +53,7 @@ export class PlayerBulletController extends Controller {
     const enemies = this.models.enemy.getLocalTanks(coords);
     const enemyCollisions = enemies.filter((enemy) => Utils.isCollision(enemy, sides));
     if (enemyCollisions.length) {
+      this.sources.sound.getElem('explosionTank').play();
       this.destroyBullet(bullet);
       this.createTankExplosion(bullet);
 
@@ -71,6 +73,7 @@ export class PlayerBulletController extends Controller {
     const borderWidth = this.canvas.width - bullet.size;
     const borderHeight = this.canvas.height - bullet.size;
     if (Utils.isBorder(coords, borderWidth, borderHeight)) {
+      this.sources.sound.getElem('hitBorder').play();
       this.destroyBullet(bullet);
     }
   }

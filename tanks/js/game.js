@@ -1,5 +1,6 @@
 // Sources
 import { Sprite } from './sources/sprite.js';
+import { Sound } from './sources/sound.js';
 // Entities
 import { Cell } from './entities/cell.js';
 import { Tank } from './entities/tank.js';
@@ -38,6 +39,7 @@ export class Game {
 
     this.sources = {
       sprite: new Sprite(),
+      sound: new Sound(),
     };
 
     this.entities = {Cell, Tank, Bullet, Explosion};
