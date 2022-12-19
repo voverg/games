@@ -51,7 +51,7 @@ export class Event {
       this.checkEventType(event.code);
     });
 
-    // Handle arrows
+    // Handle arrow events
     document.addEventListener('mouseup', (event) => {
       const target = event.target;
       if (!this.arrows.has(target.dataset.type)) return;
@@ -91,22 +91,22 @@ export class Event {
   handleEvent(eventType) {
     switch (eventType.toLowerCase()) {
       case 'up':
-        if (this.snakes.direction === 'down') break;
+        if (this.snakes.direction === 'down' || !this.snakes.moving) break;
         this.snakes.direction = eventType;
         this.actions.setSnakeSpeed(this.snakeSpeed);
         break;
       case 'down':
-        if (this.snakes.direction === 'up') break;
+        if (this.snakes.direction === 'up' || !this.snakes.moving) break;
         this.snakes.direction = eventType;
         this.actions.setSnakeSpeed(this.snakeSpeed);
         break;
       case 'left':
-      if (this.snakes.direction === 'right') break;
+      if (this.snakes.direction === 'right' || !this.snakes.moving) break;
         this.snakes.direction = eventType;
         this.actions.setSnakeSpeed(this.snakeSpeed);
         break;
       case 'right':
-        if (this.snakes.direction === 'left') break;
+        if (this.snakes.direction === 'left' || !this.snakes.moving) break;
         this.snakes.direction = eventType;
         this.actions.setSnakeSpeed(this.snakeSpeed);
         break;
