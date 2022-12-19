@@ -158,6 +158,9 @@ export class Event {
 
   closeModal() {
     this.actions.setModal(false);
+    if (this.state.gameOver) {
+      window.location.reload();
+    }
   }
 
 }
