@@ -53,6 +53,7 @@ export class EnemyBulletController extends Controller {
     const playerCollisions = players.filter((player) => Utils.isCollision(player, sides));
     if (playerCollisions.length) {
       this.destroyBullet(bullet);
+      this.createTankExplosion(bullet);
       
       players.forEach((player) => {
         this.models.player.decreaseHealth(player.id);
@@ -67,34 +68,41 @@ export class EnemyBulletController extends Controller {
     }
 
     // Border collisions
-    if (Utils.isBorder(coords, this.canvas.width, this.canvas.height)) {
+    const borderWidth = this.canvas.width - bullet.size;
+    const borderHeight = this.canvas.height - bullet.size;
+    if (Utils.isBorder(coords, borderWidth, borderHeight)) {
       this.destroyBullet(bullet);
     }
   }
 
-  destroyBullet(bullet) {
-    this.models.bullet.removeBullet(bullet.id);
-    this.createExplosion({
-      x: bullet.x,
-      y: bullet.y,
-      type: 'bullet',
-      direction: bullet.direction,
-    });
+  createTankExplosion(bullet) {
+    const coordsOffset = {
+      up: {x: -24, y: -32},
+      right: {x: -16, y: -24},
+      down: {x: -16, y: -32},
+      left: {x: -32, y: -24},
+    };
+    this.createExplosion(bullet, 'tank', coordsOffset);
   }
 
-  createExplosion({x, y, type, direction}) {
+  destroyBullet(bullet) {
+    this.models.bullet.removeBullet(bullet.id);
+
     const coordsOffset = {
       up: {x: -16, y: -8},
       right: {x: -16, y: -8},
-      down: {x: -16, y: -24},
+      down: {x: -16, y: -16},
       left: {x: -8, y: -16},
     };
+    this.createExplosion(bullet, 'bullet', coordsOffset);
+  }
 
+  createExplosion(bullet, type, coordsOffset) {
     const explosion = new this.entities.Explosion({
       canvas: this.canvas,
       type: type,
-      x: x + coordsOffset[direction].x,
-      y: y + coordsOffset[direction].y,
+      x: bullet.x + coordsOffset[bullet.direction].x,
+      y: bullet.y + coordsOffset[bullet.direction].y,
     });
 
     this.models.explosion.add(explosion);

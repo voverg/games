@@ -28,6 +28,7 @@ export class PlayerTankController extends Controller {
       spriteMap: 'bulletMap',
       type: 'bullet:player',
       power: 1,
+      size: this.sources.sprite.bullet_size,
       step: 4,
       x: player.x,
       y: player.y,

@@ -35,6 +35,7 @@ export class EnemyTankController extends Controller {
       spriteMap: 'bulletMap',
       type: 'bullet:enemy',
       power: 1,
+      size: this.sources.sprite.bullet_size,
       step: 4,
       x: enemy.x,
       y: enemy.y,

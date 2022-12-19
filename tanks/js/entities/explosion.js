@@ -8,12 +8,17 @@ export class Explosion {
       tank: 'tankExplosion',
       bullet: 'bulletExplosion',
     };
+    this.spriteSizeMap = {
+      tank: 64,
+      bullet: 32,
+    }
   }
 
   render() {
     this.canvas.drawExplosion({
       x: this.x,
       y: this.y,
+      size: this.spriteSizeMap[this.type],
       spriteMap: this.spriteMap[this.type],
       index: 0,
     });

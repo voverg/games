@@ -1,11 +1,12 @@
 export class Bullet {
-  constructor({canvas, direction, spriteMap, type, power, step, x, y}) {
+  constructor({canvas, direction, spriteMap, type, power, size, step, x, y}) {
     this.canvas = canvas;
     this.direction = direction;
     this.spriteMap = spriteMap;
     this.id = null;
     this.step = step;
     this.power = power;
+    this.size = size;
     this.type = type;
     this.x = 0;
     this.y = 0;

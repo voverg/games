@@ -60,13 +60,13 @@ export class Canvas {
     });
   }
 
-  drawExplosion({x, y, spriteMap, index}) {
+  drawExplosion({x, y, size, spriteMap, index}) {
     this.drawObj({
       sprite: this.sprite.getElem(),
       spriteOffsetX: this.sprite[spriteMap][index].x,
       spriteOffsetY: this.sprite[spriteMap][index].y,
-      width: this.sprite.unit_size,
-      height: this.sprite.unit_size,
+      width: size,
+      height: size,
       x: x,
       y: y,
     });
