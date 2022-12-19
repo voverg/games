@@ -45,7 +45,7 @@ export class Controls {
 
       <div class="play">
         <button class="${playClass}" data-type="move" title="${playTitle} игру">${playText}</button>
-        <button class="${soundClass}" data-type="sound" title="${soundTitle} музыку">${soundText}</button>
+      <button class="${soundClass}" data-type="sound" title="${soundTitle} музыку">${soundText}</button>
         <button class="btn new-game__btn" data-type="finish" title="Начать новую игру">Новая игра</button>
       </div>
 

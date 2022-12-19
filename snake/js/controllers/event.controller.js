@@ -56,7 +56,7 @@ export class Event {
       const target = event.target;
       if (!this.arrows.has(target.dataset.type)) return;
 
-      this.snakeSpeed = Math.floor(600 - this.state.level * 50);
+      this.checkKeyPress(target.dataset.type, 'keyup');
       this.checkEventType(target.dataset.type);
     });
 
@@ -64,14 +64,13 @@ export class Event {
       const target = event.target;
       if (!this.arrows.has(target.dataset.type)) return;
 
-      this.snakeSpeed = 50;
+      this.checkKeyPress(target.dataset.type, 'keydown');
       this.checkEventType(target.dataset.type);
     });
     // Mouse events (excludes arrows events)
     document.addEventListener('click', (event) => {
       const target = event.target;
       if (this.arrows.has(target.dataset.type)) return;
-
       this.checkEventType(target.dataset.type);
     });
   }
@@ -92,23 +91,19 @@ export class Event {
     switch (eventType.toLowerCase()) {
       case 'up':
         if (this.snakes.direction === 'down' || !this.snakes.moving) break;
-        this.snakes.direction = eventType;
-        this.actions.setSnakeSpeed(this.snakeSpeed);
+        this.changeDirection(eventType);
         break;
       case 'down':
         if (this.snakes.direction === 'up' || !this.snakes.moving) break;
-        this.snakes.direction = eventType;
-        this.actions.setSnakeSpeed(this.snakeSpeed);
+        this.changeDirection(eventType);
         break;
       case 'left':
-      if (this.snakes.direction === 'right' || !this.snakes.moving) break;
-        this.snakes.direction = eventType;
-        this.actions.setSnakeSpeed(this.snakeSpeed);
+        if (this.snakes.direction === 'right' || !this.snakes.moving) break;
+        this.changeDirection(eventType);
         break;
       case 'right':
         if (this.snakes.direction === 'left' || !this.snakes.moving) break;
-        this.snakes.direction = eventType;
-        this.actions.setSnakeSpeed(this.snakeSpeed);
+        this.changeDirection(eventType);
         break;
       case 'move':
         this.pauseMove();
@@ -126,6 +121,11 @@ export class Event {
         this.closeModal();
         break;
     }
+  }
+
+  changeDirection(eventType) {
+    this.snakes.direction = eventType;
+    this.actions.setSnakeSpeed(this.snakeSpeed);
   }
 
   pauseMove() {
