@@ -35,6 +35,10 @@ export class Actions {
     this.store.dispatch({ type: 'general', payload: {'win': value} });
   }
 
+  setGameOver(value) {
+    this.store.dispatch({ type: 'general', payload: {'gameOver': value} });
+  }
+
   setSnakeSpeed(value) {
     this.store.dispatch({ type: 'general', payload: {'snakeSpeed': value} });
   }

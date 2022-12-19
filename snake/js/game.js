@@ -96,6 +96,12 @@ export class Game {
     this.state = this.store.getState();
     this.store.subscribe(() => {
       this.state = this.store.getState();
+      if (this.state.snakeSpeed !== this.snakeSpeed) {
+        this.snakeSpeed = this.state.snakeSpeed;
+        clearInterval(this.gameInterval);
+        clearInterval(this.bombInterval);
+        this.run();
+      }
     });
 
     this._setSnakeSpeedToStore();
@@ -104,8 +110,8 @@ export class Game {
   }
 
   _setSnakeSpeedToStore() {
-    const snakeSpeed = Math.floor(600 - this.state.level * 50);
-    this.actions.setSnakeSpeed(snakeSpeed);
+    this.snakeSpeed = Math.floor(600 - this.state.level * 50);
+    this.actions.setSnakeSpeed(this.snakeSpeed);
   }
 
   _setBombSpeedToStore() {
@@ -192,6 +198,7 @@ export class Game {
   }
 
   stop() {
+    this.actions.setGameOver(true);
     this.playFinishSound();
 
     clearInterval(this.gameInterval);

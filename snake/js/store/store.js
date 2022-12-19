@@ -8,6 +8,7 @@ export class Store {
       showModal: false,
       modalContent: 'help',
       level: 1,
+      gameOver: false,
       win: false,
       snakeSpeed: 600,
       bombSpeed: 10000,
