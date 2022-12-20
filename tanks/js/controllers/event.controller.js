@@ -35,46 +35,52 @@ export class EventController extends Controller {
     document.addEventListener('keyup', (event) => {
       event.preventDefault();
       if (this.arrowEvents.has(event.code)) {
-        this.checkEvent(event.code, 'keyup');
+        this.checkEvent({type: event.code, keyPressed: false, event});
       }
     });
 
     document.addEventListener('keydown', (event) => {
       event.preventDefault();
-      this.checkEvent(event.code, 'keydown');
+      this.checkEvent({type: event.code, keyPressed: true, event});
     });
 
     document.addEventListener('click', (event) => {
       const target = event.target;
-      this.checkEvent(target.dataset.type);
+      this.checkEvent({type: target.dataset.type, keyPressed: false, event});
     });
   }
 
-  checkEvent(event, keyEventType = '') {
+  checkEvent(props) {
+    const tank = this.models.player.arr[0];
     // Check if arrow key keydown or keyup
-    if (this.arrowEvents.has(event)) {
-      const movingValue = keyEventType === 'keydown' ? true : false;
-      const tank = this.models.player.arr[0];
+    if (this.arrowEvents.has(props.type)) {
+      const movingValue = props.keyPressed ? true : false;
       tank.isMoving = movingValue;
     }
     // Check if event in this.events
-    if (event && event in this.events) {
-      const eventType = this.events[event];
-      this.handleEvent(eventType);
+    if (props.type && props.type in this.events) {
+      const eventType = this.events[props.type];
+      this.handleEvent({type: eventType, event});
     }
+
+    // const playSound = tank.isMoving ? 'move' : 'motor';
+    // const stopSound = !tank.isMoving ? 'move' : 'motor';
+    // this.sources.sound.pause(stopSound);
+    // this.sources.sound.loop(playSound);
+    // this.sources.sound.play(playSound);
   }
 
-  handleEvent(eventType) {
-    switch (eventType.toLowerCase()) {
+  handleEvent(props) {
+    switch (props.type.toLowerCase()) {
       case 'up':
       case 'down':
       case 'left':
       case 'right':
         const tank = this.models.player.arr[0];
-        tank.direction = eventType;
+        tank.direction = props.type;
         break;
       case 'shoot':
-        this.shoot();
+        this.shoot(props.event);
         break;
       case 'move':
         this.pauseMove();
@@ -94,7 +100,8 @@ export class EventController extends Controller {
     }
   }
 
-  shoot() {
+  shoot(event) {
+    if (event.repeat) return;
     const tank = this.models.player.arr[0];
     tank.shoot = true;
   }

@@ -2,6 +2,16 @@ export class Sound {
   constructor() {
     this.arr = [
       {
+        name: 'move',
+        elem: null,
+        path: 'sound/move.mp3',
+      },
+      {
+        name: 'motor',
+        elem: null,
+        path: 'sound/motor.mp3',
+      },
+      {
         name: 'shoot',
         elem: null,
         path: 'sound/shoot.mp3',

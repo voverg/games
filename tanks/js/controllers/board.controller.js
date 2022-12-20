@@ -29,7 +29,8 @@ export class BoardController extends Controller {
   
 
   createGrid() {
-    this.levels.map.forEach((row, rowIndex) => {
+    const levelMap = this.levels.getMap(this.state.level);
+    levelMap.forEach((row, rowIndex) => {
       row.forEach((type, colIndex) => {
         const cell = this._createCell(rowIndex, colIndex, type);
         this.grid.addCell(cell);
@@ -38,7 +39,7 @@ export class BoardController extends Controller {
   }
 
   _createCell(row, col, type) {
-    const types = {0: null, 1: 'brick', 2: 'tile'};
+    const types = {0: null, 1: 'brick', 2: 'tile', 3: 'plant'};
     const cellProps = {
       row,
       col,

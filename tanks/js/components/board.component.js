@@ -14,5 +14,7 @@ export class BoardComponent {
         cell.render();
       }
     });
+
+    this.canvas.drawBase();
   }
 }

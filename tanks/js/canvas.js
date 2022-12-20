@@ -16,11 +16,23 @@ export class Canvas {
     this.sprite = sources.sprite;
     this.levels = models.levels;
 
-    this.canvas.width = this.levels.map[0].length * this.sprite.tile_size;
-    this.canvas.height = this.levels.map.length * this.sprite.tile_size;
+    this.canvas.width = this.levels.getMapWidth(this.state.level) * this.sprite.tile_size;
+    this.canvas.height = this.levels.getMapHeight(this.state.level) * this.sprite.tile_size;
 
     this.store.subscribe(() => {
       this.state = this.store.getState();
+    });
+  }
+
+  drawBase() {
+    this.drawObj({
+      sprite: this.sprite.getElem(),
+      spriteOffsetX: this.sprite.baseMap.x,
+      spriteOffsetY: this.sprite.baseMap.y,
+      width: this.sprite.unit_size,
+      height: this.sprite.unit_size,
+      x: 192,
+      y: this.height - this.sprite.unit_size,
     });
   }
 

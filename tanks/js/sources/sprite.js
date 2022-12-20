@@ -7,6 +7,10 @@ export class Sprite {
     this.tile_size = 16;
     this.bullet_size = 8;
 
+    this.baseMap = {
+      x: 11 * this.unit_size,
+      y: 7.5 * this.unit_size,
+    };
     this.wallMap = {
       brick: {x: 8 * this.unit_size, y: 4 * this.unit_size},
       tile: {x: 8 * this.unit_size, y: 4.5 * this.unit_size},
