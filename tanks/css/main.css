@@ -1,9 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,500;0,700;1,300;1,500;1,700&display=swap');
+/*@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,500;0,700;1,300;1,500;1,700&display=swap');*/
+
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;500;700&display=swap');
 
 :root {
   --index: calc(1vw + 1vh);
   --blue: #3c485f;
   --orange: #C84C0C;
+  --gray: #878787;
 }
 
 *,
@@ -15,7 +18,7 @@
 }
 
 body {
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Comfortaa', sans-serif;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -23,6 +26,22 @@ body {
   min-height: 100vh;
   margin: 0;
   background-color: var(--blue);
+}
+
+.btn {
+  padding: 5px 10px;
+  background-color: var(--gray);
+  color: #fff;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  outline: none;
+  letter-spacing: 3px;
+  cursor: pointer;
+  user-select: none;
+  transition: .3s;
+}
+.btn:hover {
+  opacity: .8;
 }
 
 .header {
@@ -39,16 +58,40 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 20px;
   width: 100%;
   padding: 20px;
 }
 
 .canvas {
-  width: 89vh;
+  width: 80vh;
   height: 80vh;
-  margin: 0 auto;
   padding: 0;
-  border: 1px solid var(--orange);
+  border: 5px solid var(--gray);
+}
+
+.aside {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 80vh;
+  padding: 10px;
+  /*border: 1px solid var(--orange);*/
+  color: var(--gray);
+}
+
+.aside__tanks {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: start;
+  gap: 10px;
+  width: 80px;
+}
+
+.aside__tanks-img {
+  width: 32px;
+  height: 32px;
 }
 
 .footer {

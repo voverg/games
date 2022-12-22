@@ -7,8 +7,8 @@ export class Actions {
     this.store.dispatch({ type: 'general', payload: {'score': value} });
   }
 
-  setHiscore(value) {
-    this.store.dispatch({ type: 'general', payload: {'highScore': value} });
+  setEnemyAmount(value) {
+    this.store.dispatch({ type: 'general', payload: {'enemyAmount': value} });
   }
 
   setSound(value) {
@@ -31,11 +31,8 @@ export class Actions {
     this.store.dispatch({ type: 'general', payload: {'win': value} });
   }
 
-  setSnakeSpeed(value) {
-    this.store.dispatch({ type: 'general', payload: {'snakeSpeed': value} });
+  setGameOver(value) {
+    this.store.dispatch({ type: 'general', payload: {'gameOver': value} });
   }
 
-  setBombSpeed(value) {
-    this.store.dispatch({ type: 'general', payload: {'bombSpeed': value} });
-  }
 }

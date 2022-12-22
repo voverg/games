@@ -56,6 +56,7 @@ export class PlayerBulletController extends Controller {
       this.sources.sound.getElem('explosionTank').play();
       this.destroyBullet(bullet);
       this.createTankExplosion(bullet);
+      this.actions.setEnemyAmount(this.state.enemyAmount - 1);
 
       enemies.forEach((enemy) => {
         this.models.enemy.decreaseHealth(enemy.id);

@@ -18,6 +18,8 @@ import { PlayerComponent } from './components/player.component.js';
 import { EnemyComponent } from './components/enemy.component.js';
 import { BulletComponent } from './components/bullet.component.js';
 import { ExplosionComponent } from './components/explosion.component.js';
+// Static components
+import { Aside } from './components/static/aside.static.js';
 // Controllers
 import { EventController } from './controllers/event.controller.js';
 import { BoardController } from './controllers/board.controller.js';
@@ -70,6 +72,10 @@ export class Game {
       explosion: new ExplosionComponent(),
     };
 
+    this.static = {
+      aside: new Aside(),
+    };
+
     this.loop = this.loop.bind(this);
   }
 
@@ -94,6 +100,11 @@ export class Game {
     // Inin canvas components
     Object.keys(this.components).forEach((key) => {
       this.components[key].init(this.canvas, this.models);
+    });
+    // Inin static components
+    Object.keys(this.static).forEach((key) => {
+      this.static[key].init({store: this.store, models: this.models});
+      this.static[key].render();
     });
     // Init controllers
     Object.keys(this.controllers).forEach((key) => {

@@ -9,7 +9,7 @@ constructor(props) {
     this.life = 0;
     this.lifeMap = {
       'brick': 1,
-      'tile': 100,
+      'tile': 1000,
     };
 
     this.init();

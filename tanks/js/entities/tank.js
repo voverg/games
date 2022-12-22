@@ -17,7 +17,8 @@ export class Tank {
     this.healthMap = {
       enemy: 1,
       player: 1,
-    }
+    };
+    this.model = {};
     
     this.init();
   }

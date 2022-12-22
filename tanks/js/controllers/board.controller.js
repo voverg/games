@@ -89,7 +89,7 @@ export class BoardController extends Controller {
   }
 
   update() {
-    if (!this.models.enemy.length) {
+    if (!this.models.enemy.length && this.state.enemyAmount) {
       this.createEnemy(this.canvas.width - this.sources.sprite.unit_size, 0);
     }
 

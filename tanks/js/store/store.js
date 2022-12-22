@@ -1,12 +1,13 @@
 export class Store {
   constructor() {
     this.initialState = {
+      enemyAmount: 20,
       score: 0,
-      highScore: 0,
       sound: false,
       showModal: false,
       modalContent: 'help',
       level: 1,
+      gameOver: false,
       win: false,
     };
     this.state = rootReducer(this.initialState, {type: '__init__'});
