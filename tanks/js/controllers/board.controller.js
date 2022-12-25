@@ -19,17 +19,7 @@ export class BoardController extends Controller {
 
     this.createGrid();
     this.createPlayer();
-    // this.createEnemy(this.canvas.width - this.sources.sprite.unit_size, 0);
-
-    const enemyInterval = setInterval(() => {
-      if (this.state.enemyAmount && this.models.enemy.length < 3) {
-        this.createEnemy(this.canvas.width - this.sources.sprite.unit_size, 0);
-        this.actions.setEnemyAmount(this.state.enemyAmount - 1);
-      } else if (!this.state.enemyAmount && !this.models.enemy.length) {
-        this.actions.setGameOver(true);
-        this.actions.setWin(true);
-      }
-    }, 3000);
+    this.createEnemies();
   }
 
   
@@ -69,8 +59,27 @@ export class BoardController extends Controller {
     this.models.player.addTank(player);
   }
 
+  createEnemies() {
+    const enemySize = this.sources.sprite.unit_size;
+    const width = this.canvas.width;
+    const appearancePos = [0, Math.floor(width / 2), width - enemySize];
+
+    const enemyInterval = setInterval(() => {
+      const randomX = appearancePos[Utils.random(0, appearancePos.length - 1)];
+
+      if (this.state.enemyAmount && this.models.enemy.length < 3) {
+        this.createEnemy(randomX, 0);
+        this.actions.setEnemyAmount(this.state.enemyAmount - 1);
+      } else if (!this.state.enemyAmount && !this.models.enemy.length) {
+        this.actions.setGameOver(true);
+        this.actions.setWin(true);
+      }
+    }, 3000);
+  }
+
   createEnemy(x, y) {
     const types = ['enemy_1', 'enemy_2', 'enemy_3', 'enemy_4'];
+    const directions = ['up', 'right', 'down', 'left'];
     const type = types[Utils.random(0, types.length - 1)];
     let bonus = false;
     if (new Set([17, 10, 4]).has(this.state.enemyAmount)) {
@@ -86,16 +95,17 @@ export class BoardController extends Controller {
     });
 
     this.models.enemy.addTank(enemy);
+
+    setTimeout(() => {
+      this.models.enemy.getAll().forEach((enemy) => {
+        enemy.isMoving = true;
+        const direction = directions[Utils.random(0, directions.length - 1)];
+        enemy.direction = direction;
+      });
+    }, 500);
   }
 
   update() {
-    // if (!this.models.enemy.length && this.state.enemyAmount) {
-    //   this.createEnemy(this.canvas.width - this.sources.sprite.unit_size, 0);
-    // } else if (!this.state.enemyAmount) {
-    //   this.actions.setGameOver(true);
-    //   this.actions.setWin(true);
-    // }
-
     if (!this.models.player.length) {
       this.createPlayer();
     }

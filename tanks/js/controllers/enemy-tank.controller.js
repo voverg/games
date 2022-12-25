@@ -58,6 +58,8 @@ export class EnemyTankController extends Controller {
 
   move() {
     this.models.enemy.getAll().forEach((enemy) => {
+      if (!enemy.isMoving) return;
+
       const newCoords = this.getNewCoords(enemy);
       enemy.x = newCoords.x;
       enemy.y = newCoords.y;
@@ -87,19 +89,24 @@ export class EnemyTankController extends Controller {
     const wall = this.models.grid.getLocalTankWall(currentCoords);
     const wallCollisions = wall.filter((cell) => Utils.isCollision(cell, sides));
     // Player collisions
-    // const players = this.models.player.getLocalTanks(currentCoords);
-    // const playerCollisions = players.filter((player) => Utils.isCollision(player, sides));
-    const playerCollisions = [];
+    const players = this.models.player.getLocalMovingTanks(currentCoords);
+    const playerCollisions = players.filter((player) => Utils.isCollision(player, sides));
     // Enemy collisions
-    // const enemies = this.models.enemy.getLocalTanks(currentCoords, enemy.id);
-    // const enemyCollisions = enemies.filter((enemy) => Utils.isCollision(enemy, sides));
-    const enemyCollisions = [];
+    const enemies = this.models.enemy.getLocalMovingTanks(currentCoords, enemy.id);
+    const enemyCollisions = enemies.filter((enemy) => Utils.isCollision(enemy, sides));
+    enemyCollisions.forEach((enemy) => enemy.isMoving = false);
+    setTimeout(() => {
+      enemyCollisions.forEach((enemy) => enemy.isMoving = true);
+    }, 300);
+    // const enemyCollisions = [];
+    // Base collisions
+    const baseCollision = Utils.isCollision(this.models.base, sides);
     // Border collisions
     const borderWidth = this.canvas.width - spriteSize; // 384
     const borderHeight = this.canvas.height - spriteSize; // 416
     const borderCollision = Utils.isBorder(newCoords, borderWidth, borderHeight);
     // Collisions conditions
-    const collisions = [wallCollisions.length, playerCollisions.length, enemyCollisions.length, borderCollision];
+    const collisions = [wallCollisions.length, playerCollisions.length, enemyCollisions.length, baseCollision, borderCollision];
     if (Utils.hasCollisions(collisions)) {
       this.changeDirection(currentCoords, enemy);
       return currentCoords;

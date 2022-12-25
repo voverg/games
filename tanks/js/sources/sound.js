@@ -27,6 +27,11 @@ export class Sound {
         path: 'sound/explosion-wall.mp3',
       },
       {
+        name: 'explosionBase',
+        elem: null,
+        path: 'sound/explosion-base.mp3',
+      },
+      {
         name: 'hitBorder',
         elem: null,
         path: 'sound/hit-border.mp3',

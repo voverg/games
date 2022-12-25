@@ -83,6 +83,14 @@ export class PlayerBulletController extends Controller {
       this.destroyBullet(bullet);
     }
 
+    // Base collisions
+    const baseCollision = Utils.isCollision(this.models.base, sides);
+    if (baseCollision) {
+      this.destroyBullet(bullet);
+      this.actions.setGameOver(true);
+      this.sources.sound.getElem('explosionBase').play();
+    }
+
     // Border collisions
     const borderWidth = this.canvas.width - bullet.size;
     const borderHeight = this.canvas.height - bullet.size;

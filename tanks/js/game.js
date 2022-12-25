@@ -8,6 +8,7 @@ import { Bullet } from './entities/bullet.js';
 import { Explosion } from './entities/explosion.js';
 // Models
 import { LevelsModel } from './models/levels.model.js';
+import { BaseModel } from './models/base.model.js';
 import { GridModel } from './models/grid.model.js';
 import { TankModel } from './models/tank.model.js';
 import { BulletModel } from './models/bullet.model.js';
@@ -48,6 +49,7 @@ export class Game {
 
     this.models = {
       levels: new LevelsModel(),
+      base: new BaseModel(),
       grid: new GridModel(),
       player: new TankModel(),
       enemy: new TankModel(),
@@ -89,6 +91,8 @@ export class Game {
   init() {
     this.store.subscribe(() => {
       this.state = this.store.getState();
+      console.log('game over: ', this.state.isGameOver);
+      console.log('Is Win: ', this.state.isWin);
     });
     // Init canvas
     this.canvas.init({
