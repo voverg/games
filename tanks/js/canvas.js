@@ -84,6 +84,18 @@ export class Canvas {
     });
   }
 
+  drawScore({x, y, index}) {
+    this.drawObj({
+      sprite: this.sprite.getElem(),
+      spriteOffsetX: this.sprite.getScoreSprite(index).x,
+      spriteOffsetY: this.sprite.getScoreSprite(index).y,
+      width: 32,
+      height: 16,
+      x: x,
+      y: y,
+    });
+  }
+
   drawObj( {sprite, spriteOffsetX, spriteOffsetY, width, height, x, y} ) {
     this.ctx.drawImage(
       sprite,

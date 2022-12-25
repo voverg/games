@@ -1,11 +1,12 @@
 import { Utils } from '../utils/utils.js';
 
 export class Tank {
-  constructor({canvas, x, y, type,}) {
+  constructor({canvas, x, y, type, bonus}) {
     this.x = x;
     this.y = y;
     this.size = 32;
     this.canvas = canvas;
+    this.bonus = bonus;
     this.type = type;
     this.tank = getTankMap(type);
     // this.direction = 'up';
@@ -39,6 +40,7 @@ export class Tank {
     let index = this.type === 'enemy_4' ? this.spriteIndex + this.health : this.spriteIndex;
     index = index === 11 ? 10 : index;
     index = this.type === 'player' ? this.spriteIndex + this.health - 1 : index;
+    index = this.bonus ? this.spriteIndex + 1 : index;
 
     this.canvas.drawTank({
       direction: this.direction,

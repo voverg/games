@@ -52,6 +52,10 @@ export class Sprite {
     return tankMap;
   };
 
+  getScoreSprite(index = 16) {
+    return {x: index * this.unit_size, y: 4 * this.unit_size}
+  }
+
   getElem() {
     return this.sprite;
   }

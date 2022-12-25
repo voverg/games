@@ -7,6 +7,12 @@ export class Actions {
     this.store.dispatch({ type: 'general', payload: {'score': value} });
   }
 
+  setKilledEnemies(type) {
+    const state = this.store.getState();
+    const value = {...state.killedEnemies, [type]: state.killedEnemies[type] + 1};
+    this.store.dispatch({ type: 'general', payload: {'killedEnemies': value} });
+  }
+
   setEnemyAmount(value) {
     this.store.dispatch({ type: 'general', payload: {'enemyAmount': value} });
   }

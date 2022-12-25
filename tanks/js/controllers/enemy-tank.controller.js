@@ -87,11 +87,13 @@ export class EnemyTankController extends Controller {
     const wall = this.models.grid.getLocalTankWall(currentCoords);
     const wallCollisions = wall.filter((cell) => Utils.isCollision(cell, sides));
     // Player collisions
-    const players = this.models.player.getLocalTanks(currentCoords);
-    const playerCollisions = players.filter((player) => Utils.isCollision(player, sides));
+    // const players = this.models.player.getLocalTanks(currentCoords);
+    // const playerCollisions = players.filter((player) => Utils.isCollision(player, sides));
+    const playerCollisions = [];
     // Enemy collisions
-    const enemies = this.models.enemy.getLocalTanks(currentCoords, enemy.id);
-    const enemyCollisions = enemies.filter((enemy) => Utils.isCollision(enemy, sides));
+    // const enemies = this.models.enemy.getLocalTanks(currentCoords, enemy.id);
+    // const enemyCollisions = enemies.filter((enemy) => Utils.isCollision(enemy, sides));
+    const enemyCollisions = [];
     // Border collisions
     const borderWidth = this.canvas.width - spriteSize; // 384
     const borderHeight = this.canvas.height - spriteSize; // 416

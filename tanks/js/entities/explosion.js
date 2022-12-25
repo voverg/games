@@ -22,5 +22,15 @@ export class Explosion {
       spriteMap: this.spriteMap[this.type],
       index: 0,
     });
+
+    if (this.type === 'tank') {
+      setTimeout(() => {
+        this.canvas.drawScore({
+          x: this.x,
+          y: this.y - 16,
+          index: 16,
+        });
+      }, 100);
+    }
   }
 }

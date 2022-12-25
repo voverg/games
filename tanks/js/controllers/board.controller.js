@@ -19,12 +19,17 @@ export class BoardController extends Controller {
 
     this.createGrid();
     this.createPlayer();
-    this.createEnemy(this.canvas.width - this.sources.sprite.unit_size, 0);
+    // this.createEnemy(this.canvas.width - this.sources.sprite.unit_size, 0);
 
-    // this.createEnemy((this.canvas.width - this.sources.sprite.unit_size) / 2, 0);
-    // const enemyInterval = setInterval(() => {
-    //   this.createEnemy(this.canvas.width - this.sources.sprite.unit_size, 0);
-    // }, 3000);
+    const enemyInterval = setInterval(() => {
+      if (this.state.enemyAmount && this.models.enemy.length < 3) {
+        this.createEnemy(this.canvas.width - this.sources.sprite.unit_size, 0);
+        this.actions.setEnemyAmount(this.state.enemyAmount - 1);
+      } else if (!this.state.enemyAmount && !this.models.enemy.length) {
+        this.actions.setGameOver(true);
+        this.actions.setWin(true);
+      }
+    }, 3000);
   }
 
   
@@ -67,8 +72,14 @@ export class BoardController extends Controller {
   createEnemy(x, y) {
     const types = ['enemy_1', 'enemy_2', 'enemy_3', 'enemy_4'];
     const type = types[Utils.random(0, types.length - 1)];
+    let bonus = false;
+    if (new Set([17, 10, 4]).has(this.state.enemyAmount)) {
+      bonus = true;
+    }
+
     const enemy = new this.entities.Tank({
       canvas: this.canvas,
+      bonus: bonus,
       type: type,
       x: x,
       y: y,
@@ -78,12 +89,12 @@ export class BoardController extends Controller {
   }
 
   update() {
-    if (!this.models.enemy.length && this.state.enemyAmount) {
-      this.createEnemy(this.canvas.width - this.sources.sprite.unit_size, 0);
-    } else if (!this.state.enemyAmount) {
-      this.actions.setGameOver(true);
-      this.actions.setWin(true);
-    }
+    // if (!this.models.enemy.length && this.state.enemyAmount) {
+    //   this.createEnemy(this.canvas.width - this.sources.sprite.unit_size, 0);
+    // } else if (!this.state.enemyAmount) {
+    //   this.actions.setGameOver(true);
+    //   this.actions.setWin(true);
+    // }
 
     if (!this.models.player.length) {
       this.createPlayer();

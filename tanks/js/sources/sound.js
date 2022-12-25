@@ -41,6 +41,16 @@ export class Sound {
         elem: null,
         path: 'sound/score.mp3',
       },
+      {
+        name: 'setBonus',
+        elem: null,
+        path: 'sound/set-bonus.mp3',
+      },
+      {
+        name: 'winBonus',
+        elem: null,
+        path: 'sound/win-bonus.mp3',
+      },
     ];
 
     this._init();
