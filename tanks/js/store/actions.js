@@ -12,7 +12,7 @@ export class Actions {
   }
 
   setSound(value) {
-    this.store.dispatch({ type: 'general', payload: {'sound': value} });
+    this.store.dispatch({ type: 'general', payload: {'isSound': value} });
   }
 
   setLevel(value) {
@@ -20,7 +20,7 @@ export class Actions {
   }
 
   setModal(value) {
-    this.store.dispatch({ type: 'general', payload: {'showModal': value} });
+    this.store.dispatch({ type: 'general', payload: {'isModal': value} });
   }
 
   setModalContent(value) {
@@ -28,11 +28,11 @@ export class Actions {
   }
 
   setWin(value) {
-    this.store.dispatch({ type: 'general', payload: {'win': value} });
+    this.store.dispatch({ type: 'general', payload: {'isWin': value} });
   }
 
   setGameOver(value) {
-    this.store.dispatch({ type: 'general', payload: {'gameOver': value} });
+    this.store.dispatch({ type: 'general', payload: {'isGameOver': value} });
   }
 
 }

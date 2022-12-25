@@ -52,6 +52,7 @@ export class EventController extends Controller {
 
   checkEvent(props) {
     const tank = this.models.player.arr[0];
+    if (!tank) return;
     // Check if arrow key keydown or keyup
     if (this.arrowEvents.has(props.type)) {
       const movingValue = props.keyPressed ? true : false;
@@ -77,6 +78,7 @@ export class EventController extends Controller {
       case 'left':
       case 'right':
         const tank = this.models.player.arr[0];
+        if (!tank) return;
         tank.direction = props.type;
         break;
       case 'shoot':
@@ -101,8 +103,8 @@ export class EventController extends Controller {
   }
 
   shoot(event) {
-    if (event.repeat) return;
     const tank = this.models.player.arr[0];
+    if (event.repeat || !tank) return;
     tank.shoot = true;
   }
 

@@ -31,6 +31,16 @@ export class Sound {
         elem: null,
         path: 'sound/hit-border.mp3',
       },
+      {
+        name: 'hitArmoredTank',
+        elem: null,
+        path: 'sound/hit-armored-tank.mp3',
+      },
+      {
+        name: 'score',
+        elem: null,
+        path: 'sound/score.mp3',
+      },
     ];
 
     this._init();

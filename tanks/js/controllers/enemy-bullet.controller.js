@@ -54,6 +54,7 @@ export class EnemyBulletController extends Controller {
     if (playerCollisions.length) {
       this.destroyBullet(bullet);
       this.createTankExplosion(bullet);
+      this.actions.setGameOver(true);
       
       players.forEach((player) => {
         this.models.player.decreaseHealth(player.id);

@@ -24,11 +24,11 @@ export class Canvas {
     });
   }
 
-  drawBase() {
+  drawBase(index) {
     this.drawObj({
       sprite: this.sprite.getElem(),
-      spriteOffsetX: this.sprite.baseMap.x,
-      spriteOffsetY: this.sprite.baseMap.y,
+      spriteOffsetX: this.sprite.baseMap[index].x,
+      spriteOffsetY: this.sprite.baseMap[index].y,
       width: this.sprite.unit_size,
       height: this.sprite.unit_size,
       x: 192,
@@ -48,11 +48,11 @@ export class Canvas {
     });
   }
 
-  drawTank({direction, x, y, spriteMap}) {
+  drawTank({direction, x, y, index}) {
     this.drawObj({
       sprite: this.sprite.getElem(),
-      spriteOffsetX: this.sprite[spriteMap][direction].x,
-      spriteOffsetY: this.sprite[spriteMap][direction].y,
+      spriteOffsetX: this.sprite.getTankSprite(index)[direction].x,
+      spriteOffsetY: this.sprite.getTankSprite(index)[direction].y,
       width: this.sprite.unit_size,
       height: this.sprite.unit_size,
       x: x,

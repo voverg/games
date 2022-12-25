@@ -1,4 +1,5 @@
 import { Controller } from './controller.js';
+import { Utils } from '../utils/utils.js';
 
 export class BoardController extends Controller {
   constructor() {
@@ -39,7 +40,7 @@ export class BoardController extends Controller {
   }
 
   _createCell(row, col, type) {
-    const types = {0: null, 1: 'brick', 2: 'tile', 3: 'plant'};
+    const types = {0: null, 1: 'brick', 2: 'tile', 3: 'water', 4: null};
     const cellProps = {
       row,
       col,
@@ -55,14 +56,7 @@ export class BoardController extends Controller {
   createPlayer() {
     const player = new this.entities.Tank({
       canvas: this.canvas,
-      spriteMap: 'playerMap',
-      direction: 'up',
-      isMoving: false,
-      size: this.sources.sprite.unit_size,
       type: 'player',
-      life: 1,
-      step: 2,
-      shoot: false,
       x: 128,
       y: 384,
     });
@@ -71,16 +65,11 @@ export class BoardController extends Controller {
   }
 
   createEnemy(x, y) {
+    const types = ['enemy_1', 'enemy_2', 'enemy_3', 'enemy_4'];
+    const type = types[Utils.random(0, types.length - 1)];
     const enemy = new this.entities.Tank({
       canvas: this.canvas,
-      spriteMap: 'enemyMap',
-      direction: 'left',
-      isMoving: true,
-      size: this.sources.sprite.unit_size,
-      type: 'enemy',
-      life: 1,
-      step: 2,
-      shoot: false,
+      type: type,
       x: x,
       y: y,
     });
@@ -91,6 +80,9 @@ export class BoardController extends Controller {
   update() {
     if (!this.models.enemy.length && this.state.enemyAmount) {
       this.createEnemy(this.canvas.width - this.sources.sprite.unit_size, 0);
+    } else if (!this.state.enemyAmount) {
+      this.actions.setGameOver(true);
+      this.actions.setWin(true);
     }
 
     if (!this.models.player.length) {

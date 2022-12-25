@@ -53,14 +53,25 @@ export class PlayerBulletController extends Controller {
     const enemies = this.models.enemy.getLocalTanks(coords);
     const enemyCollisions = enemies.filter((enemy) => Utils.isCollision(enemy, sides));
     if (enemyCollisions.length) {
-      this.sources.sound.getElem('explosionTank').play();
       this.destroyBullet(bullet);
-      this.createTankExplosion(bullet);
-      this.actions.setEnemyAmount(this.state.enemyAmount - 1);
 
       enemies.forEach((enemy) => {
         this.models.enemy.decreaseHealth(enemy.id);
       });
+
+      const enemy = enemyCollisions[0];
+      const type = enemy.health <= 0 ? enemy.type : null;
+      console.log(type);
+      if (type) {
+        const score = enemy.score;
+        this.actions.setEnemyAmount(this.state.enemyAmount - 1);
+        this.actions.setScore(this.state.score + score);
+        this.createTankExplosion(bullet);
+        this.sources.sound.getElem('explosionTank').play();
+      } else {
+        this.sources.sound.getElem('hitArmoredTank').play();
+      }
+      console.log(this.state.score);
     }
 
     // Enemy bullet collision

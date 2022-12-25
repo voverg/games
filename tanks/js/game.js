@@ -147,6 +147,17 @@ export class Game {
     this.update();
     this.render();
 
+    // if (this.state.isGameOver) {
+    //   this.gameOver();
+    // } else {
+    //   requestAnimationFrame(this.loop);
+    // }
+
     requestAnimationFrame(this.loop);
   }
+
+  gameOver() {
+    this.actions.setModal(true);
+  }
+
 }
