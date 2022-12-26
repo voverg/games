@@ -27,7 +27,7 @@ export class PlayerTankController extends Controller {
       direction: player.direction,
       spriteMap: 'bulletMap',
       type: 'bullet:player',
-      power: 1,
+      power: player.power,
       size: this.sources.sprite.bullet_size,
       step: 4,
       x: player.x,
@@ -94,6 +94,12 @@ export class PlayerTankController extends Controller {
     if (Utils.hasCollisions(collisions)) {
       return currentCoords;
     }
+    // Bonus collisions
+    const bonuses = this.models.bonus.getLocalBonuses(currentCoords);
+    const bonusCollisions = bonuses.filter((bonus) => Utils.isCollision(bonus, sides));
+    if (bonusCollisions.length) {
+      this.handleBonus(bonusCollisions[0], player);
+    }
 
     return newCoords;
   }
@@ -131,6 +137,53 @@ export class PlayerTankController extends Controller {
 
     player.prevDirection = player.direction;
     return coords;
+  }
+
+  handleBonus(bonus, player) {
+    this.models.bonus.clearAll();
+    this.actions.setScore(this.state.score + 500);
+    this.sources.sound.play('winBonus');
+
+    switch (bonus.type) {
+      case 'helmet':
+        player.health = 4;
+        break;
+      case 'timer':
+        this.models.enemy.getAll().forEach((enemy) => {
+          this.models.enemy.stopTank(enemy.id);
+        });
+        setTimeout(() => {
+          this.models.enemy.getAll().forEach((enemy) => {
+            this.models.enemy.moveTank(enemy.id);
+          });
+        }, 10000);
+        break;
+      case 'shovel':
+        const baseWall = this.models.grid.getBaseWall();
+        baseWall.forEach((cell) => {
+          cell.type = 'tile';
+          cell.life = cell.lifeMap[cell.type];
+        });
+        setTimeout(() => {
+          baseWall.forEach((cell) => {
+            cell.type = 'brick';
+          cell.life = cell.lifeMap[cell.type];
+          });
+        }, 20000);
+        break;
+      case 'star':
+        player.power = 1000;
+        break;
+      case 'grenade':
+        console.log('Grenade bonus');
+        this.models.enemy.getAll().forEach((enemy) => {
+          this.models.enemy.removeTank(enemy.id);
+        });
+        break;
+      case 'tank':
+        player.health += 2;
+        break;
+    }
   }
 
 }

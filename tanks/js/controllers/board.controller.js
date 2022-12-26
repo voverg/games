@@ -82,7 +82,7 @@ export class BoardController extends Controller {
     const directions = ['up', 'right', 'down', 'left'];
     const type = types[Utils.random(0, types.length - 1)];
     let bonus = false;
-    if (new Set([17, 10, 4]).has(this.state.enemyAmount)) {
+    if (new Set([17, 10, 3]).has(this.state.enemyAmount)) {
       bonus = true;
     }
 

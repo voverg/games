@@ -8,8 +8,14 @@ export class GridModel {
     this.arr.push(cell);
   }
 
+  getCell(id) {
+    return this.arr.find((cell) => cell.id === id);
+  }
+
   removeCell(id) {
-    this.arr = this.arr.filter((cell) => cell.id !== id);
+    // this.arr = this.arr.filter((cell) => cell.id !== id);
+    const cell = this.getCell(id);
+    cell.type = null;
   }
 
   decreaseHealth(id, count = 1) {
@@ -24,6 +30,25 @@ export class GridModel {
   getWall() {
     const wall = this.arr.filter((cell) => cell.type);
     return wall;
+  }
+
+  getBaseWall() {
+    const baseWall = this.arr.filter((cell) => {
+      if (
+          (cell.row === 25 && cell.col === 11) ||
+          (cell.row === 25 && cell.col === 14) ||
+          (cell.row === 24 && cell.col === 11) ||
+          (cell.row === 24 && cell.col === 14) ||
+          (cell.row === 23 && cell.col === 11) ||
+          (cell.row === 23 && cell.col === 12) ||
+          (cell.row === 23 && cell.col === 13) ||
+          (cell.row === 23 && cell.col === 14)
+         ) {
+        return true;
+      }
+    });
+
+    return baseWall;
   }
 
   getLocalTankWall({x, y}) {

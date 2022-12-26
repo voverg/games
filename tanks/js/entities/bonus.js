@@ -9,7 +9,8 @@ export class Bonus {
     this.y = 100;
     this.id = null;
     this.spriteIndex = 0;
-    this.types = ['helmet', 'watch', 'shovel', 'star', 'grenade', 'tank'];
+    this.types = ['helmet', 'timer', 'shovel', 'star', 'grenade', 'tank'];
+    // this.types = ['helmet' ,'timer', 'shovel'];
 
     this.init();
   }

@@ -25,12 +25,14 @@ export class EnemyTankController extends Controller {
     const bulletInterval = setInterval(() => {
       this.models.enemy.getAll().forEach((enemy) => {
         if (counter >= enemy.shootInterval) {
-          enemy.shoot = true;
+          if (enemy.isMoving) {
+            enemy.shoot = true;
+          }
           counter = 0;
         }
         counter++;
       });
-    }, 500);
+    }, 1000);
   }
 
   setShoot (enemy) {

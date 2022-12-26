@@ -16,6 +16,11 @@ export class TankModel {
     return this.arr.find((item) => item.id === id);
   }
 
+  moveTank(id) {
+    const enemy = this.getTank(id);
+    enemy.isMoving = true;
+  }
+
   stopTank(id) {
     const enemy = this.getTank(id);
     enemy.isMoving = false;
@@ -23,6 +28,10 @@ export class TankModel {
 
   removeTank(id) {
     this.arr = this.arr.filter((tank) => tank.id !== id);
+  }
+
+  removeAll() {
+    this.arr = [];
   }
 
   decreaseHealth(id, count = 1) {

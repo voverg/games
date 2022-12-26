@@ -41,7 +41,7 @@ export class PlayerBulletController extends Controller {
     const wallCollisions = wall.filter((cell) => Utils.isCollision(cell, sides));
 
     if (wallCollisions.length) {
-      this.sources.sound.getElem('explosionWall').play();
+      this.sources.sound.play('explosionWall');
       this.destroyBullet(bullet);
 
       wallCollisions.forEach((cell) => {
@@ -61,24 +61,24 @@ export class PlayerBulletController extends Controller {
         this.models.enemy.decreaseHealth(enemy.id, count);
 
         if (enemy.bonus) {
+          this.models.bonus.clearAll();
           const bonusObj = new this.entities.Bonus({canvas: this.canvas});
           this.models.bonus.add(bonusObj);
         }
+
+        const type = enemy.health <= 0 ? enemy.type : null;
+
+        if (type) {
+          const score = enemy.score;
+          this.actions.setScore(this.state.score + score);
+          this.actions.setKilledEnemies(type);
+          this.createTankExplosion(bullet);
+          const sound = enemy.bonus ? 'setBonus' : 'explosionTank';
+          this.sources.sound.play(sound);
+        } else {
+          this.sources.sound.play('hitArmoredTank');
+        }
       });
-
-      const enemy = enemyCollisions[0];
-      const type = enemy.health <= 0 ? enemy.type : null;
-
-      if (type) {
-        const score = enemy.score;
-        this.actions.setScore(this.state.score + score);
-        this.actions.setKilledEnemies(type);
-        this.createTankExplosion(bullet);
-        const sound = enemy.bonus ? 'setBonus' : 'explosionTank';
-        this.sources.sound.getElem(sound).play();
-      } else {
-        this.sources.sound.getElem('hitArmoredTank').play();
-      }
     }
 
     // Enemy bullet collision
@@ -93,14 +93,14 @@ export class PlayerBulletController extends Controller {
     if (baseCollision) {
       this.destroyBullet(bullet);
       this.actions.setGameOver(true);
-      this.sources.sound.getElem('explosionBase').play();
+      this.sources.sound.play('explosionBase');
     }
 
     // Border collisions
     const borderWidth = this.canvas.width - bullet.size;
     const borderHeight = this.canvas.height - bullet.size;
     if (Utils.isBorder(coords, borderWidth, borderHeight)) {
-      this.sources.sound.getElem('hitBorder').play();
+      this.sources.sound.play('hitBorder');
       this.destroyBullet(bullet);
     }
   }
