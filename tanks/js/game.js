@@ -6,6 +6,7 @@ import { Cell } from './entities/cell.js';
 import { Tank } from './entities/tank.js';
 import { Bullet } from './entities/bullet.js';
 import { Explosion } from './entities/explosion.js';
+import { Bonus } from './entities/bonus.js';
 // Models
 import { LevelsModel } from './models/levels.model.js';
 import { BaseModel } from './models/base.model.js';
@@ -13,12 +14,14 @@ import { GridModel } from './models/grid.model.js';
 import { TankModel } from './models/tank.model.js';
 import { BulletModel } from './models/bullet.model.js';
 import { ExplosionModel } from './models/explosion.model.js';
+import { BonusModel } from './models/bonus.model.js';
 // Components
 import { BoardComponent } from './components/board.component.js';
 import { PlayerComponent } from './components/player.component.js';
 import { EnemyComponent } from './components/enemy.component.js';
 import { BulletComponent } from './components/bullet.component.js';
 import { ExplosionComponent } from './components/explosion.component.js';
+import { BonusComponent } from './components/bonus.component.js';
 // Static components
 import { Aside } from './components/static/aside.static.js';
 // Controllers
@@ -32,6 +35,7 @@ import { EnemyBulletController } from './controllers/enemy-bullet.controller.js'
 import { Store } from './store/store.js';
 import { Actions } from './store/actions.js';
 import { Canvas } from './canvas.js';
+import { Service } from './utils/service.js';
 
 export class Game {
   constructor() {
@@ -39,13 +43,14 @@ export class Game {
     this.state = this.store.getState();
     this.actions = new Actions(this.store);
     this.canvas = new Canvas();
+    this.service = new Service({store: this.store, actions: this.actions});
 
     this.sources = {
       sprite: new Sprite(),
       sound: new Sound(),
     };
 
-    this.entities = {Cell, Tank, Bullet, Explosion};
+    this.entities = {Cell, Tank, Bullet, Explosion, Bonus};
 
     this.models = {
       levels: new LevelsModel(),
@@ -55,6 +60,7 @@ export class Game {
       enemy: new TankModel(),
       bullet: new BulletModel(),
       explosion: new ExplosionModel(),
+      bonus: new BonusModel(),
     };
 
     this.controllers = {
@@ -72,6 +78,7 @@ export class Game {
       enemy: new EnemyComponent(),
       bullet: new BulletComponent(),
       explosion: new ExplosionComponent(),
+      bonus: new BonusComponent(),
     };
 
     this.static = {
@@ -91,8 +98,8 @@ export class Game {
   init() {
     this.store.subscribe(() => {
       this.state = this.store.getState();
-      console.log('game over: ', this.state.isGameOver);
-      console.log('Is Win: ', this.state.isWin);
+      // console.log('game over: ', this.state.isGameOver);
+      // console.log('Is Win: ', this.state.isWin);
     });
     // Init canvas
     this.canvas.init({
@@ -122,6 +129,8 @@ export class Game {
         components: this.components,
       });
     });
+
+    this.service.setLevelToStore();
   }
 
   start() {

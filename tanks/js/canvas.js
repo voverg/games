@@ -84,6 +84,18 @@ export class Canvas {
     });
   }
 
+  drawBonus({x, y, size, index}) {
+    this.drawObj({
+      sprite: this.sprite.getElem(),
+      spriteOffsetX: this.sprite.getBonusSprite(index).x,
+      spriteOffsetY: this.sprite.getBonusSprite(index).y,
+      width: size,
+      height: size,
+      x: x,
+      y: y,
+    });
+  }
+
   drawScore({x, y, index}) {
     this.drawObj({
       sprite: this.sprite.getElem(),

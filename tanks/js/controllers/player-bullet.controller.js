@@ -59,6 +59,11 @@ export class PlayerBulletController extends Controller {
       enemies.forEach((enemy) => {
         const count = enemy.bonus ? 4 : 1;
         this.models.enemy.decreaseHealth(enemy.id, count);
+
+        if (enemy.bonus) {
+          const bonusObj = new this.entities.Bonus({canvas: this.canvas});
+          this.models.bonus.add(bonusObj);
+        }
       });
 
       const enemy = enemyCollisions[0];

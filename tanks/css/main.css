@@ -94,6 +94,10 @@ body {
   height: 32px;
 }
 
+.level {
+  margin-bottom: 20px;
+}
+
 .footer {
   flex-shrink: 0;
   display: flex;

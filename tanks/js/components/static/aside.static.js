@@ -1,6 +1,7 @@
 export class Aside {
   constructor() {
     this.$root = document.querySelector('.aside');
+    this.enemyAmount = 0;
   }
 
   init({store}) {
@@ -19,6 +20,8 @@ export class Aside {
   }
 
   createContent() {
+    const level = this.state.level;
+    const score = this.state.score;
     const enemyAmount = this.state.enemyAmount;
     const tankImg = `<img src="img/enemy.png" class="aside__tanks-img" alt="">`;
     const tanks = [];
@@ -28,9 +31,22 @@ export class Aside {
 
     return `
       <div class="aside__tanks">${tanks.join('')}</div>
-      <div class="aside__btns">
-        <button class="pause__btn btn" data-type="pause">МЕНЮ</button>
+
+      <div class="info">
+        <div class="level">
+          <span class="level__text">УРОВЕНЬ </span>
+          <span class="level__value">${level}</span>
+        </div>
+
+        <div class="score">
+          <span class="score__text">ОЧКИ </span>
+          <span class="score__value">${score}</span>
+        </div>
       </div>
+
+      <!-- <div class="aside__btns">
+        <button class="pause__btn btn" data-type="pause">МЕНЮ</button>
+      </div> -->
     `
   }
 }
