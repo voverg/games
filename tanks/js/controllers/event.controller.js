@@ -52,23 +52,27 @@ export class EventController extends Controller {
 
   checkEvent(props) {
     const tank = this.models.player.arr[0];
-    if (!tank) return;
-    // Check if arrow key keydown or keyup
-    if (this.arrowEvents.has(props.type)) {
-      const movingValue = props.keyPressed ? true : false;
-      tank.isMoving = movingValue;
+    if (tank) {
+      // Check if arrow key keydown or keyup
+      if (this.arrowEvents.has(props.type)) {
+        const movingValue = props.keyPressed ? true : false;
+        tank.isMoving = movingValue;
+      }
+
+      // const playSound = tank.isMoving ? 'move' : 'motor';
+      // const stopSound = !tank.isMoving ? 'move' : 'motor';
+      // this.sources.sound.pause(stopSound);
+      // this.sources.sound.loop(playSound);
+      // this.sources.sound.play(playSound);
     }
+    
     // Check if event in this.events
     if (props.type && props.type in this.events) {
       const eventType = this.events[props.type];
       this.handleEvent({type: eventType, event});
     }
 
-    // const playSound = tank.isMoving ? 'move' : 'motor';
-    // const stopSound = !tank.isMoving ? 'move' : 'motor';
-    // this.sources.sound.pause(stopSound);
-    // this.sources.sound.loop(playSound);
-    // this.sources.sound.play(playSound);
+
   }
 
   handleEvent(props) {
@@ -108,6 +112,11 @@ export class EventController extends Controller {
     tank.shoot = true;
   }
 
+  closeModal() {
+    console.log('game over');
+    window.location.reload();
+  }
+
   pauseMove() {
     // this.snakes.moving = this.snakes.moving ? false : true;
     // this.actions.setMoving(this.snakes.moving);
@@ -133,10 +142,6 @@ export class EventController extends Controller {
   startNewGame() {
     // this.actions.setModal(false);
     // window.location.reload();
-  }
-
-  closeModal() {
-    // this.actions.setModal(false);
   }
 
 }

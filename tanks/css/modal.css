@@ -1,0 +1,112 @@
+/* --- Modal --- */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: var(--blue);
+  color: #fff;
+  overflow-y: auto;
+  opacity: 0;
+  visibility: hidden;
+  transition: .3s;
+}
+.modal__show {
+  visibility: visible;
+  opacity: 1;
+}
+.modal__center {
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.modal__header {
+  position: relative;
+  padding: 20px;
+}
+
+.modal__close {
+  margin-top: 50px;
+  padding: 5px;
+  background-color: rgba(255, 255, 255, .5);
+  border: 1px solid transparent;
+  border-radius: 3px;
+  color: #fff;
+  font-size: 1.3rem;
+  cursor: pointer;
+  transition: .3s;
+}
+.modal__close:hover {
+  border-bottom: 1px solid rgba(255, 255, 255, .2);
+  opacity: .8;
+}
+
+.modal__title {
+  text-align: center;
+  font-size: 2rem;
+  letter-spacing: .3rem;
+}
+
+.modal__content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.modal__item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-width: 300px;
+  padding: 10px 10px 5px;
+  font-size: 1.5rem;
+}
+.hr {
+  min-width: 300px;
+}
+.value-color {
+  color: var(--orange);
+}
+
+.modal__tank-icon {
+  width: var(--unit-size);
+  height: var(--unit-size);
+}
+
+.modal__footer {
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 5vh;
+  padding-bottom: 20px;
+  color: #999;
+  text-align: center;
+}
+
+/*Sprites*/
+.tank-1 {
+  background-image: url('../img/sprite.png');
+  background-position: left 0px top calc(-4 * var(--unit-size));
+}
+.tank-2 {
+  background-image: url('../img/sprite.png');
+  background-position: left 0px top calc(-6 * var(--unit-size));
+}
+.tank-3 {
+  background-image: url('../img/sprite.png');
+  background-position: left 0px top calc(-8 * var(--unit-size));
+}
+.tank-4 {
+  background-image: url('../img/sprite.png');
+  background-position: left 0px top calc(-10 * var(--unit-size));
+}

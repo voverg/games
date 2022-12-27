@@ -54,7 +54,6 @@ export class EnemyBulletController extends Controller {
     if (playerCollisions.length) {
       this.destroyBullet(bullet);
       this.createTankExplosion(bullet);
-      this.actions.setGameOver(true);
       
       players.forEach((player) => {
         this.models.player.decreaseHealth(player.id);
@@ -73,7 +72,7 @@ export class EnemyBulletController extends Controller {
     if (baseCollision) {
       this.destroyBullet(bullet);
       this.actions.setGameOver(true);
-      // this.sources.sound.getElem('explosionBase').play();
+      this.sources.sound.play('explosionBase');
     }
 
     // Border collisions

@@ -25,7 +25,9 @@ export class BoardController extends Controller {
   
 
   createGrid() {
-    const levelMap = this.levels.getMap(this.state.level);
+    const level = this.state.level;
+    const levelMap = this.levels.getMap(level);
+    
     levelMap.forEach((row, rowIndex) => {
       row.forEach((type, colIndex) => {
         const cell = this._createCell(rowIndex, colIndex, type);
@@ -108,7 +110,8 @@ export class BoardController extends Controller {
 
   update() {
     if (!this.models.player.length) {
-      this.createPlayer();
+      this.actions.setGameOver(true);
+      // this.createPlayer();
     }
   }
 

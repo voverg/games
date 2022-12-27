@@ -31,6 +31,10 @@ export class EnemyTankController extends Controller {
           counter = 0;
         }
         counter++;
+        
+        if (this.state.isGameOver) {
+          clearInterval(bulletInterval);
+        }
       });
     }, 1000);
   }

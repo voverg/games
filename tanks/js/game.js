@@ -24,6 +24,7 @@ import { ExplosionComponent } from './components/explosion.component.js';
 import { BonusComponent } from './components/bonus.component.js';
 // Static components
 import { Aside } from './components/static/aside.static.js';
+import { Modal } from './components/static/modal.static.js';
 // Controllers
 import { EventController } from './controllers/event.controller.js';
 import { BoardController } from './controllers/board.controller.js';
@@ -83,6 +84,7 @@ export class Game {
 
     this.static = {
       aside: new Aside(),
+      modal: new Modal(),
     };
 
     this.loop = this.loop.bind(this);
@@ -98,9 +100,9 @@ export class Game {
   init() {
     this.store.subscribe(() => {
       this.state = this.store.getState();
-      // console.log('game over: ', this.state.isGameOver);
-      // console.log('Is Win: ', this.state.isWin);
     });
+
+    this.service.setLevelToStore();
     // Init canvas
     this.canvas.init({
         store: this.store,
@@ -114,7 +116,7 @@ export class Game {
     });
     // Inin static components
     Object.keys(this.static).forEach((key) => {
-      this.static[key].init({store: this.store, models: this.models});
+      this.static[key].init({store: this.store, models: this.models, sources: this.sources});
       this.static[key].render();
     });
     // Init controllers
@@ -130,7 +132,6 @@ export class Game {
       });
     });
 
-    this.service.setLevelToStore();
   }
 
   start() {
@@ -160,17 +161,17 @@ export class Game {
     this.update();
     this.render();
 
-    // if (this.state.isGameOver) {
-    //   this.gameOver();
-    // } else {
-    //   requestAnimationFrame(this.loop);
-    // }
-
-    requestAnimationFrame(this.loop);
+    if (this.state.isGameOver) {
+      this.gameOver();
+    } else {
+      requestAnimationFrame(this.loop);
+    }
   }
 
   gameOver() {
     this.actions.setModal(true);
+    const level = this.state.isWin ? this.state.level + 1 : this.state.level;
+    this.service.set('tanks-level', level);
   }
 
 }
