@@ -52,7 +52,7 @@ export class Event {
     });
 
     // Handle arrow events
-    document.addEventListener('mouseup', (event) => {
+    document.addEventListener('pointerup', (event) => {
       const target = event.target;
       if (!this.arrows.has(target.dataset.type)) return;
 
@@ -60,7 +60,7 @@ export class Event {
       this.checkEventType(target.dataset.type);
     });
 
-    document.addEventListener('mousedown', (event) => {
+    document.addEventListener('pointerdown', (event) => {
       const target = event.target;
       if (!this.arrows.has(target.dataset.type)) return;
 
