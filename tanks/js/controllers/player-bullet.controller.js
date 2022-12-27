@@ -57,7 +57,7 @@ export class PlayerBulletController extends Controller {
       this.destroyBullet(bullet);
 
       enemies.forEach((enemy) => {
-        const count = enemy.bonus ? 4 : 1;
+        const count = enemy.bonus ? 4 : bullet.power;
         this.models.enemy.decreaseHealth(enemy.id, count);
 
         if (enemy.bonus) {

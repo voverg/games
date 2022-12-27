@@ -10,7 +10,6 @@ export class Bonus {
     this.id = null;
     this.spriteIndex = 0;
     this.types = ['helmet', 'timer', 'shovel', 'star', 'grenade', 'tank'];
-    // this.types = ['helmet' ,'timer', 'shovel'];
 
     this.init();
   }

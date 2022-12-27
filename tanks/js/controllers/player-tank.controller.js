@@ -175,13 +175,20 @@ export class PlayerTankController extends Controller {
         player.power = 1000;
         break;
       case 'grenade':
-        console.log('Grenade bonus');
         this.models.enemy.getAll().forEach((enemy) => {
+          const explosion = new this.entities.Explosion({
+            canvas: this.canvas,
+            type: 'tank',
+            x: enemy.x - 15,
+            y: enemy.y - 15,
+          });
+          this.models.explosion.add(explosion);
+          this.sources.sound.play('explosionTank');
           this.models.enemy.removeTank(enemy.id);
         });
         break;
       case 'tank':
-        player.health += 2;
+        player.step += 2;
         break;
     }
   }
