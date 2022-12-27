@@ -73,6 +73,7 @@ export class BoardController extends Controller {
       } else if (!this.state.enemyAmount && !this.models.enemy.length) {
         this.actions.setGameOver(true);
         this.actions.setWin(true);
+        clearInterval(enemyInterval);
       }
     }, 3000);
   }

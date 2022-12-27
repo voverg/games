@@ -43,7 +43,7 @@ export class EnemyTankController extends Controller {
       type: 'bullet:enemy',
       power: 1,
       size: this.sources.sprite.bullet_size,
-      step: 4,
+      step: enemy.bulletStep,
       x: enemy.x,
       y: enemy.y,
     });

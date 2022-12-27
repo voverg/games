@@ -29,7 +29,7 @@ export class PlayerTankController extends Controller {
       type: 'bullet:player',
       power: player.power,
       size: this.sources.sprite.bullet_size,
-      step: 4,
+      step: player.bulletStep,
       x: player.x,
       y: player.y,
     });
@@ -172,7 +172,8 @@ export class PlayerTankController extends Controller {
         }, 20000);
         break;
       case 'star':
-        player.power = 1000;
+        player.step += 2;
+        player.bulletStep += 4;
         break;
       case 'grenade':
         this.models.enemy.getAll().forEach((enemy) => {
@@ -188,7 +189,7 @@ export class PlayerTankController extends Controller {
         });
         break;
       case 'tank':
-        player.step += 2;
+        player.power = 1000;
         break;
     }
   }

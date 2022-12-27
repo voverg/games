@@ -15,6 +15,9 @@ export class Bonus {
   }
 
   init() {
+    this.x = Utils.random(0, this.canvas.width - this.size);
+    this.y = Utils.random(0, this.canvas.height - this.size);
+    // Define bonus sides
     this.upSide = this.y;
     this.rightSide = this.x + this.size;
     this.downSide = this.y + this.size;

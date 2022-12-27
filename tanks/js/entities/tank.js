@@ -28,6 +28,7 @@ export class Tank {
     this.prevDirection = this.direction;
     this.isMoving = this.tank.isMoving;
     this.step = this.tank.step;
+    this.bulletStep = this.tank.bulletStep;
     this.shoot = this.tank.shoot;
     this.shootInterval = this.tank.shootInterval;
     this.power = this.tank.power;
@@ -61,6 +62,7 @@ function getTankMap(type) {
       spriteIndex: 0,
       isMoving: false,
       step: 2,
+      bulletStep: 4,
       power: 1,
       shoot: false,
       shootInterval: 0,
@@ -72,6 +74,7 @@ function getTankMap(type) {
       spriteIndex: 4,
       isMoving: false,
       step: 2,
+      bulletStep: 4,
       power: 1,
       shoot: false,
       shootInterval: 2,
@@ -83,6 +86,7 @@ function getTankMap(type) {
       spriteIndex: 6,
       isMoving: false,
       step: 3,
+      bulletStep: 4,
       power: 1,
       shoot: false,
       shootInterval: 2,
@@ -94,6 +98,7 @@ function getTankMap(type) {
       spriteIndex: 8,
       isMoving: false,
       step: 2,
+      bulletStep: 4,
       power: 1,
       shoot: false,
       shootInterval: 1,
@@ -105,6 +110,7 @@ function getTankMap(type) {
       spriteIndex: 10,
       isMoving: false,
       step: 2,
+      bulletStep: 4,
       power: 1,
       shoot: false,
       shootInterval: 2,
