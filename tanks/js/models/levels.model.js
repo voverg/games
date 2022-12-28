@@ -4,9 +4,12 @@ export class LevelsModel {
   }
 
   getMap(level) {
-    const mapAmount = Object.keys(getLevelMaps()).length;
-    level = level > mapAmount ? 1 : level;
     return this.arr[level];
+  }
+
+  getMapsAmount() {
+    const mapsAmount = Object.keys(getLevelMaps()).length;
+    return mapsAmount;
   }
 
   getMapWidth(level) {

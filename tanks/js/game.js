@@ -110,14 +110,14 @@ export class Game {
         sources: this.sources,
         models: this.models,
       });
-    // Inin canvas components
-    Object.keys(this.components).forEach((key) => {
-      this.components[key].init(this.canvas, this.models);
-    });
     // Inin static components
     Object.keys(this.static).forEach((key) => {
       this.static[key].init({store: this.store, models: this.models, sources: this.sources});
       this.static[key].render();
+    });
+    // Inin canvas components
+    Object.keys(this.components).forEach((key) => {
+      this.components[key].init(this.canvas, this.models);
     });
     // Init controllers
     Object.keys(this.controllers).forEach((key) => {
@@ -170,7 +170,10 @@ export class Game {
 
   gameOver() {
     this.actions.setModal(true);
-    const level = this.state.isWin ? this.state.level + 1 : this.state.level;
+    // Set level to local storage
+    let nextLevel = this.state.level + 1;
+    nextLevel = nextLevel > this.models.levels.getMapsAmount() ? 1 : nextLevel;
+    const level = this.state.isWin ? nextLevel : this.state.level;
     this.service.set('tanks-level', level);
   }
 

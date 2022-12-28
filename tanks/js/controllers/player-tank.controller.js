@@ -174,6 +174,7 @@ export class PlayerTankController extends Controller {
       case 'star':
         player.step += 2;
         player.bulletStep += 4;
+        player.health = 2;
         break;
       case 'grenade':
         this.models.enemy.getAll().forEach((enemy) => {
@@ -190,6 +191,7 @@ export class PlayerTankController extends Controller {
         break;
       case 'tank':
         player.power = 1000;
+        player.health = 3;
         break;
     }
   }
