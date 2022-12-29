@@ -73,6 +73,7 @@ export class PlayerBulletController extends Controller {
           this.actions.setScore(this.state.score + score);
           this.actions.setKilledEnemies(type);
           this.createTankExplosion(bullet);
+          this.createScore(enemy);
           const sound = enemy.bonus ? 'setBonus' : 'explosionTank';
           this.sources.sound.play(sound);
         } else {
@@ -103,6 +104,17 @@ export class PlayerBulletController extends Controller {
       this.sources.sound.play('hitBorder');
       this.destroyBullet(bullet);
     }
+  }
+
+  createScore(enemy) {
+    const score = new this.entities.Score({
+      canvas: this.canvas,
+      spriteIndex: enemy.score / 100 - 1,
+      x: enemy.x,
+      y: enemy.y + 8,
+    });
+
+    this.models.score.add(score);
   }
 
   createTankExplosion(bullet) {

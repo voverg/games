@@ -52,6 +52,27 @@ button {
   opacity: .8;
 }
 
+.level-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--gray);
+  color: #fff;
+  font-size: 5rem;
+  visibility: visible;
+  opacity: 1;
+  transition: .3s;
+}
+.level-screen__hide {
+  opacity: 0;
+  visibility: hidden;
+}
+
 .header {
   flex-shrink: 0;
   width: 100%;

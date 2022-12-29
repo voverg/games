@@ -99,9 +99,21 @@ export class PlayerTankController extends Controller {
     const bonusCollisions = bonuses.filter((bonus) => Utils.isCollision(bonus, sides));
     if (bonusCollisions.length) {
       this.handleBonus(bonusCollisions[0], player);
+      this.createScore(bonusCollisions[0]);
     }
 
     return newCoords;
+  }
+
+  createScore(bonus) {
+    const score = new this.entities.Score({
+      canvas: this.canvas,
+      spriteIndex: 4,
+      x: bonus.x,
+      y: bonus.y + 8,
+    });
+
+    this.models.score.add(score);
   }
 
   changeDirection(coords, player) {

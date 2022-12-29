@@ -59,6 +59,8 @@ export class EventController extends Controller {
         tank.isMoving = movingValue;
       }
 
+      this.handleSound(tank);
+
       // const playSound = tank.isMoving ? 'move' : 'motor';
       // const stopSound = !tank.isMoving ? 'move' : 'motor';
       // this.sources.sound.pause(stopSound);
@@ -112,26 +114,21 @@ export class EventController extends Controller {
     tank.shoot = true;
   }
 
+  handleSound(tank) {
+    const playSound = tank.isMoving ? 'move' : 'motor';
+    const stopSound = !tank.isMoving ? 'move' : 'motor';
+    this.sources.sound.pause(stopSound);
+    this.sources.sound.loop(playSound);
+    this.sources.sound.play(playSound);
+  }
+
   closeModal() {
-    console.log('game over');
     window.location.reload();
   }
 
   pauseMove() {
     // this.snakes.moving = this.snakes.moving ? false : true;
     // this.actions.setMoving(this.snakes.moving);
-  }
-
-  handleSound() {
-    // this.sounds.isSound = this.sounds.isSound ? false : true;
-    // this.actions.setSound(this.sounds.isSound);
-
-    // if (this.sounds.isSound) {
-    //   this.sounds.loop('theme');
-    //   this.sounds.play('theme');
-    // } else {
-    //   this.sounds.pause('theme');
-    // }
   }
 
   showHelpModal() {

@@ -56,8 +56,8 @@ export class Sprite {
     return {x: index * this.unit_size, y: 1 * this.unit_size}
   }
 
-  getScoreSprite(index = 16) {
-    return {x: index * this.unit_size, y: 4 * this.unit_size}
+  getScoreSprite(index = 0) {
+    return {x: (index + 16) * this.unit_size, y: 4.2 * this.unit_size}
   }
 
   getElem() {

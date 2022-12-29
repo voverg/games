@@ -6,6 +6,7 @@ import { Cell } from './entities/cell.js';
 import { Tank } from './entities/tank.js';
 import { Bullet } from './entities/bullet.js';
 import { Explosion } from './entities/explosion.js';
+import { Score } from './entities/score.js';
 import { Bonus } from './entities/bonus.js';
 // Models
 import { LevelsModel } from './models/levels.model.js';
@@ -14,6 +15,7 @@ import { GridModel } from './models/grid.model.js';
 import { TankModel } from './models/tank.model.js';
 import { BulletModel } from './models/bullet.model.js';
 import { ExplosionModel } from './models/explosion.model.js';
+import { ScoreModel } from './models/score.model.js';
 import { BonusModel } from './models/bonus.model.js';
 // Components
 import { BoardComponent } from './components/board.component.js';
@@ -21,10 +23,12 @@ import { PlayerComponent } from './components/player.component.js';
 import { EnemyComponent } from './components/enemy.component.js';
 import { BulletComponent } from './components/bullet.component.js';
 import { ExplosionComponent } from './components/explosion.component.js';
+import { ScoreComponent } from './components/score.component.js';
 import { BonusComponent } from './components/bonus.component.js';
 // Static components
 import { Aside } from './components/static/aside.static.js';
 import { Modal } from './components/static/modal.static.js';
+import { Level } from './components/static/level.static.js';
 // Controllers
 import { EventController } from './controllers/event.controller.js';
 import { BoardController } from './controllers/board.controller.js';
@@ -51,7 +55,7 @@ export class Game {
       sound: new Sound(),
     };
 
-    this.entities = {Cell, Tank, Bullet, Explosion, Bonus};
+    this.entities = {Cell, Tank, Bullet, Explosion, Score, Bonus};
 
     this.models = {
       levels: new LevelsModel(),
@@ -61,6 +65,7 @@ export class Game {
       enemy: new TankModel(),
       bullet: new BulletModel(),
       explosion: new ExplosionModel(),
+      score: new ScoreModel(),
       bonus: new BonusModel(),
     };
 
@@ -79,12 +84,14 @@ export class Game {
       enemy: new EnemyComponent(),
       bullet: new BulletComponent(),
       explosion: new ExplosionComponent(),
+      score: new ScoreComponent(),
       bonus: new BonusComponent(),
     };
 
     this.static = {
       aside: new Aside(),
       modal: new Modal(),
+      level: new Level(),
     };
 
     this.loop = this.loop.bind(this);
@@ -175,6 +182,9 @@ export class Game {
     nextLevel = nextLevel > this.models.levels.getMapsAmount() ? 1 : nextLevel;
     const level = this.state.isWin ? nextLevel : this.state.level;
     this.service.set('tanks-level', level);
+    // Stop bachground sounds
+    this.sources.sound.pause('move');
+    this.sources.sound.pause('motor');
   }
 
 }
