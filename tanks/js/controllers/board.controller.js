@@ -15,6 +15,10 @@ export class BoardController extends Controller {
 
     this.store.subscribe(() => {
       this.state = this.store.getState();
+
+      if (this.state.isGameOver && !this.state.isWin) {
+        this.models.base.spriteIndex = 1;
+      }
     });
 
     this.createGrid();

@@ -113,7 +113,7 @@ export class Game {
     // Inin static components
     Object.keys(this.static).forEach((key) => {
       this.static[key].init({store: this.store, models: this.models, sources: this.sources});
-      this.static[key].render();
+      // this.static[key].render();
     });
     // Inin canvas components
     Object.keys(this.components).forEach((key) => {

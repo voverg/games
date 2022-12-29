@@ -5,6 +5,7 @@ export class BoardComponent {
 
   init(canvas, models) {
     this.canvas = canvas;
+    this.models = models;
     this.grid = models.grid;
   }
 
@@ -15,6 +16,6 @@ export class BoardComponent {
       }
     });
 
-    this.canvas.drawBase(0);
+    this.canvas.drawBase(this.models.base.spriteIndex);
   }
 }

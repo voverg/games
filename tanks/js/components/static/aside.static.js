@@ -12,6 +12,8 @@ export class Aside {
       this.state = this.store.getState();
       this.render();
     });
+
+    this.render();
   }
 
   render() {
