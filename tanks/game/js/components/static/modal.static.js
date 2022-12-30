@@ -77,7 +77,7 @@ export class Modal {
     return `
       <div class="modal__header modal__center">
         <h2 class="modal__title">УРОВЕНЬ ${title}</h2>
-        <a href="../../../../index.html" class="modal__back">&#9668;МЕНЮ</a>
+        <a href="../../index.html" class="modal__back">&#9668;МЕНЮ</a>
       </div>
 
       ${content}
