@@ -58,14 +58,10 @@ export class EventController extends Controller {
         const movingValue = props.keyPressed ? true : false;
         tank.isMoving = movingValue;
       }
-
-      this.handleSound(tank);
-
-      // const playSound = tank.isMoving ? 'move' : 'motor';
-      // const stopSound = !tank.isMoving ? 'move' : 'motor';
-      // this.sources.sound.pause(stopSound);
-      // this.sources.sound.loop(playSound);
-      // this.sources.sound.play(playSound);
+      
+      if (!this.state.isGameOver) {
+        this.handleSound(tank);
+      }
     }
     
     // Check if event in this.events
