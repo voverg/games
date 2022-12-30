@@ -13,22 +13,138 @@
   <link rel="stylesheet" href="menu/css/modal.css">
 </head>
 <body>
-  <header class="header">
+  <header class="header center">
     <h1 class="header__title">ТАНЧИКИ</h1>
   </header>
 
-  <main class="main">
+  <main class="main center">
     <div class="rules main__item">ПРАВИЛА</div>
     <div class="start main__item">
       <a href="game/index.html" class="start__link">СТАРТ</a>
     </div>
   </main>
 
-  <footer class="footer">
+  <footer class="footer center">
     <p class="footer__text">Created by <a href="https://github.com/voverg" class="footer__link" rel="noopener noreferrer" target="_blank">Voverg</a></p>
   </footer>
 
-  <div class="modal"></div>
+  <div class="modal">
+    <div class="modal__header modal__center">
+      <h2 class="modal__title">ПРАВИЛА ИГРЫ</h2>
+      <button class="modal__close">&#9668;МЕНЮ</button>
+    </div>
+
+    <div class="modal__content modal__center">
+
+      <div class="modal__block">
+        <h2 class="modal__block-title">Цель игры</h2>
+        <p class="modal__item-description">Ваш танк должен перебить орды наступающих вражеских танков, не допустив при этом уничтожения собственного штаба. Чтобы перейти на следующий уровень, нужно уничтожить 20 танков противника, не погибнуть самому и не дать уничтожить свой штаб. Если вы прошли уровень, то перейдёте на следующий уровень. Если уровень не пройден, то он начнётся заново.</p><br>
+        <p class="modal__item-description">Нажмите кнопку [Старт] в главном меню, чтобы начать игру.</p>
+      </div>
+
+      <div class="modal__block">
+        <h2 class="modal__block-title">Управление</h2>
+        <div class="modal__item">
+          <div class="modal__icon key">&#8593;</div>
+          <div class="modal__icon key">&#8594;</div>
+          <div class="modal__icon key">&#8595;</div>
+          <div class="modal__icon key">&#8592;</div>
+          <div class="modal__item-description">Движение танка вверх, вправо, вниз, влево</div>
+        </div>
+        <div class="modal__item">
+          <div class="modal__icon key">Пробел</div>
+          <div class="modal__item-description">Стрельба</div>
+        </div>
+      </div>
+
+      <div class="modal__block">
+        <h2 class="modal__block-title">Препятствия и элементы ландшафта</h2>
+        <div class="modal__item">
+          <div class="modal__icon brick"></div>
+          <div class="modal__item-description"> Кирпичная стена - обычная кирпичная стена, легко уничтожаемая выстрелами любых танков.</div>
+        </div>
+        <div class="modal__item">
+          <div class="modal__icon beton"></div>
+          <div class="modal__item-description">Бетонная стена - своего рода, неуничтожимый аналог кирпичной стены, хотя и с оговорками - враги такую стенку не пробьют никогда, а вот ваш танк с некоторыми бонусами вполне на это способен.</div>
+        </div>
+        <div class="modal__item">
+          <div class="modal__icon water"></div>
+          <div class="modal__item-description">Вода - непреодолимое препятствие для любых танков, плавать они не умеют. Стрелять вода, конечно же, не мешает</div>
+        </div>
+        <div class="modal__item">
+          <div class="modal__icon plant"></div>
+          <div class="modal__item-description">Леса - не оказывают никакого влияния на передвижение или стрельбу, но в лесных пространствах танки очень плохо видны, а значит, такие пространства могут стать источником неприятных сюрпризов - будьте внимательны</div>
+        </div>
+      </div>
+
+      <div class="modal__block">
+        <h2 class="modal__block-title">Вражеские танки</h2>
+        <div class="modal__item">
+          <div class="modal__icon tank-1"></div>
+          <div class="modal__item-description">Обычный танк - не отличается ни собственной высокой скоростью, ни быстротой стрельбы. Представляет минимальную опасность. Даёт 100 очков за уничтожение</div>
+        </div>
+        <div class="modal__item">
+          <div class="modal__icon tank-2"></div>
+          <div class="modal__item-description">
+            Скоростной танк - обладает очень высокой скоростью. Даёт 200 очков за уничтожение
+          </div>
+        </div>
+        <div class="modal__item">
+          <div class="modal__icon tank-3"></div>
+          <div class="modal__item-description">Скорострельный танк - ничем особо не отличается от обычного, за исключением более высокого темпа стрельбы. Даёт 300 очков за уничтожение</div>
+        </div>
+        <div class="modal__item">
+          <div class="modal__icon tank-4"></div>
+          <div class="modal__item-description">Бронированый танк - самый опасный противник. Не отличается высокой скоростью или скорострельностью, но для его уничтожения требуется аж четыре попадания. Даёт 400 очков за уничтожение</div>
+        </div>
+        <div class="modal__item">
+          <div class="modal__icon tank-rose"></div>
+          <div class="modal__item-description">
+            Розовый танк - при попадании в этот танк на игровом поле появляется бонус. При взятии бонуса игроку начисляется 500 очков + сам бонус.
+          </div>
+        </div>
+      </div>
+
+      <div class="modal__block">
+        <h2 class="modal__block-title">Бонусы</h2>
+        <div class="modal__item">
+          <div class="modal__icon helmet"></div>
+          <div class="modal__item-description">Каска - делает ваш танк бронированным. Чтобы его подбить, потребуется 4 выстрела</div>
+        </div>
+        <div class="modal__item">
+          <div class="modal__icon timer"></div>
+          <div class="modal__item-description">
+              Таймер - на короткий промежуток времени "замораживает" вражеские танки - они не могут ни двигаться, ни стрелять.
+          </div>
+        </div>
+        <div class="modal__item">
+          <div class="modal__icon shovel"></div>
+          <div class="modal__item-description">Лопата - на короткий промежуток времени окружает ваш штаб бетонной стеной вместо кирпичной. После окончания времени действия все ранее полученные защитой штаба повреждения восстанавливаются.</div>
+        </div>
+        <div class="modal__item">
+          <div class="modal__icon star"></div>
+          <div class="modal__item-description">Звезда - увеличивает скорость и скорострельность вашего танка</div>
+        </div>
+        <div class="modal__item">
+          <div class="modal__icon grenade"></div>
+          <div class="modal__item-description">
+            Граната - уничтожает все присутствующие в данный момент на экране вражеские танки.
+          </div>
+        </div>
+        <div class="modal__item">
+          <div class="modal__icon tank"></div>
+          <div class="modal__item-description">
+            Танк - увеличивает броню и мощьность выстрела (можно с одного раза пробивать бетонные стены и уничтожать бронированные танки врагов)
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="modal__footer modal__center">
+      <p class="footer__text">Created by <a href="https://github.com/voverg" class="footer__link" rel="noopener noreferrer" target="_blank">Voverg</a></p>
+    </div>
+  </div>
 
 
   <script src="menu/js/index.js" type="module"></script>

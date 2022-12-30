@@ -7,7 +7,7 @@
   --index: calc(1vw + 1vh);
   --unit-size: 32px;
   --blue: #3c485f;
-  --orange: #C84C0C;
+  --orange: #e56d2f;
   --gray: #878787;
 }
 
@@ -36,6 +36,10 @@ button {
   letter-spacing: .1rem;
 }
 
+.center {
+  max-width: 700px;
+}
+
 .btn {
   padding: 5px 10px;
   background-color: var(--gray);
@@ -61,6 +65,7 @@ button {
   color: #fff;
   text-align: center;
   letter-spacing: .5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, .3);
 }
 
 .main {
@@ -98,9 +103,11 @@ button {
   align-items: center;
   width: 100%;
   height: 5vh;
+  padding: 20px;
   background: var(--blue);
   color: var(--gray);
   text-align: center;
+  border-top: 1px solid rgba(255, 255, 255, .3);
 }
 
 .footer__link {
