@@ -25,6 +25,7 @@ export class Level {
     return `
       <span class="level-screen__title">УРОВЕНЬ&nbsp;</span>
       <span class="level-screen__value">${level}</span>
+      <audio src="sound/start.mp3" autoplay></audio>
     `;
     //  <audio src="sound/start.mp3" autoplay></audio>
   }

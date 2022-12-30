@@ -9,8 +9,8 @@
   <title>Tanks</title>
   <link rel="shortcut icon" href="../main/favicon.png" type="image/x-icon">
   <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" /> -->
-  <link rel="stylesheet" href="menu/css/main.css">
-  <link rel="stylesheet" href="menu/css/modal.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/modal.css">
 </head>
 <body>
   <header class="header">
@@ -18,19 +18,20 @@
   </header>
 
   <main class="main">
-    <div class="rules main__item">ПРАВИЛА</div>
-    <div class="start main__item">
-      <a href="game/index.html" class="start__link">СТАРТ</a>
-    </div>
+    <canvas class="canvas" width="450" height="450"></canvas>
+
+    <aside class="aside"></aside>
   </main>
 
   <footer class="footer">
     <p class="footer__text">Created by <a href="https://github.com/voverg" class="footer__link" rel="noopener noreferrer" target="_blank">Voverg</a></p>
   </footer>
 
+  <div class="level-screen"></div>
+
   <div class="modal"></div>
 
 
-  <script src="menu/js/index.js" type="module"></script>
+  <script src="js/index.js" type="module"></script>
 </body>
 </html>

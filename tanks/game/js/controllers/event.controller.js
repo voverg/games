@@ -60,7 +60,7 @@ export class EventController extends Controller {
       }
       
       if (!this.state.isGameOver) {
-        // this.handleSound(tank);
+        this.handleSound(tank);
       }
     }
     

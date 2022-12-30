@@ -1,0 +1,159 @@
+@font-face {
+  font-family: 'Molot';
+  src: url('../fonts/Molot.otf');
+}
+
+:root {
+  --index: calc(1vw + 1vh);
+  --unit-size: 32px;
+  --blue: #3c485f;
+  --orange: #C84C0C;
+  --gray: #878787;
+}
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Molot', sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+  background-color: var(--blue);
+  letter-spacing: .1rem;
+}
+
+button {
+  font-family: 'Molot', sans-serif;
+  letter-spacing: .1rem;
+}
+
+.btn {
+  padding: 5px 10px;
+  background-color: var(--gray);
+  color: #fff;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  outline: none;
+  letter-spacing: 3px;
+  cursor: pointer;
+  user-select: none;
+  transition: .3s;
+}
+.btn:hover {
+  opacity: .8;
+}
+
+.level-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--gray);
+  color: #fff;
+  font-size: 5rem;
+  visibility: visible;
+  opacity: 1;
+  transition: .3s;
+}
+.level-screen__hide {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.header {
+  flex-shrink: 0;
+  width: 100%;
+  padding: 10px;
+  background-color: var(--blue);
+  color: #fff;
+  text-align: center;
+}
+
+.main {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  padding: 20px;
+}
+
+.canvas {
+  width: 80vh;
+  height: 80vh;
+  padding: 0;
+  border: 5px solid var(--gray);
+}
+
+.aside {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 80vh;
+  padding: 10px;
+  /*border: 1px solid var(--orange);*/
+  color: var(--gray);
+}
+
+.aside__tanks {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: start;
+  gap: 10px;
+  width: 80px;
+}
+
+.aside__tanks-img {
+  width: 32px;
+  height: 32px;
+}
+
+.level {
+  margin-bottom: 20px;
+}
+
+.footer {
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 5vh;
+  background: var(--blue);
+  color: var(--gray);
+  text-align: center;
+}
+
+.footer__link {
+  text-decoration: none;
+  color: white;
+}
+.footer__link:hover {
+  opacity: .8;
+  border-bottom: 1px solid rgba(255, 255, 255, .2);
+}
+
+
+
+
+/*-------------- Responsive ---------------*/
+@media (max-width: 720px) {
+  header {
+    font-size: .8rem;
+  }
+}

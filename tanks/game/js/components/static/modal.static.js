@@ -77,6 +77,7 @@ export class Modal {
     return `
       <div class="modal__header modal__center">
         <h2 class="modal__title">УРОВЕНЬ ${title}</h2>
+        <a href="../../../../index.html" class="modal__back">&#9668;МЕНЮ</a>
       </div>
 
       ${content}
@@ -145,7 +146,7 @@ function createContent({state, score}) {
         <span class="modal__result-value value-color">${toStr(score.tankAmount)}</span>
       </div>
 
-      <button class="modal__close value-color" data-type="close">${btnText}</button>
+      <button class="modal__close" data-type="close">&#9668;${btnText}&#9658;</button>
 
     </div>
   `;
