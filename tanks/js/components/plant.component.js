@@ -1,4 +1,4 @@
-export class BoardComponent {
+export class PlantComponent {
   constructor() {
     this.canvas = null;
   }
@@ -11,11 +11,9 @@ export class BoardComponent {
 
   render() {
     this.grid.arr.forEach((cell) => {
-      if (cell.type && cell.type !== 'plant') {
+      if (cell.type === 'plant') {
         cell.render();
       }
     });
-
-    this.canvas.drawBase(this.models.base.spriteIndex);
   }
 }

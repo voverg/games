@@ -6,12 +6,14 @@ export class BoardController extends Controller {
     super();
     this.levels = null;
     this.grid = null;
+    this.enemyMap = null;
   }
 
   init(props) {
     super.init(props);
     this.levels = this.models.levels;
     this.grid = this.models.grid;
+    this.enemyMap = this.levels.getEnemies(this.state.level);
 
     this.store.subscribe(() => {
       this.state = this.store.getState();
@@ -41,7 +43,7 @@ export class BoardController extends Controller {
   }
 
   _createCell(row, col, type) {
-    const types = {0: null, 1: 'brick', 2: 'tile', 3: 'water', 4: null};
+    const types = {0: null, 1: 'brick', 2: 'tile', 3: 'water', 4: 'plant'};
     const cellProps = {
       row,
       col,
@@ -68,14 +70,16 @@ export class BoardController extends Controller {
   createEnemies() {
     const enemySize = this.sources.sprite.unit_size;
     const width = this.canvas.width;
-    const appearancePos = [0, Math.floor(width / 2), width - enemySize];
+    const appearancePos = [0, Math.floor(width / 2 - 30), width - enemySize];
+    let enemyMapIndex = 0;
 
     const enemyInterval = setInterval(() => {
       const randomX = appearancePos[Utils.random(0, appearancePos.length - 1)];
 
       if (this.state.enemyAmount && this.models.enemy.length < 3) {
-        this.createEnemy(randomX, 0);
+        this.createEnemy(randomX, 0, enemyMapIndex);
         this.actions.setEnemyAmount(this.state.enemyAmount - 1);
+        enemyMapIndex++;
       } else if (!this.state.enemyAmount && !this.models.enemy.length) {
         this.actions.setGameOver(true);
         this.actions.setWin(true);
@@ -84,10 +88,11 @@ export class BoardController extends Controller {
     }, 3000);
   }
 
-  createEnemy(x, y) {
-    const types = ['enemy_1', 'enemy_2', 'enemy_3', 'enemy_4'];
+  createEnemy(x, y, enemyMapIndex) {
     const directions = ['up', 'right', 'down', 'left'];
-    const type = types[Utils.random(0, types.length - 1)];
+    const types = ['enemy_1', 'enemy_2', 'enemy_3', 'enemy_4'];
+    // const type = types[Utils.random(0, types.length - 1)]; // Random tank type
+    const type = types[this.enemyMap[enemyMapIndex]];
     let bonus = false;
     if (new Set([17, 10, 3]).has(this.state.enemyAmount)) {
       bonus = true;

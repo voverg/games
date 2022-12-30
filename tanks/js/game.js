@@ -9,7 +9,7 @@ import { Explosion } from './entities/explosion.js';
 import { Score } from './entities/score.js';
 import { Bonus } from './entities/bonus.js';
 // Models
-import { LevelsModel } from './models/levels.model.js';
+import { LevelsModel } from './models/levels/levels.model.js';
 import { BaseModel } from './models/base.model.js';
 import { GridModel } from './models/grid.model.js';
 import { TankModel } from './models/tank.model.js';
@@ -19,6 +19,7 @@ import { ScoreModel } from './models/score.model.js';
 import { BonusModel } from './models/bonus.model.js';
 // Components
 import { BoardComponent } from './components/board.component.js';
+import { PlantComponent } from './components/plant.component.js';
 import { PlayerComponent } from './components/player.component.js';
 import { EnemyComponent } from './components/enemy.component.js';
 import { BulletComponent } from './components/bullet.component.js';
@@ -83,6 +84,7 @@ export class Game {
       player: new PlayerComponent(),
       enemy: new EnemyComponent(),
       bullet: new BulletComponent(),
+      plant: new PlantComponent(),
       explosion: new ExplosionComponent(),
       score: new ScoreComponent(),
       bonus: new BonusComponent(),

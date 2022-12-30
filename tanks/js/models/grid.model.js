@@ -56,6 +56,7 @@ export class GridModel {
 
     const wall = this.arr.filter((cell) => {
       if (cell.type &&
+          cell.type !== 'plant' &&
           cell.x > x - size &&
           cell.x < x + 2 * size &&
           cell.y > y - size &&
@@ -73,6 +74,8 @@ export class GridModel {
 
     const wall = this.arr.filter((cell) => {
       if (cell.type &&
+          cell.type !== 'plant' &&
+          cell.type !== 'water' &&
           cell.x > x - size &&
           cell.x < x + size &&
           cell.y > y - size &&
