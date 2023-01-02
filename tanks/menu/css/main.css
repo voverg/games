@@ -124,7 +124,4 @@ button {
 
 /*-------------- Responsive ---------------*/
 @media (max-width: 720px) {
-  header {
-    font-size: .8rem;
-  }
 }

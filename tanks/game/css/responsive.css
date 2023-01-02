@@ -1,0 +1,98 @@
+/*-------------- Responsive ---------------*/
+@media (max-width: 720px) {
+  .header,
+  .aside,
+  .footer {
+    display: none;
+  }
+
+  .main {
+    flex-direction: column;
+  }
+
+  .shoot {
+    order: 1;
+    display: block;
+    width: 95%;
+    font-size: 1.2rem;
+  }
+
+  .controls {
+    order: 2;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 3px;
+  }
+
+  .arrow-up,
+  .arrow-down {
+    flex-grow: 1;
+    width: 100%;
+  }
+
+  .arrow-left,
+  .arrow-right {
+    width: 49%;
+  }
+
+  .arrow__btn {
+    font-size: 3rem;
+  }
+
+  .modal__header {
+    margin-top: 0;
+  }
+  .modal__title {
+    padding-top: 30px;
+  }
+}
+
+/*Width*/
+@media (max-width: 600px) {
+  .canvas {
+    width: calc(100vw - 50px);
+    height: calc(100vw - 50px);
+  }
+}
+
+/*Height*/
+@media (max-height: 500px) {
+  .main {
+    flex-direction: row;
+  }
+  .canvas {
+    width: calc(100vh - 50px);
+    height: calc(100vh - 50px);
+  }
+
+  .header,
+  .aside,
+  .footer {
+    display: none;
+  }
+
+  .shoot {
+    order: 0;
+    display: block;
+    width: 80px;
+    height: 200px;
+    font-size: 1rem;
+  }
+
+  .controls {
+    order: 0;
+    display: flex;
+  }
+
+  .arrow__btn {
+    font-size: 3rem;
+  }
+
+  .modal__header {
+    margin-top: 0;
+  }
+  .modal__title {
+    padding-top: 0;
+  }
+}

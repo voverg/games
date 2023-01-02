@@ -55,7 +55,7 @@
 
 .modal__title {
   text-align: center;
-  font-size: 2rem;
+  font-size: calc(2rem * var(--index));
   letter-spacing: .3rem;
 }
 
@@ -76,7 +76,7 @@
 }
 .modal__block-title {
   padding: 10px;
-  font-size: 1.5rem;
+  font-size: calc(1.5rem * var(--index));
   text-align: center;
   letter-spacing: .2rem;
   color: var(--orange);
@@ -86,13 +86,13 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  gap: 15px;
   min-width: 300px;
   width: 100%;
   padding: 10px 10px 5px;
-  font-size: 1.5rem;
+  font-size: calc(1.5rem * var(--index));
 }
 .modal__item-description {
-  margin-left: var(--unit-size);
   font-size: 0.8rem;
 }
 .hr {
@@ -124,7 +124,6 @@
   display: inline-block;
   min-width: 25px;
   height: 25px;
-  margin-right: 5px;
   padding: 3px;
   border: 1px solid #999;
   border-radius: 3px;

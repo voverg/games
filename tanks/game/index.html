@@ -11,6 +11,7 @@
   <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" /> -->
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/modal.css">
+  <link rel="stylesheet" href="css/responsive.css">
 </head>
 <body>
   <header class="header">
@@ -18,9 +19,18 @@
   </header>
 
   <main class="main">
+    <button class="shoot btn">Огонь</button>
+
     <canvas class="canvas" width="450" height="450"></canvas>
 
     <aside class="aside"></aside>
+
+    <div class="controls">
+      <button class="btn arrow__btn arrow-up">&#9650;</button>
+      <button class="btn arrow__btn arrow-left">&#9668;</button>
+      <button class="btn arrow__btn arrow-right">&#9658;</button>
+      <button class="btn arrow__btn arrow-down"> &#9660;</button>
+    </div>
   </main>
 
   <footer class="footer">
@@ -28,7 +38,6 @@
   </footer>
 
   <div class="level-screen"></div>
-
   <div class="modal"></div>
 
 

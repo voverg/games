@@ -63,7 +63,7 @@ button {
   align-items: center;
   background-color: var(--gray);
   color: #fff;
-  font-size: 5rem;
+  font-size: calc(5rem * var(--index));
   visibility: visible;
   opacity: 1;
   transition: .3s;
@@ -123,6 +123,11 @@ button {
   height: 32px;
 }
 
+.shoot,
+.controls {
+  display: none;
+}
+
 .level {
   margin-bottom: 20px;
 }
@@ -146,14 +151,4 @@ button {
 .footer__link:hover {
   opacity: .8;
   border-bottom: 1px solid rgba(255, 255, 255, .2);
-}
-
-
-
-
-/*-------------- Responsive ---------------*/
-@media (max-width: 720px) {
-  header {
-    font-size: .8rem;
-  }
 }
