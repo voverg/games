@@ -3,7 +3,7 @@ import { Controller } from './controller.js';
 export class EventController extends Controller {
   constructor() {
     super();
-    this.arrowEvents = new Set(['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight']);
+    this.arrowEvents = new Set(['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'up', 'down', 'left', 'right']);
 
     this.events = {
       ArrowUp: 'up',
@@ -17,6 +17,7 @@ export class EventController extends Controller {
       down: 'down',
       left: 'left',
       right: 'right',
+      shoot: 'shoot',
       move: 'move',
       sound: 'sound',
       help: 'help',
@@ -32,6 +33,10 @@ export class EventController extends Controller {
       this.state = this.store.getState();
     });
 
+    this.addListeners();
+  }
+
+  addListeners() {
     document.addEventListener('keyup', (event) => {
       event.preventDefault();
       if (this.arrowEvents.has(event.code)) {
@@ -42,6 +47,24 @@ export class EventController extends Controller {
     document.addEventListener('keydown', (event) => {
       event.preventDefault();
       this.checkEvent({type: event.code, keyPressed: true, event});
+    });
+
+    document.addEventListener('pointerup', (event) => {
+      const target = event.target;
+      const type = target.dataset.type;
+
+      if (this.arrowEvents.has(type)) {
+        this.checkEvent({type, keyPressed: false, event});
+      }
+    });
+
+    document.addEventListener('pointerdown', (event) => {
+      const target = event.target;
+      const type = target.dataset.type;
+
+      if (this.arrowEvents.has(type)) {
+        this.checkEvent({type, keyPressed: true, event});
+      }
     });
 
     document.addEventListener('click', (event) => {
