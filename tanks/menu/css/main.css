@@ -82,7 +82,7 @@ button {
 }
 
 .main__item,
-.start__link {
+.main__link {
   padding: 5px;
   font-size: 2rem;
   color: rgba(255, 255, 255, .7);

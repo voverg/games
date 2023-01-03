@@ -1,0 +1,36 @@
+/*-------------- Responsive ---------------*/
+@media (max-width: 720px) {
+  .header__title {
+    margin-top: 30px;
+  }
+
+  .main {
+    flex-direction: column;
+  }
+
+  .board {
+    width: calc(100vw - 50px);
+    height: calc(100vw - 50px);
+  }
+}
+
+/*Height*/
+@media (max-height: 500px) {
+  .header {
+    padding: 10px;
+  }
+  
+  .header__title {
+    margin-top: 0;
+  }
+
+  .main {
+    flex-direction: row;
+  }
+
+  .board {
+    width: calc(100vh - 100px);
+    height: calc(100vh - 100px);
+  }
+
+}
