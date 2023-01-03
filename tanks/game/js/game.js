@@ -112,7 +112,7 @@ export class Game {
     });
 
     this.service.setLevelToStore();
-    this.service.setScoreToStore();
+    // this.service.setScoreToStore();
     // Init canvas
     this.canvas.init({
         store: this.store,
@@ -181,7 +181,7 @@ export class Game {
   gameOver() {
     this.actions.setModal(true);
     this.setLevelToLocalStorage();
-    this.setScoreToLocalStorage();
+    // this.setScoreToLocalStorage();
     this.stopBackgroundSound();
   }
 
