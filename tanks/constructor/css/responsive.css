@@ -1,7 +1,7 @@
 /*-------------- Responsive ---------------*/
 @media (max-width: 720px) {
   .header__title {
-    margin-top: 30px;
+    margin-top: 40px;
   }
 
   .main {
@@ -11,6 +11,12 @@
   .board {
     width: calc(100vw - 50px);
     height: calc(100vw - 50px);
+  }
+
+  .aside {
+    max-width: calc(100vw - 50px);
+    width: calc(100vw - 50px);
+    height: auto;
   }
 }
 
@@ -31,6 +37,11 @@
   .board {
     width: calc(100vh - 100px);
     height: calc(100vh - 100px);
+  }
+
+  .aside {
+    width: auto;
+    height: calc(100vh - 100px);;
   }
 
 }

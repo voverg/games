@@ -5,7 +5,7 @@
 
 :root {
   --index: calc(1vw + 1vh);
-  --unit-size: 32px;
+  --unit-size: calc(80vh / 13);
   --blue: #3c485f;
   --orange: #e56d2f;
   --gray: #878787;
@@ -56,7 +56,7 @@ button {
   position: relative;
   flex-shrink: 0;
   width: 100%;
-  padding: 20px;
+  padding: 10px;
   background-color: var(--blue);
   color: #fff;
   text-align: center;
@@ -85,9 +85,18 @@ button {
 }
 
 .board {
+  flex-shrink: 0;
+  display: flex;
+  flex-wrap: wrap;
   width: 80vh;
   height: 80vh;
   border: 5px solid var(--gray);
+}
+
+.board__item {
+  width: calc(100% / 13);
+  height: calc(100% / 13);
+  border: 1px dotted var(--gray);
 }
 
 .aside {
@@ -95,11 +104,28 @@ button {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  gap: 20px;
   min-width: 15%;
+  max-width: 255px;
   height: 80vh;
   padding: 10px;
   border: 1px solid var(--gray);
-  color: var(--gray);
+  color: #fff;
+  letter-spacing: .3rem;
+  background-color: rgba(255, 255, 255, .2);
+}
+
+.tiles {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: 5px;
+}
+
+.aside__item {
+  width: 42px;
+  height: 42px;
+  border: 1px solid var(--gray);
 }
 
 
@@ -122,4 +148,67 @@ button {
 .footer__link:hover {
   opacity: .8;
   border-bottom: 1px solid rgba(255, 255, 255, .2);
+}
+
+/* --------- Tiles ---------- */
+.tile {
+  background-color: var(--blue);
+  background-image: url('../img/sprite.png');
+  background-size: 153vh;
+  cursor: pointer;
+}
+.tile-selected {
+  border: 3px solid var(--orange);
+}
+/*Empty*/
+.tile-a {
+  background-position: left calc(-10 * var(--unit-size)) top calc(-4.5 * var(--unit-size));
+}
+/*Bricks*/
+.tile-b {
+  background-position: left calc(-8 * var(--unit-size)) top calc(-5.5 * var(--unit-size));
+}
+.tile-c {
+  background-position: left calc(-9 * var(--unit-size)) top calc(-5.5 * var(--unit-size));
+}
+.tile-d {
+  background-position: left calc(-10 * var(--unit-size)) top calc(-5.5 * var(--unit-size));
+}
+.tile-e {
+  background-position: left calc(-11 * var(--unit-size)) top calc(-5.5 * var(--unit-size));
+}
+.tile-f {
+  background-position: left calc(-12 * var(--unit-size)) top calc(-5.5 * var(--unit-size));
+}
+/*Beton*/
+.tile-g {
+  background-position: left calc(-8 * var(--unit-size)) top calc(-6.5 * var(--unit-size));
+}
+.tile-h {
+  background-position: left calc(-9 * var(--unit-size)) top calc(-6.5 * var(--unit-size));
+}
+.tile-i {
+  background-position: left calc(-10 * var(--unit-size)) top calc(-6.5 * var(--unit-size));
+}
+.tile-j {
+  background-position: left calc(-11 * var(--unit-size)) top calc(-6.5 * var(--unit-size));
+}
+.tile-k {
+  background-position: left calc(-12 * var(--unit-size)) top calc(-6.5 * var(--unit-size));
+}
+/*Water*/
+.tile-l {
+  background-position: left calc(-8 * var(--unit-size)) top calc(-7.5 * var(--unit-size));
+}
+/*Plant*/
+.tile-m {
+  background-position: left calc(-9 * var(--unit-size)) top calc(-7.5 * var(--unit-size));
+}
+/*Player tank*/
+.tile-player {
+  background-position: left 0 top 0;
+}
+/*Base*/
+.tile-base {
+  background-position: left calc(-11 * var(--unit-size)) top calc(-7.5 * var(--unit-size));
 }

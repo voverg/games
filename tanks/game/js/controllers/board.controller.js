@@ -15,6 +15,8 @@ export class BoardController extends Controller {
     this.grid = this.models.grid;
     this.enemyMap = this.levels.getEnemies(this.state.level);
 
+    // console.log('width: ', this.levels.getMapWidth(1), 'height: ', this.levels.getMapHeight(1));
+
     this.store.subscribe(() => {
       this.state = this.store.getState();
 
