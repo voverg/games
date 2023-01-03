@@ -19,6 +19,16 @@ export class PlayerTankController extends Controller {
     this.store.subscribe(() => {
       this.state = this.store.getState();
     });
+
+    // Inite player sides
+    this.models.player.getAll().forEach((player) => {
+      if (!player) return;
+      
+      const coords = {x: player.x, y: player.y};
+      const spriteSize = player.size;
+      const sides = Utils.getSideCoords(coords, spriteSize);
+      this.setSides(player, sides);
+    });
   }
 
   setShoot(player) {
@@ -155,10 +165,13 @@ export class PlayerTankController extends Controller {
     this.models.bonus.clearAll();
     this.actions.setScore(this.state.score + 500);
     this.sources.sound.play('winBonus');
+    let armor = 1;
 
     switch (bonus.type) {
       case 'helmet':
-        player.health = 4;
+        armor = 4;
+        player.health = armor;
+        this.actions.setPlayerArmor(armor);
         break;
       case 'timer':
         this.models.enemy.getAll().forEach((enemy) => {
@@ -186,7 +199,9 @@ export class PlayerTankController extends Controller {
       case 'star':
         player.step += 2;
         player.bulletStep += 4;
-        player.health = player.health < 2 ? 2 : player.health;
+        armor = player.health < 2 ? 2 : player.health;
+        player.health = armor;
+        this.actions.setPlayerArmor(armor);
         break;
       case 'grenade':
         this.models.enemy.getAll().forEach((enemy) => {
@@ -203,7 +218,9 @@ export class PlayerTankController extends Controller {
         break;
       case 'tank':
         player.power = 1000;
-        player.health = player.health < 3 ? 3 : player.health;
+        armor = player.health < 3 ? 3 : player.health;
+        player.health = armor;
+        this.actions.setPlayerArmor(armor);
         break;
     }
   }

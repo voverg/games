@@ -112,6 +112,7 @@ export class Game {
     });
 
     this.service.setLevelToStore();
+    this.service.setScoreToStore();
     // Init canvas
     this.canvas.init({
         store: this.store,
@@ -179,12 +180,25 @@ export class Game {
 
   gameOver() {
     this.actions.setModal(true);
-    // Set level to local storage
+    this.setLevelToLocalStorage();
+    this.setScoreToLocalStorage();
+    this.stopBackgroundSound();
+  }
+
+  setLevelToLocalStorage() {
     let nextLevel = this.state.level + 1;
     nextLevel = nextLevel > this.models.levels.getMapsAmount() ? 1 : nextLevel;
     const level = this.state.isWin ? nextLevel : this.state.level;
     this.service.set('tanks-level', level);
-    // Stop bachground sounds
+  }
+
+  setScoreToLocalStorage() {
+    const currentScore = this.service.get('tanks-score') ? this.service.get('tanks-score') : 0;
+    const score = this.state.isWin ? this.state.score : currentScore;
+    this.service.set('tanks-score', score);
+  }
+
+  stopBackgroundSound() {
     this.sources.sound.pause('move');
     this.sources.sound.pause('motor');
   }

@@ -21,4 +21,10 @@ export class Service {
     this.actions.setLevel(level);
   }
 
+  setScoreToStore() {
+    let score = this.get('tanks-score');
+    score = score ? score : 0;
+    this.actions.setScore(score);
+  }
+
 }

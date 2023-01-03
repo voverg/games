@@ -2,7 +2,9 @@ export class Store {
   constructor() {
     this.initialState = {
       enemyAmount: 20,
+      level: 1,
       score: 0,
+      playerArmor: 1,
       killedEnemies: {
         enemy_1: 0,
         enemy_2: 0,
@@ -12,7 +14,6 @@ export class Store {
       isSound: false,
       isModal: false,
       modalContent: 'help',
-      level: 1,
       isGameOver: false,
       isWin: false,
     };

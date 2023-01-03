@@ -57,6 +57,7 @@ export class EnemyBulletController extends Controller {
       
       players.forEach((player) => {
         this.models.player.decreaseHealth(player.id);
+        this.actions.setPlayerArmor(player.health);
       });
     }
 

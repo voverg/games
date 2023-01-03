@@ -7,6 +7,14 @@ export class Actions {
     this.store.dispatch({ type: 'general', payload: {'score': value} });
   }
 
+  setLevel(value) {
+    this.store.dispatch({ type: 'general', payload: {'level': value} });
+  }
+
+  setPlayerArmor(value) {
+    this.store.dispatch({ type: 'general', payload: {'playerArmor': value} });
+  }
+
   setKilledEnemies(type) {
     const state = this.store.getState();
     const value = {...state.killedEnemies, [type]: state.killedEnemies[type] + 1};
@@ -19,10 +27,6 @@ export class Actions {
 
   setSound(value) {
     this.store.dispatch({ type: 'general', payload: {'isSound': value} });
-  }
-
-  setLevel(value) {
-    this.store.dispatch({ type: 'general', payload: {'level': value} });
   }
 
   setModal(value) {

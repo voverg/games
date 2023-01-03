@@ -128,8 +128,8 @@ button {
   display: none;
 }
 
-.level {
-  margin-bottom: 20px;
+.info__item {
+  margin-bottom: 5px;
 }
 
 .footer {
