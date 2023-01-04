@@ -5,7 +5,6 @@ export class Tile {
     this.row = row;
     this.col = col;
     this.id = `${row}:${col}`;
-    this.className = `${type}-${code}`;
     this.pos = [];
     this.selected = false;
 
@@ -13,6 +12,7 @@ export class Tile {
   }
 
   init() {
+    this.className = `${this.type}-${this.code}`;
     this.pos = getPos(this.code);
   }
 }

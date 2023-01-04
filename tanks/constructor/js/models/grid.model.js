@@ -7,8 +7,21 @@ export class GridModel {
     this.arr.push(item);
   }
 
+  setCode(id, code) {
+    this.arr.forEach((item) => {
+      if (item.id === id) {
+        item.code = code;
+        item.init();
+      }
+    });
+  }
+
   get(id) {
     return this.arr.find((item) => item.id === id);
+  }
+
+  select(id) {
+    this.arr.forEach((item) => item.selected = item.id === id ? true : false);
   }
 
   getAll() {

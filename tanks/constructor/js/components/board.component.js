@@ -15,7 +15,10 @@ export class BoardComponent {
 
   createContent() {
     const content = this.models.grid.getAll().map((tile) => {
-      return `<div class="board__item tile ${tile.className}" data-type="${tile.type}"></div>`;
+      return `<div class="board__item tile ${tile.className}"
+                    id="${tile.id}"
+                    data-type="${tile.type}">
+              </div>`;
     });
 
     return content.join('');

@@ -1,21 +1,9 @@
 export class Store {
   constructor() {
     this.initialState = {
-      enemyAmount: 20,
-      level: 1,
-      score: 0,
-      playerArmor: 1,
-      killedEnemies: {
-        enemy_1: 0,
-        enemy_2: 0,
-        enemy_3: 0,
-        enemy_4: 0,
-      },
-      isSound: false,
-      isModal: false,
-      modalContent: 'help',
-      isGameOver: false,
-      isWin: false,
+      asideTileId: '0:0',
+      boardTileId: '',
+      isSave: false,
     };
     this.state = rootReducer(this.initialState, {type: '__init__'});
     this.subscribers = [];

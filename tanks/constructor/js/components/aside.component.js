@@ -15,7 +15,12 @@ export class AsideComponent {
 
   createContent() {
     const tiles = this.models.aside.getAll().map((tile) => {
-      return `<div class="aside__item tile ${tile.className}" data-type="${tile.type}"></div>`;
+      const className = tile.selected ? `${tile.className} tile--selected` : tile.className;
+
+      return `<div class="aside__item tile ${className}"
+                  id="${tile.id}"
+                  data-type="${tile.type}">
+              </div>`;
     });
 
     const content = `

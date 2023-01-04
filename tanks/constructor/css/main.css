@@ -153,62 +153,68 @@ button {
 /* --------- Tiles ---------- */
 .tile {
   background-color: var(--blue);
-  background-image: url('../img/sprite.png');
-  background-size: 153vh;
+  background-size: contain;
+  background-repeat: no-repeat;
   cursor: pointer;
 }
-.tile-selected {
+.tile--selected {
   border: 3px solid var(--orange);
 }
 /*Empty*/
-.tile-a {
-  background-position: left calc(-10 * var(--unit-size)) top calc(-4.5 * var(--unit-size));
-}
+.tile-a {}
 /*Bricks*/
 .tile-b {
-  background-position: left calc(-8 * var(--unit-size)) top calc(-5.5 * var(--unit-size));
+  background-image: url('../img/tile-b.png');
 }
 .tile-c {
-  background-position: left calc(-9 * var(--unit-size)) top calc(-5.5 * var(--unit-size));
+  background-image: url('../img/tile-e.png');
+  background-position: right;
 }
 .tile-d {
-  background-position: left calc(-10 * var(--unit-size)) top calc(-5.5 * var(--unit-size));
+  background-image: url('../img/tile-d.png');
+  background-position: bottom;
 }
 .tile-e {
-  background-position: left calc(-11 * var(--unit-size)) top calc(-5.5 * var(--unit-size));
+  background-image: url('../img/tile-e.png');
 }
 .tile-f {
-  background-position: left calc(-12 * var(--unit-size)) top calc(-5.5 * var(--unit-size));
+  background-image: url('../img/tile-f.png');
 }
 /*Beton*/
 .tile-g {
-  background-position: left calc(-8 * var(--unit-size)) top calc(-6.5 * var(--unit-size));
+  background-image: url('../img/tile-g.png');
 }
 .tile-h {
-  background-position: left calc(-9 * var(--unit-size)) top calc(-6.5 * var(--unit-size));
+  background-image: url('../img/tile-h.png');
+  background-position: right;
 }
 .tile-i {
-  background-position: left calc(-10 * var(--unit-size)) top calc(-6.5 * var(--unit-size));
+  background-image: url('../img/tile-i.png');
+  background-position: bottom;
 }
 .tile-j {
-  background-position: left calc(-11 * var(--unit-size)) top calc(-6.5 * var(--unit-size));
+  background-image: url('../img/tile-j.png');
 }
 .tile-k {
-  background-position: left calc(-12 * var(--unit-size)) top calc(-6.5 * var(--unit-size));
+  background-image: url('../img/tile-k.png');
 }
 /*Water*/
 .tile-l {
-  background-position: left calc(-8 * var(--unit-size)) top calc(-7.5 * var(--unit-size));
+  background-image: url('../img/tile-l.png');
 }
 /*Plant*/
 .tile-m {
-  background-position: left calc(-9 * var(--unit-size)) top calc(-7.5 * var(--unit-size));
+  background-image: url('../img/tile-m.png');
 }
 /*Player tank*/
 .tile-player {
-  background-position: left 0 top 0;
+  background-image: url('../img/tile-player.png');
 }
 /*Base*/
 .tile-base {
-  background-position: left calc(-11 * var(--unit-size)) top calc(-7.5 * var(--unit-size));
+  background-image: url('../img/tile-base.png');
+}
+/*Enemy*/
+.tile-enemy {
+  background-image: url('../img/tile-enemy.png');
 }

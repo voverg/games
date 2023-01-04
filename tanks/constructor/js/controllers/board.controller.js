@@ -2,7 +2,8 @@ import { Controller } from './controller.js';
 
 export class BoardController extends Controller {
   init(props) {
-    super.init(props)
+    super.init(props);
+    this.selectedTileId = '';
 
     this.createGrid();
     this.components.board.render();
@@ -20,7 +21,7 @@ export class BoardController extends Controller {
   createCell(row, col) {
     const props = {
       type: 'tile',
-      code: 'd',
+      code: 'a',
       row,
       col,
     };
@@ -29,7 +30,15 @@ export class BoardController extends Controller {
   }
 
   update() {
+    // this.setTile();
+    const code = this.models.aside.get(this.state.asideTileId).code;
+    this.models.grid.setCode(this.state.boardTileId, code);
     this.components.board.render();
+  }
+
+  setTile() {
+    const code = this.models.aside.get(this.state.asideTileId).code;
+    this.models.grid.setCode(this.state.boardTileId, code);
   }
 
 }

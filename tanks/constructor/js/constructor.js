@@ -8,6 +8,7 @@ import { AsideComponent } from './components/aside.component.js';
 // Controllers
 import { BoardController } from './controllers/board.controller.js';
 import { AsideController } from './controllers/aside.controller.js';
+import { EventController } from './controllers/event.controller.js';
 
 import { Store } from './store/store.js';
 import { Actions } from './store/actions.js';
@@ -32,6 +33,7 @@ export class Constructor {
     this.controllers = {
       board: new BoardController(),
       aside: new AsideController(),
+      event: new EventController(),
     };
   }
 
