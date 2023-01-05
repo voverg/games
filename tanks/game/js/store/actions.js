@@ -11,6 +11,10 @@ export class Actions {
     this.store.dispatch({ type: 'general', payload: {'level': value} });
   }
 
+  setLevelMap(value) {
+    this.store.dispatch({ type: 'general', payload: {'levelMap': value} });
+  }
+
   setPlayerArmor(value) {
     this.store.dispatch({ type: 'general', payload: {'playerArmor': value} });
   }

@@ -11,7 +11,7 @@ export class GridModel {
     this.arr.forEach((item) => {
       if (item.id === id) {
         item.code = code;
-        item.init();
+        item.update();
       }
     });
   }

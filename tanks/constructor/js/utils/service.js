@@ -15,16 +15,4 @@ export class Service {
     localStorage.setItem(name, JSON.stringify(data));
   }
 
-  setLevelToStore() {
-    let level = this.get('tanks-level');
-    level = level ? level : 1;
-    this.actions.setLevel(level);
-  }
-
-  setScoreToStore() {
-    let score = this.get('tanks-score');
-    score = score ? score : 0;
-    this.actions.setScore(score);
-  }
-
 }

@@ -6,6 +6,7 @@ export class EventController extends Controller {
 
     this.types = {
       tile: this.handleTile,
+      save: this.handleSave,
     }
 
     this.setListeners();
@@ -32,6 +33,20 @@ export class EventController extends Controller {
     } else if (target.closest('.board')) {
       this.actions.setBoardTileId(target.id);
     }
+  }
+
+  handleSave = () => {
+    this.actions.setIsSave(true);
+    this.animateSpoiler();
+  }
+
+  animateSpoiler() {
+    const $spoiler = document.querySelector('.aside__spoiler');
+    $spoiler.classList.add('aside__spoiler--show');
+
+    setTimeout(() => {
+      $spoiler.classList.remove('aside__spoiler--show');
+    }, 3000);
   }
 
 }

@@ -112,6 +112,8 @@ export class Game {
     });
 
     this.service.setLevelToStore();
+    this.service.setLevelMapToStore();
+    console.log(this.state.levelMap);
     // this.service.setScoreToStore();
     // Init canvas
     this.canvas.init({
@@ -190,6 +192,9 @@ export class Game {
     nextLevel = nextLevel > this.models.levels.getMapsAmount() ? 1 : nextLevel;
     const level = this.state.isWin ? nextLevel : this.state.level;
     this.service.set('tanks-level', level);
+
+    const levelMap = this.state.isWin ? null : this.state.levelMap;
+    this.service.set('tanks-level-map', levelMap);
   }
 
   setScoreToLocalStorage() {

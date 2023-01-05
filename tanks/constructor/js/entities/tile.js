@@ -8,10 +8,10 @@ export class Tile {
     this.pos = [];
     this.selected = false;
 
-    this.init();
+    this.update();
   }
 
-  init() {
+  update() {
     this.className = `${this.type}-${this.code}`;
     this.pos = getPos(this.code);
   }
@@ -20,6 +20,9 @@ export class Tile {
 function getPos(code) {
   const positions = {
     a: [0, 0, 0, 0],
+    base: [0, 0, 0, 0],
+    player: [0, 0, 0, 0],
+    enemy: [0, 0, 0, 0],
     b: [1, 1, 1, 1],
     c: [0, 1, 0, 1],
     d: [0, 0, 1, 1],
@@ -32,6 +35,8 @@ function getPos(code) {
     k: [2, 2, 0, 0],
     l: [3, 3, 3, 3],
     m: [4, 4, 4, 4],
+    n: [0, 0, 0, 1], // Эти два блока дежурные
+    o: [0, 0, 1, 0],
   };
 
   return positions[code];

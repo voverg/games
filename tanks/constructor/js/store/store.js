@@ -3,6 +3,7 @@ export class Store {
     this.initialState = {
       asideTileId: '0:0',
       boardTileId: '',
+      clickTarget: 'aside',
       isSave: false,
     };
     this.state = rootReducer(this.initialState, {type: '__init__'});

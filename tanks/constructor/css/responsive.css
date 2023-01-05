@@ -18,6 +18,17 @@
     width: calc(100vw - 50px);
     height: auto;
   }
+
+    /*Дежурные блоки кирпичей - уголки*/
+  .tile-n {
+    background-image: url('../img/tile-d.png');
+    background-position: 10px 100%;
+  }
+  .tile-o {
+    background-image: url('../img/tile-d.png');
+    background-position: -10px 100%;
+  }
+
 }
 
 /*Height*/
@@ -42,6 +53,16 @@
   .aside {
     width: auto;
     height: calc(100vh - 100px);;
+  }
+
+    /*Дежурные блоки кирпичей - уголки*/
+  .tile-n {
+    background-image: url('../img/tile-d.png');
+    background-position: 8px 100%;
+  }
+  .tile-o {
+    background-image: url('../img/tile-d.png');
+    background-position: -8px 100%;
   }
 
 }

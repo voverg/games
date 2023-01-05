@@ -21,6 +21,12 @@ export class Service {
     this.actions.setLevel(level);
   }
 
+  setLevelMapToStore() {
+    let levelMap = this.get('tanks-level-map');
+    levelMap = levelMap ? levelMap : false;
+    this.actions.setLevelMap(levelMap);
+  }
+
   setScoreToStore() {
     let score = this.get('tanks-score');
     score = score ? score : 0;

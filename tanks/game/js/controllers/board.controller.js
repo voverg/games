@@ -34,7 +34,7 @@ export class BoardController extends Controller {
 
   createGrid() {
     const level = this.state.level;
-    const levelMap = this.levels.getMap(level);
+    const levelMap = this.state.levelMap ? this.state.levelMap : this.levels.getMap(level);
     
     levelMap.forEach((row, rowIndex) => {
       row.forEach((type, colIndex) => {

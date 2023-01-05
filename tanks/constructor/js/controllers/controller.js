@@ -20,4 +20,8 @@ export class Controller {
       this.update();
     });
   }
+
+  update() {
+    throw new Error('Method update() should be created');
+  }
 }

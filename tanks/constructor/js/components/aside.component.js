@@ -30,7 +30,11 @@ export class AsideComponent {
         ${tiles.join('')}
       </div>
 
-      <button class="btn aside__btn">СОХРАНИТЬ</button>
+      <button class="btn aside__btn" data-type="save">СОХРАНИТЬ</button>
+
+      <span class="aside__spoiler">
+          Уровень сохранён!
+        </span>
     `;
 
     return content;

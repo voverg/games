@@ -3,6 +3,7 @@ export class Store {
     this.initialState = {
       enemyAmount: 20,
       level: 1,
+      levelMap: [],
       score: 0,
       playerArmor: 1,
       killedEnemies: {
