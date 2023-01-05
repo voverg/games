@@ -19,17 +19,31 @@
   </header>
 
   <main class="main">
-    <button class="shoot btn" data-type="shoot">Огонь</button>
-
     <canvas class="canvas" width="450" height="450"></canvas>
 
     <aside class="aside"></aside>
 
     <div class="controls">
-      <button class="btn arrow__btn arrow-up" data-type="up">&#9650;</button>
-      <button class="btn arrow__btn arrow-left" data-type="left">&#9668;</button>
-      <button class="btn arrow__btn arrow-right" data-type="right">&#9658;</button>
-      <button class="btn arrow__btn arrow-down" data-type="down"> &#9660;</button>
+      <div class="controls__item"></div>
+      <div class="controls__item">
+        <button class="btn arrow__btn arrow-up" data-type="up">&#9650;</button>
+      </div>
+      <div class="controls__item"></div>
+
+      <div class="controls__item">
+        <button class="btn arrow__btn arrow-left" data-type="left">&#9668;</button>
+      </div>
+      <div class="controls__item">
+        <button class="btn arrow__btn shoot" data-type="shoot">Огонь</button>
+      </div>
+      <div class="controls__item">
+        <button class="btn arrow__btn arrow-right" data-type="right">&#9658;</button>
+      </div>
+
+      <div class="controls__item"></div>
+      <div class="controls__item"><button class="btn arrow__btn arrow-down" data-type="down"> &#9660;</button></div>
+      <div class="controls__item"></div>
+
     </div>
   </main>
 
