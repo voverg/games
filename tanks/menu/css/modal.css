@@ -55,7 +55,7 @@
 
 .modal__title {
   text-align: center;
-  font-size: calc(2rem * var(--index));
+  font-size: calc(2 * var(--index));
   letter-spacing: .3rem;
 }
 
@@ -76,7 +76,7 @@
 }
 .modal__block-title {
   padding: 10px;
-  font-size: calc(1.5rem * var(--index));
+  font-size: calc(2 * var(--index));
   text-align: center;
   letter-spacing: .2rem;
   color: var(--orange);
@@ -90,7 +90,7 @@
   min-width: 300px;
   width: 100%;
   padding: 10px 10px 5px;
-  font-size: calc(1.5rem * var(--index));
+  font-size: calc(1.5 * var(--index));
 }
 .modal__item-description {
   font-size: 0.8rem;

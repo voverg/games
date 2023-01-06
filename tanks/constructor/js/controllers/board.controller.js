@@ -40,7 +40,7 @@ export class BoardController extends Controller {
       {id: '11:7', code: 'o'},
       {id: '12:4', code: 'player'},
       {id: '0:0', code: 'enemy'},
-      {id: '0:5', code: 'enemy'},
+      {id: '0:6', code: 'enemy'},
       {id: '0:12', code: 'enemy'},
     ];
 

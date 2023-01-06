@@ -73,7 +73,7 @@ export class BoardController extends Controller {
     const enemySize = this.sources.sprite.unit_size;
     const width = this.canvas.width;
     // const appearancePos = [0, Math.floor(width / 2 - 30), width - enemySize];
-    const appearancePos = [0, 32 * 5, width - enemySize];
+    const appearancePos = [0, 32 * 6, width - enemySize];
     let enemyMapIndex = 0;
 
     const enemyInterval = setInterval(() => {

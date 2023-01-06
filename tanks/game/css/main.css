@@ -63,7 +63,7 @@ button {
   align-items: center;
   background-color: var(--gray);
   color: #fff;
-  font-size: calc(5rem * var(--index));
+  font-size: calc(5 * var(--index));
   visibility: visible;
   opacity: 1;
   transition: .3s;
@@ -106,7 +106,6 @@ button {
   align-items: center;
   height: 80vh;
   padding: 10px;
-  /*border: 1px solid var(--orange);*/
   color: var(--gray);
 }
 
