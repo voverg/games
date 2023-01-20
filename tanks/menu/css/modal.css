@@ -76,7 +76,7 @@
 }
 .modal__block-title {
   padding: 10px;
-  font-size: calc(2 * var(--index));
+  font-size: calc(1.5 * var(--index));
   text-align: center;
   letter-spacing: .2rem;
   color: var(--orange);
