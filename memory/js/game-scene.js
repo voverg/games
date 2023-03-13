@@ -8,6 +8,7 @@ export class GameScene extends Phaser.Scene {
     this.cards = [];
     this.openedCard = null;
     this.openedCardCount = 0;
+    this.sounds = {};
     this.timeout = props.timeout;
     this.timeoutText = '';
   }
@@ -19,9 +20,16 @@ export class GameScene extends Phaser.Scene {
     this.props.cards.forEach((value) => {
       this.load.image(`card${value}`, `sprites/card${value}.png`)
     });
+
+    this.load.audio('card', 'sounds/card.mp3');
+    this.load.audio('complete', 'sounds/complete.mp3');
+    this.load.audio('success', 'sounds/success.mp3');
+    this.load.audio('theme', 'sounds/theme.mp3');
+    this.load.audio('timeout', 'sounds/timeout.mp3');
   }
 
   create() {
+    this.createSounds();
     this.createTimer();
     this.createBackground();
     this.createText();
@@ -47,10 +55,25 @@ export class GameScene extends Phaser.Scene {
     });
   }
 
+  createSounds() {
+    this.sounds = {
+      card: this.sound.add('card'),
+      complete: this.sound.add('complete'),
+      success: this.sound.add('success'),
+      theme: this.sound.add('theme'),
+      timeout: this.sound.add('timeout'),
+    };
+
+    // this.sounds.theme.play({
+    //   volume: 0.1,
+    // });
+  }
+
   onTimerTick() {
     this.timeoutText.setText(`Time: ${this.timeout}`);
 
     if (this.timeout <= 0) {
+      this.sounds.timeout.play();
       this.start();
     } else {
       --this.timeout;
@@ -95,10 +118,18 @@ export class GameScene extends Phaser.Scene {
   onCardClick(pointer, card) {
     if (card.opened) return;
 
+    this.sounds.card.play();
+
     if (this.openedCard) {
       if (this.openedCard.value === card.value) {
         this.openedCard = null;
         ++this.openedCardCount;
+        
+        if (this.isWin()) {
+          this.sounds.complete.play();
+        } else {
+          this.sounds.success.play();
+        }
       } else {
         this.openedCard.close();
         this.openedCard = card;
@@ -109,9 +140,14 @@ export class GameScene extends Phaser.Scene {
 
     card.open();
 
-    if (this.openedCardCount === this.props.cards.length) {
+    if (this.isWin()) {
+      this.sounds.complete.play();
       this.start();
     }
+  }
+
+  isWin() {
+    return this.openedCardCount === this.props.cards.length;
   }
 
   getCardPositions() {
