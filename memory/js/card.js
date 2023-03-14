@@ -4,6 +4,7 @@ export class Card extends Phaser.GameObjects.Sprite {
     this.scene = scene;
     this.value = value;
     this.opened = false;
+    this.pos = {};
 
     // Set the starting point of sprite coords if it needs
     // this.setOrigin(0, 0);
@@ -11,6 +12,28 @@ export class Card extends Phaser.GameObjects.Sprite {
     this.scene.add.existing(this);
     // Set sprite as an interective game object
     this.setInteractive();
+  }
+
+  init(pos) {
+    this.pos = pos;
+    this.close();
+    this.setPosition(-this.width, -this.height);
+  }
+
+  move({x, y, delay, callback}) {
+    this.scene.tweens.add({
+      targets: this,
+      ease: 'Linear',
+      duration: 500,
+      delay,
+      x,
+      y,
+      onComplete: () => {
+        if (callback) {
+          callback();
+        }
+      },
+    });
   }
 
   open() {

@@ -1,12 +1,10 @@
 import { GameScene } from './game-scene.js';
+import { Levels } from './levels.js';
 
-// Create scene 
-const sceneProps = {
-  rows: 2,
-  cols: 5,
-  cards: [1, 2, 3, 4, 5],
-  timeout: 30,
-};
+
+const levelModel = new Levels();
+const level = 1;
+const sceneProps = levelModel.get(level);
 
 // Game config
 const config = {
