@@ -7,6 +7,10 @@ export class GameScene extends Phaser.Scene {
     this.props = {};
     
     this.level = 1;
+    this.score = 0;
+    this.successCount = 0;
+    this.bonuses = {1: 100, 2: 250, 3: 500, 4: 1000, 5: 5000};
+
     this.positions = [];
     this.cards = [];
     this.openedCard = null;
@@ -126,7 +130,7 @@ export class GameScene extends Phaser.Scene {
     this.timeoutText.setText(`Время: ${this.timeout}`);
 
     if (this.timeout <= 0) {
-      // this.sounds.timeout.play();
+      this.sounds.timeout.play();
       this.timer.paused = true;
       this.restart();
     } else {
@@ -179,6 +183,19 @@ export class GameScene extends Phaser.Scene {
     this.input.on('gameobjectdown', this.onCardClick, this);
   }
 
+  setBonus() {
+    this.score += this.bonuses[this.successCount];
+    this.scoreText.setText(`Очки ${this.score}`);
+  }
+
+  playSuccessSound() {
+    if (this.isWin()) {
+      this.sounds.complete.play();
+    } else {
+      this.sounds.success.play();
+    }
+  }
+
   onCardClick(pointer, card) {
     if (card.opened) return;
 
@@ -188,15 +205,14 @@ export class GameScene extends Phaser.Scene {
       if (this.openedCard.value === card.value) {
         this.openedCard = null;
         ++this.openedCardCount;
-        
-        if (this.isWin()) {
-          this.sounds.complete.play();
-        } else {
-          this.sounds.success.play();
-        }
+        ++this.successCount;
+
+        this.setBonus();
+        this.playSuccessSound();
       } else {
         this.openedCard.close();
         this.openedCard = card;
+        this.successCount = 0;
       }
     } else {
       this.openedCard = card;
