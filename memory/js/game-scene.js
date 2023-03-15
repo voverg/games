@@ -1,27 +1,30 @@
 import { Card } from './card.js';
 
 export class GameScene extends Phaser.Scene {
-  constructor(sceneName, props) {
+  constructor(sceneName, {levelModel}) {
     super(sceneName);
-    this.props = props;
+    this.levelModel = levelModel;
+    this.props = {};
     
+    this.level = 1;
     this.positions = [];
     this.cards = [];
     this.openedCard = null;
     this.openedCardCount = 0;
     this.sounds = {};
     this.timer = null;
-    this.timeout = props.timeout;
+    this.timeout = 0;
     this.timeoutText = '';
   }
 
   preload() {
     this.load.image('bg', 'sprites/background.png');
     this.load.image('card', 'sprites/card.png');
-
-    this.props.cards.forEach((value) => {
-      this.load.image(`card${value}`, `sprites/card${value}.png`)
-    });
+    this.load.image('card1', 'sprites/card1.png');
+    this.load.image('card2', 'sprites/card2.png');
+    this.load.image('card3', 'sprites/card3.png');
+    this.load.image('card4', 'sprites/card4.png');
+    this.load.image('card5', 'sprites/card5.png');
 
     this.load.audio('card', 'sounds/card.mp3');
     this.load.audio('complete', 'sounds/complete.mp3');
@@ -31,11 +34,12 @@ export class GameScene extends Phaser.Scene {
   }
 
   create() {
+    this.props = this.levelModel.get(this.level);
     this.createSounds();
     this.createTimer();
     this.createBackground();
     this.createText();
-    this.createCards();
+    // this.createCards();
     this.start();
   }
 
@@ -44,10 +48,15 @@ export class GameScene extends Phaser.Scene {
   }
 
   start() {
+    this.cards = [];
     this.openedCard = null;
     this.openedCardCount = 0;
     this.timeout = this.props.timeout;
     this.timer.paused = false;
+    this.levelText.setText(`Уровень ${this.level}`);
+
+    this.props = this.levelModel.get(this.level);
+    this.createCards();
 
     this.initCards();
     this.showCards();
@@ -154,11 +163,13 @@ export class GameScene extends Phaser.Scene {
 
     this.timeoutText = this.add.text(150, 20, 'Время: 0', textConfig);
     this.titleText = this.add.text(600, 20, 'Memory', titleTextConfig).setOrigin(0.5, 0.3);
-    this.levelText = this.add.text(800, 20, `Уровень ${this.props.level}`, textConfig);
+    this.levelText = this.add.text(800, 20, `Уровень ${this.level}`, textConfig);
     this.scoreText = this.add.text(1000, 20, 'Очки 0', textConfig);
   }
 
   createCards() {
+    this.cards = [];
+
     for (let value of this.props.cards) {
       for (let i = 0; i < 2; i++) {
         this.cards.push(new Card(this, value));
@@ -195,6 +206,7 @@ export class GameScene extends Phaser.Scene {
 
     if (this.isWin()) {
       this.sounds.complete.play();
+      this.level = this.level >= this.levelModel.length ? 1 : this.level + 1;
       this.restart();
     }
   }

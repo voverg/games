@@ -3,8 +3,7 @@ import { Levels } from './levels.js';
 
 
 const levelModel = new Levels();
-const level = 1;
-const sceneProps = levelModel.get(level);
+const sceneProps = {levelModel};
 
 // Game config
 const config = {

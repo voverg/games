@@ -2,49 +2,49 @@ export class Levels {
   constructor() {
     this.levels = {
       1: {
-        level: 1,
+        id: 1,
         rows: 2,
         cols: 2,
         cards: [1, 2],
         timeout: 15,
       },
       2: {
-        level: 2,
+        id: 2,
         rows: 2,
         cols: 3,
         cards: [1, 2, 3],
         timeout: 20,
       },
       3: {
-        level: 3,
+        id: 3,
         rows: 2,
         cols: 4,
         cards: [1, 2, 3, 4],
         timeout: 25,
       },
       4: {
-        level: 4,
+        id: 4,
         rows: 2,
         cols: 5,
         cards: [1, 2, 3, 4, 5],
         timeout: 30,
       },
       5: {
-        level: 5,
+        id: 5,
         rows: 2,
         cols: 5,
         cards: [1, 2, 3, 4, 5],
         timeout: 25,
       },
       6: {
-        level: 6,
+        id: 6,
         rows: 2,
         cols: 5,
         cards: [1, 2, 3, 4, 5],
         timeout: 20,
       },
       7: {
-        level: 7,
+        id: 7,
         rows: 2,
         cols: 5,
         cards: [1, 2, 3, 4, 5],
@@ -59,6 +59,10 @@ export class Levels {
 
   getAll() {
     return this.levels;
+  }
+
+  get length() {
+    return Object.keys(this.levels).length;
   }
 
 }
