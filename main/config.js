@@ -2,6 +2,7 @@ const titles = [
   'clicker@Игра Clicker',
   'snake@Игра Змейка',
   'tanks@Игра Танчики',
+  'memory@Игра Memory',
 ];
 
 function getData(list) {
