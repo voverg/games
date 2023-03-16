@@ -1,16 +1,14 @@
-import { GameScene } from './game-scene.js';
-import { Levels } from './levels.js';
-
-
-const levelModel = new Levels();
-const sceneProps = {levelModel};
+import { BootScene } from './scenes/boot-scene.js';
+import { PreloadScene } from './scenes/preload-scene.js';
+import { StartScene } from './scenes/start-scene.js';
+import { GameScene } from './scenes/game-scene.js';
 
 // Game config
 const config = {
   type: Phaser.AUTO,
   width: 1280,
   height: 720,
-  scene: new GameScene('Game', sceneProps),
+  scene: [BootScene, PreloadScene, StartScene, GameScene],
 };
 
 // Greate a game
