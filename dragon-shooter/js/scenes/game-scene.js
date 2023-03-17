@@ -1,5 +1,6 @@
 import { Player } from '../prefabs/player.js';
 import { Enemy } from '../prefabs/enemy.js';
+import { EnemyGroup } from '../prefabs/enemy-group.js';
 
 export class GameScene extends Phaser.Scene {
   constructor() {
@@ -17,13 +18,12 @@ export class GameScene extends Phaser.Scene {
   create() {
     this.createBackground();
     this.createPlayer();
-    this.createEnemy();
+    this.createEnemies();
   }
 
   update() {
     this.bg.tilePositionX += 0.5;
     this.player.move();
-    this.enemy.move();
   }
 
   createPlayer() {
@@ -32,10 +32,10 @@ export class GameScene extends Phaser.Scene {
     this.player.init(pos);
   }
 
-  createEnemy() {
-    const pos = {x: this.width - 150, y: this.height / 2};
-    this.enemy = new Enemy(this);
-    this.enemy.init(pos);
+  createEnemies() {
+    const props = {width: this.width, height: this.height};
+    this.enemyGroup = new EnemyGroup(this);
+    this.enemyGroup.createEnemy(this, props);
   }
 
   createBackground() {

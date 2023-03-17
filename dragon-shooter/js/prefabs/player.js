@@ -1,10 +1,10 @@
 export class Player extends Phaser.GameObjects.Sprite {
   constructor(scene) {
     super(scene, 0, 0, 'dragon', 'dragon1');
-    this.velocity = 300;
   }
 
   init(pos) {
+    this.velocity = 300;
     this.setPosition(pos.x, pos.y);
     // Add this sprite to the scene
     this.scene.add.existing(this);
