@@ -7,7 +7,7 @@ export class Enemy extends Phaser.GameObjects.Sprite {
 
   static generate(scene, {width, height}) {
     const props = {
-      x: width - 150,
+      x: width + 150,
       y: Phaser.Math.Between(100, height - 100),
       texture: 'enemy',
       frame: `enemy${Phaser.Math.Between(1, 4)}`,
@@ -16,7 +16,7 @@ export class Enemy extends Phaser.GameObjects.Sprite {
   }
 
   init() {
-    this.velocity = 50;
+    this.velocity = 100;
     this.scene.add.existing(this);
     this.scene.physics.add.existing(this);
     this.body.enable = true;

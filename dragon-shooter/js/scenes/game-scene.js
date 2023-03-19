@@ -33,9 +33,8 @@ export class GameScene extends Phaser.Scene {
   }
 
   createEnemies() {
-    const props = {width: this.width, height: this.height};
+    // const props = {width: this.width, height: this.height};
     this.enemyGroup = new EnemyGroup(this);
-    this.enemyGroup.createEnemy(this, props);
   }
 
   createBackground() {
