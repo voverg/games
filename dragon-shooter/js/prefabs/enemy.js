@@ -20,13 +20,13 @@ export class Enemy extends Phaser.GameObjects.Sprite {
     this.scene.add.existing(this);
     this.scene.physics.add.existing(this);
     this.body.enable = true;
+
     this.scene.events.on('update', this.update, this);
   }
 
   update() {
-    if (this.active && this.x < this.width) {
+    if (this.active && this.x < -this.width) {
       this.setAlive(false);
-      console.log('Enemy deactivated');
     }
   }
 

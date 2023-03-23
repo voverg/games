@@ -1,3 +1,5 @@
+import { FireGroup } from './fire-group.js';
+
 export class Player extends Phaser.GameObjects.Sprite {
   constructor(scene) {
     super(scene, 0, 0, 'dragon', 'dragon1');
@@ -11,6 +13,26 @@ export class Player extends Phaser.GameObjects.Sprite {
     // Turn physics on this sprite
     this.scene.physics.add.existing(this);
     this.body.enable = true;
+
+    this.fireGroup = new FireGroup(this.scene);
+    this.createTimer();
+  }
+
+  onTimerTick() {
+    this.shoot();
+  }
+
+  createTimer() {
+    this.timer = this.scene.time.addEvent({
+      delay: 500,
+      callback: this.onTimerTick,
+      callbackScope: this,
+      loop: true,
+    });
+  }
+
+  shoot() {
+    this.fireGroup.createFire(this);
   }
 
   move() {
