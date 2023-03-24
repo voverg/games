@@ -1,50 +1,26 @@
-export class Enemy extends Phaser.GameObjects.Sprite {
-  constructor(scene, {x, y, texture, frame}) {
-    super(scene, x, y, texture, frame);
-    this.init();
-  }
+import { MovableObject } from './movable-object.js';
 
+export class Enemy extends MovableObject {
   static generate(scene) {
     const props = {
+      scene,
       x: scene.sys.game.config.width + 150,
       y: Phaser.Math.Between(100, scene.sys.game.config.height - 100),
       texture: 'enemy',
       frame: `enemy${Phaser.Math.Between(1, 4)}`,
+      velocity: -500,
     };
 
-    return new Enemy(scene, props);
+    return new Enemy(props);
   }
 
-  init() {
-    this.velocity = 100 * 5;
-    this.scene.add.existing(this);
-    this.scene.physics.add.existing(this);
-    this.body.enable = true;
-
-    this.scene.events.on('update', this.update, this);
+  isDead() {
+    return this.active && this.x < -this.width;
   }
 
-  update() {
-    if (this.active && this.x < -this.width) {
-      this.setAlive(false);
-    }
-  }
-
-  setAlive(status) {
-    this.body.enable = status;
-    this.setVisible(status);
-    this.setActive(status);
-  }
-
-  reset() {
-    this.x = this.scene.sys.game.config.width + 150;
-    this.y = Phaser.Math.Between(100, this.scene.game.config.height - 100);
+  reset(props) {
+    super.reset(props);
     this.setFrame(`enemy${Phaser.Math.Between(1, 4)}`);
-    this.setAlive(true);
-  }
-
-  move() {
-    this.body.setVelocityX(-this.velocity);
   }
 
 }

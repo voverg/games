@@ -11,7 +11,7 @@ export class EnemyGroup extends Phaser.Physics.Arcade.Group {
   }
 
   onTimerTick() {
-    this.createEnemy(this.scene);
+    this.createEnemy();
 
     if (this.countCreated >= this.countMax) {
       this.timer.remove();
@@ -34,7 +34,10 @@ export class EnemyGroup extends Phaser.Physics.Arcade.Group {
       enemy = Enemy.generate(this.scene);
       this.add(enemy);
     } else {
-      enemy.reset();
+      enemy.reset({
+        x: this.scene.sys.game.config.width + 150,
+        y: Phaser.Math.Between(100, this.scene.game.config.height - 100),
+      });
     }
 
     enemy.move();

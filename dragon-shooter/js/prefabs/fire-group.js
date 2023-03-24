@@ -2,7 +2,8 @@ import { Fire } from './fire.js';
 
 export class FireGroup extends Phaser.Physics.Arcade.Group {
   constructor(scene) {
-    super(scene.physics.world, scene);
+    super();
+    this.scene = scene;
   }
 
   createFire(player) {
@@ -13,7 +14,10 @@ export class FireGroup extends Phaser.Physics.Arcade.Group {
       this.add(fire);
       console.log('Fire created');
     } else {
-      fire.reset(player);
+      fire.reset({
+        x: player.x + player.width / 2,
+        y: player.y,
+      });
       console.log('Fire reused');
     }
 

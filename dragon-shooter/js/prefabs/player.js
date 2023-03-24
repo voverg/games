@@ -1,18 +1,20 @@
+import { MovableObject } from './movable-object.js';
+import { Enemy } from './enemy.js';
 import { FireGroup } from './fire-group.js';
 
-export class Player extends Phaser.GameObjects.Sprite {
+export class Player extends Enemy {
   constructor(scene) {
-    super(scene, 0, 0, 'dragon', 'dragon1');
+    super({scene,
+      x: 150,
+      y: scene.sys.game.config.height / 2,
+      texture: 'dragon',
+      frame: 'dragon1',
+      velocity: 300,
+    });
   }
 
-  init(pos) {
-    this.velocity = 300;
-    this.setPosition(pos.x, pos.y);
-    // Add this sprite to the scene
-    this.scene.add.existing(this);
-    // Turn physics on this sprite
-    this.scene.physics.add.existing(this);
-    this.body.enable = true;
+  init(props) {
+    super.init(props);
 
     this.fireGroup = new FireGroup(this.scene);
     this.createTimer();

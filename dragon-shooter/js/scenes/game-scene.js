@@ -29,7 +29,7 @@ export class GameScene extends Phaser.Scene {
   createPlayer() {
     const pos = {x: 150, y: this.height / 2};
     this.player = new Player(this);
-    this.player.init(pos);
+    // this.player.init(pos);
   }
 
   createEnemies() {
