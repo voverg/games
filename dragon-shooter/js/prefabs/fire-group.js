@@ -12,13 +12,13 @@ export class FireGroup extends Phaser.Physics.Arcade.Group {
     if (!fire) {
       fire = Fire.generate(this.scene, player);
       this.add(fire);
-      console.log('Fire created');
+      // console.log('Fire created');
     } else {
       fire.reset({
         x: player.x + player.width / 2,
         y: player.y,
       });
-      console.log('Fire reused');
+      // console.log('Fire reused');
     }
 
     fire.move();

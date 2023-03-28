@@ -1,6 +1,4 @@
-import { MovableObject } from './movable-object.js';
 import { Enemy } from './enemy.js';
-import { FireGroup } from './fire-group.js';
 
 export class Player extends Enemy {
   constructor(scene) {
@@ -10,31 +8,13 @@ export class Player extends Enemy {
       texture: 'dragon',
       frame: 'dragon1',
       velocity: 300,
+      bullet: {
+        delay: 500,
+        velocity: 700,
+        texture: 'fire',
+      },
+      origin: {x: 1, y: 0.5},
     });
-  }
-
-  init(props) {
-    super.init(props);
-
-    this.fireGroup = new FireGroup(this.scene);
-    this.createTimer();
-  }
-
-  onTimerTick() {
-    this.shoot();
-  }
-
-  createTimer() {
-    this.timer = this.scene.time.addEvent({
-      delay: 500,
-      callback: this.onTimerTick,
-      callbackScope: this,
-      loop: true,
-    });
-  }
-
-  shoot() {
-    this.fireGroup.createFire(this);
   }
 
   move() {

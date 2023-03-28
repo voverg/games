@@ -5,10 +5,10 @@ export class Fire extends MovableObject {
     const props = {
       scene,
       player,
-      x: player.x + player.width / 2,
+      x: player.x,
       y: player.y,
-      texture: 'fire',
-      velocity: 700,
+      texture: player.bullet.texture,
+      velocity: player.bullet.velocity,
     };
 
     return new Fire(props);

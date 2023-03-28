@@ -1,4 +1,5 @@
 import { MovableObject } from './movable-object.js';
+import { FireGroup } from './fire-group.js';
 
 export class Enemy extends MovableObject {
   static generate(scene) {
@@ -8,10 +9,42 @@ export class Enemy extends MovableObject {
       y: Phaser.Math.Between(100, scene.sys.game.config.height - 100),
       texture: 'enemy',
       frame: `enemy${Phaser.Math.Between(1, 4)}`,
-      velocity: -500,
+      velocity: -250,
+      bullet: {
+        delay: 1000,
+        velocity: -500,
+        texture: 'bullet',
+      },
+      origin: {x: 0, y: 0.5},
     };
 
     return new Enemy(props);
+  }
+
+  init(props) {
+    super.init(props);
+
+    this.bullet = props.bullet;
+    this.setOrigin(props.origin.x, props.origin.y);
+    this.fireGroup = new FireGroup(this.scene);
+    this.createTimer();
+  }
+
+  onTimerTick() {
+    this.shoot();
+  }
+
+  createTimer() {
+    this.timer = this.scene.time.addEvent({
+      delay: this.bullet.delay,
+      callback: this.onTimerTick,
+      callbackScope: this,
+      loop: true,
+    });
+  }
+
+  shoot() {
+    this.fireGroup.createFire(this);
   }
 
   isDead() {
