@@ -2,7 +2,8 @@ import { Enemy } from './enemy.js';
 
 export class Player extends Enemy {
   constructor(scene) {
-    super({scene,
+    super({
+      scene,
       x: 150,
       y: scene.sys.game.config.height / 2,
       texture: 'dragon',

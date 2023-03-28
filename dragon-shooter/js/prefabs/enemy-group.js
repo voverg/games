@@ -1,9 +1,11 @@
 import { Enemy } from './enemy.js';
+import { FireGroup } from './fire-group.js';
 
 export class EnemyGroup extends Phaser.Physics.Arcade.Group {
   constructor(scene) {
     super();
     this.scene = scene;
+    this.fireGroup = new FireGroup(this.scene);
     this.countMax = 10;
     this.countCreated = 0;
 
@@ -31,7 +33,7 @@ export class EnemyGroup extends Phaser.Physics.Arcade.Group {
     let enemy = this.getFirstDead();
 
     if (!enemy) {
-      enemy = Enemy.generate(this.scene);
+      enemy = Enemy.generate(this.scene, this.fireGroup);
       this.add(enemy);
     } else {
       enemy.reset({

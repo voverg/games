@@ -19,6 +19,7 @@ export class GameScene extends Phaser.Scene {
     this.createBackground();
     this.createPlayer();
     this.createEnemies();
+    this.createOverlap();
   }
 
   update() {
@@ -26,10 +27,19 @@ export class GameScene extends Phaser.Scene {
     this.player.move();
   }
 
+  createOverlap() {
+    this.physics.add.overlap(this.player.fireGroup, this.enemyGroup, this.onOverlap, undefined, this);
+    this.physics.add.overlap(this.enemyGroup.fireGroup, this.player, this.onOverlap, undefined, this);
+    this.physics.add.overlap(this.enemyGroup, this.player, this.onOverlap, undefined, this);
+  }
+
+  onOverlap(source, target) {
+    source.setAlive(false);
+    target.setAlive(false);
+  }
+
   createPlayer() {
-    const pos = {x: 150, y: this.height / 2};
     this.player = new Player(this);
-    // this.player.init(pos);
   }
 
   createEnemies() {

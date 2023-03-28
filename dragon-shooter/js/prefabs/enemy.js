@@ -2,9 +2,10 @@ import { MovableObject } from './movable-object.js';
 import { FireGroup } from './fire-group.js';
 
 export class Enemy extends MovableObject {
-  static generate(scene) {
+  static generate(scene, fireGroup) {
     const props = {
       scene,
+      fireGroup,
       x: scene.sys.game.config.width + 150,
       y: Phaser.Math.Between(100, scene.sys.game.config.height - 100),
       texture: 'enemy',
@@ -25,8 +26,9 @@ export class Enemy extends MovableObject {
     super.init(props);
 
     this.bullet = props.bullet;
+    this.fireGroup = props.fireGroup || new FireGroup(this.scene);
+    
     this.setOrigin(props.origin.x, props.origin.y);
-    this.fireGroup = new FireGroup(this.scene);
     this.createTimer();
   }
 
