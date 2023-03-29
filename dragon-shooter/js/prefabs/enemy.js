@@ -26,7 +26,7 @@ export class Enemy extends MovableObject {
     super.init(props);
 
     this.bullet = props.bullet;
-    this.fireGroup = props.fireGroup || new FireGroup(this.scene);
+    this.fireGroup = props.fireGroup || new FireGroup(props.scene);
     
     this.setOrigin(props.origin.x, props.origin.y);
     this.createTimer();

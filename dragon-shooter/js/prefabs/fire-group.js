@@ -2,8 +2,7 @@ import { Fire } from './fire.js';
 
 export class FireGroup extends Phaser.Physics.Arcade.Group {
   constructor(scene) {
-    super();
-    this.scene = scene;
+    super(scene.physics.world, scene);
   }
 
   createFire(player) {

@@ -19,12 +19,22 @@ export class GameScene extends Phaser.Scene {
     this.createBackground();
     this.createPlayer();
     this.createEnemies();
+    this.createCompleteEvents();
     this.createOverlap();
   }
 
   update() {
     this.bg.tilePositionX += 0.5;
     this.player.move();
+  }
+
+  createCompleteEvents() {
+    this.player.once('killed', this.onComplete, this);
+    this.events.once('enemies-killed', this.onComplete, this);
+  }
+
+  onComplete() {
+    this.scene.start('Start');
   }
 
   createOverlap() {

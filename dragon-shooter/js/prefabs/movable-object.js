@@ -31,7 +31,11 @@ export class MovableObject extends Phaser.GameObjects.Sprite {
     this.setActive(status);
 
     if (this.timer) {
-      this.timer.paused = !status ? true : false;
+      this.timer.paused = !status;
+    }
+
+    if (!status) {
+      this.emit('killed');
     }
   }
 

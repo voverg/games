@@ -3,11 +3,12 @@ import { FireGroup } from './fire-group.js';
 
 export class EnemyGroup extends Phaser.Physics.Arcade.Group {
   constructor(scene) {
-    super();
+    super(scene.physics.world, scene);
     this.scene = scene;
-    this.fireGroup = new FireGroup(this.scene);
-    this.countMax = 10;
+    this.fireGroup = new FireGroup(scene);
+    this.countMax = 2;
     this.countCreated = 0;
+    this.countKilled = 0;
 
     this.createTimer();
   }
@@ -29,11 +30,21 @@ export class EnemyGroup extends Phaser.Physics.Arcade.Group {
     });
   }
 
+  onEnemyKilled() {
+    ++this.countKilled;
+    
+    if (this.countKilled >= this.countMax) {
+      this.scene.events.emit('enemies-killed');
+    }
+
+  }
+
   createEnemy() {
     let enemy = this.getFirstDead();
 
     if (!enemy) {
       enemy = Enemy.generate(this.scene, this.fireGroup);
+      enemy.on('killed', this.onEnemyKilled, this);
       this.add(enemy);
     } else {
       enemy.reset({
