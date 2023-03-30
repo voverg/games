@@ -12,11 +12,13 @@ export class GameScene extends Phaser.Scene {
   init() {
     this.width = this.sys.game.config.width;
     this.height = this.sys.game.config.height;
+    this.score = 0;
     this.cursors = this.input.keyboard.createCursorKeys();
   }
 
   create() {
     this.createBackground();
+    this.createText();
     this.createPlayer();
     this.createEnemies();
     this.createCompleteEvents();
@@ -34,7 +36,10 @@ export class GameScene extends Phaser.Scene {
   }
 
   onComplete() {
-    this.scene.start('Start');
+    this.scene.start('Start', {
+      score: this.score,
+      completed: this.player.active,
+    });
   }
 
   createOverlap() {
@@ -44,6 +49,11 @@ export class GameScene extends Phaser.Scene {
   }
 
   onOverlap(source, target) {
+    if (source !== this.player && target !== this.player) {
+      ++this.score;
+      this.scoreText.setText(`Очки ${this.score}`);
+    }
+
     source.setAlive(false);
     target.setAlive(false);
   }
@@ -54,6 +64,15 @@ export class GameScene extends Phaser.Scene {
 
   createEnemies() {
     this.enemyGroup = new EnemyGroup(this);
+  }
+
+  createText() {
+    const textConfig = {
+      font: '48px Caveat',
+      fill: '#fff',
+    };
+
+    this.scoreText = this.add.text(10, 10, `Очки ${this.score}`, textConfig).setOrigin(0);
   }
 
   createBackground() {

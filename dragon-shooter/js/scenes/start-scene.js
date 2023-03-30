@@ -3,7 +3,8 @@ export class StartScene extends Phaser.Scene {
     super('Start');
   }
 
-  create() {
+  create(props) {
+    console.log('Start scene', props);
     this.createBackground();
     this.createText();
     this.setEvents();
