@@ -72,7 +72,7 @@ export class GameScene extends Phaser.Scene {
       fill: '#fff',
     };
 
-    this.scoreText = this.add.text(10, 10, `Очки ${this.score}`, textConfig).setOrigin(0);
+    this.scoreText = this.add.text(50, 20, `Очки ${this.score}`, textConfig).setOrigin(0);
   }
 
   createBackground() {
