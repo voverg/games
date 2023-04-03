@@ -10,10 +10,10 @@ export class Enemy extends MovableObject {
       y: Phaser.Math.Between(100, scene.sys.game.config.height - 100),
       texture: 'enemy',
       frame: `enemy${Phaser.Math.Between(1, 4)}`,
-      velocity: -250,
+      velocity: -150,
       bullet: {
         delay: 1000,
-        velocity: -500,
+        velocity: -300,
         texture: 'bullet',
       },
       origin: {x: 0, y: 0.5},

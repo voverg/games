@@ -6,7 +6,7 @@ export class EnemyGroup extends Phaser.Physics.Arcade.Group {
     super(scene.physics.world, scene);
     this.scene = scene;
     this.fireGroup = new FireGroup(scene);
-    this.countMax = 4;
+    this.countMax = 10;
     this.countCreated = 0;
     this.countKilled = 0;
 

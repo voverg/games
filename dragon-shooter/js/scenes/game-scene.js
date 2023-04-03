@@ -1,6 +1,7 @@
 import { Player } from '../prefabs/player.js';
 import { Enemy } from '../prefabs/enemy.js';
 import { EnemyGroup } from '../prefabs/enemy-group.js';
+import { Boom } from '../prefabs/boom.js';
 
 export class GameScene extends Phaser.Scene {
   constructor() {
@@ -49,13 +50,27 @@ export class GameScene extends Phaser.Scene {
   }
 
   onOverlap(source, target) {
-    if (source !== this.player && target !== this.player) {
+    const enemy = [source, target].find((item) => item.texture.key === 'enemy');
+
+    if (enemy) {
+      this.makeBoom(target);
+
       ++this.score;
       this.scoreText.setText(`Очки ${this.score}`);
     }
 
     source.setAlive(false);
     target.setAlive(false);
+  }
+
+  makeBoom(target) {
+    const props = {
+      scene: this,
+      x: target.x,
+      y: target.y,
+    };
+
+    const boom = new Boom(props);
   }
 
   createPlayer() {
