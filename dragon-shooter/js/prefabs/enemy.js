@@ -12,7 +12,7 @@ export class Enemy extends MovableObject {
       frame: `enemy${Phaser.Math.Between(1, 4)}`,
       velocity: -150,
       bullet: {
-        delay: 1000,
+        delay: 2000,
         velocity: -300,
         texture: 'bullet',
       },

@@ -19,6 +19,9 @@ export class GameScene extends Phaser.Scene {
 
   create() {
     this.createBackground();
+    if (!this.sounds) {
+      this.createSounds();
+    }
     this.createText();
     this.createPlayer();
     this.createEnemies();
@@ -53,6 +56,7 @@ export class GameScene extends Phaser.Scene {
     const enemy = [source, target].find((item) => item.texture.key === 'enemy');
 
     if (enemy) {
+      this.sounds.boom.play();
       this.makeBoom(target);
 
       ++this.score;
@@ -79,6 +83,15 @@ export class GameScene extends Phaser.Scene {
 
   createEnemies() {
     this.enemyGroup = new EnemyGroup(this);
+  }
+
+  createSounds() {
+    this.sounds = {
+      theme: this.sound.add('theme', {volume: 0.5, loop: true}),
+      boom: this.sound.add('boom', {volume: 0.1}),
+    };
+
+    this.sounds.theme.play();
   }
 
   createText() {
