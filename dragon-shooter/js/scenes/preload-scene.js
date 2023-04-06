@@ -1,9 +1,17 @@
+import { LoadingBar } from '../utils/loading-bar.js';
+
 export class PreloadScene extends Phaser.Scene {
   constructor() {
     super('Preload');
   }
 
   preload() {
+    this.add.sprite(0, 0, 'bg').setOrigin(0);
+    const loadingBar = new LoadingBar(this);
+    this.preloadAssets();
+  }
+
+  preloadAssets() {
     this.load.atlas('dragon', 'sprites/dragon.png', 'sprites/dragon.json');
     this.load.atlas('enemy', 'sprites/enemy.png', 'sprites/enemy.json');
     this.load.atlas('boom', 'sprites/boom.png', 'sprites/boom.json');
