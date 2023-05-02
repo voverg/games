@@ -2,8 +2,8 @@ import Phaser from 'phaser';
 
 import { LoadingBar } from '../utils/loading-bar.js';
 
-import tilesetPng from '/tileset.png';
-import objectsPng from '/objects.png';
+import tilesetPng from '../assets/tileset.png';
+import objectsPng from '../assets/objects.png';
 import tilemapJson from '../assets/tilemap.json';
 import objectsJson from '../assets/objects.json';
 
