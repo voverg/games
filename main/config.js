@@ -3,12 +3,11 @@ const titles = [
   'snake@Игра Змейка',
   'tanks@Игра Танчики',
   'memory@Игра Memory',
+  'dragon-shooter@Dragon Shooter',
 ];
 
 function getData(list) {
   const data = list.map((item, index) => {
-    // const link = item.split('@')[0];
-    // const title = item.split('@')[1];
     const [link, title] = item.split('@');
     const url = `./${link}/index.html`;
     const img = `./main/img/${link}.png`;
