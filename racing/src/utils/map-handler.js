@@ -24,8 +24,11 @@ export class MapHandler {
 
   createCollisions() {
     this.tilemap.findObject('collisions', (obj) => {
-      const sprite = this.scene.matter.add.sprite(obj.x, obj.y, 'objects', obj.name);
-      sprite.setOrigin(0, 1);
+      // В программе Tiled все объекты начинают отсчёт с левого нижнего угла, поэтому подстраиваем координаты
+      const x = obj.x + obj.width / 2;
+      const y = obj.y - obj.height / 2;
+      const sprite = this.scene.matter.add.sprite(x, y, 'objects', obj.name);
+      // sprite.setOrigin(0, 1);
       sprite.setStatic(true);
     });
   }

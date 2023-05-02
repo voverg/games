@@ -8,6 +8,10 @@ export class GameScene extends Phaser.Scene {
     super('Game');
   }
 
+  init() {
+    this.cursors = this.input.keyboard.createCursorKeys();
+  }
+
   preload() {
     this.add.sprite(0, 0, 'bg').setOrigin(0);
   }
@@ -20,6 +24,9 @@ export class GameScene extends Phaser.Scene {
     this.cameras.main.startFollow(this.player.car);
   }
 
+  update() {
+    this.player.move();
+  }
 
 
 }
