@@ -1,3 +1,10 @@
+const GRASS_FRICTION = 0.3;
+const ROADS_FRICTION = {
+  road: 1,
+  ground: 0.5,
+  sand: 0.4,
+};
+
 export class MapHandler {
   constructor(scene) {
     this.scene = scene;
@@ -37,6 +44,17 @@ export class MapHandler {
     return this.tilemap.findObject('player', (obj) => {
       return obj.name === 'player';
     });
+  }
+
+  getTileFriction(car) {
+    for (let road of Object.keys(ROADS_FRICTION)) {
+      const tile = this.tilemap.getTileAtWorldXY(car.x, car.y, false, this.scene.cameras.main, road);
+      if (tile) {
+        return ROADS_FRICTION[road];
+      }
+    }
+
+    return GRASS_FRICTION;
   }
 
 }

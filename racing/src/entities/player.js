@@ -10,7 +10,7 @@ const TURNS = Object.freeze({
   RIGHT: 1,
 });
 
-const SPEED = 10;
+const SPEED = 6;
 const ACCELERATION = 0.5;
 
 export class Player {
@@ -30,9 +30,8 @@ export class Player {
   get direction() {
     let direction = DIRECTIONS.NONE;
 
-    if (this.scene.cursors.up.isDown) {
+    if (this.scene.cursors.up.isDown || this.scene.cursors.space.isDown) {
       direction = DIRECTIONS.FORWARD;
-      console.log(this.car.angle);
     } else if (this.scene.cursors.down.isDown) {
       direction = DIRECTIONS.BACKWARD;
     }
@@ -42,10 +41,11 @@ export class Player {
 
   get velocity() {
     const speed = Math.abs(this._velocity);
-    
-    if (this.direction && speed < SPEED) {
+    const maxSpeed = this.getMaxSpeed();
+
+    if (this.direction && speed < maxSpeed) {
       this._velocity += ACCELERATION * Math.sign(this.direction);
-    } else if (!this.direction && speed > 0) {
+    } else if ((this.direction && speed > maxSpeed) || (!this.direction && speed > 0)) {
       this._velocity -= ACCELERATION * Math.sign(this._velocity);
     }
 
@@ -55,6 +55,10 @@ export class Player {
   getVelocityFromAngle() {
     const vec2 = new Phaser.Math.Vector2();
     return vec2.setToPolar(this.car.rotation - Math.PI / 2, this.velocity);
+  }
+
+  getMaxSpeed() {
+    return this.map.getTileFriction(this.car) * SPEED;
   }
 
   get turn() {
@@ -70,7 +74,7 @@ export class Player {
   }
 
   get angle() {
-    return this.car.angle + this.turn * SPEED / 2;
+    return this.car.angle + this.turn * SPEED / 4;
   }
 
   move() {
