@@ -10,8 +10,9 @@ const TURNS = Object.freeze({
   RIGHT: 1,
 });
 
-const SPEED = 6;
+const SPEED = 4;
 const ACCELERATION = 0.5;
+const SLIDE_ANGLE = 2;
 
 
 export class Player {
@@ -48,6 +49,22 @@ export class Player {
     return direction;
   }
 
+  get turn() {
+    let turn = TURNS.NONE;
+
+    if (this.scene.cursors.left.isDown) {
+      turn = TURNS.LEFT;
+    } else if (this.scene.cursors.right.isDown) {
+      turn = TURNS.RIGHT;
+    }
+
+    return turn;
+  }
+
+  get angle() {
+    return this.car.angle + this.turn * SPEED / 2;
+  }
+
   get velocity() {
     const speed = Math.abs(this._velocity);
     const maxSpeed = this.getMaxSpeed();
@@ -70,20 +87,8 @@ export class Player {
     return this.map.getTileFriction(this.car) * SPEED;
   }
 
-  get turn() {
-    let turn = TURNS.NONE;
-
-    if (this.scene.cursors.left.isDown) {
-      turn = TURNS.LEFT;
-    } else if (this.scene.cursors.right.isDown) {
-      turn = TURNS.RIGHT;
-    }
-
-    return turn;
-  }
-
-  get angle() {
-    return this.car.angle + this.turn * SPEED / 2;
+  slide() {
+    this.car.angle += SLIDE_ANGLE;
   }
 
   move() {

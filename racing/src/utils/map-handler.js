@@ -23,6 +23,7 @@ export class MapHandler {
     this.createLayers();
     this.createCollisions();
     this.createCheckpoints();
+    this.createOils();
   }
 
   createLayers() {
@@ -39,6 +40,7 @@ export class MapHandler {
       const y = obj.y - obj.height / 2;
       const sprite = this.scene.matter.add.sprite(x, y, 'objects', obj.name);
       // sprite.setOrigin(0, 1);
+      // Делает объект статическим, то есть при столкновении не сдвигается
       sprite.setStatic(true);
     });
   }
@@ -48,6 +50,17 @@ export class MapHandler {
       const rectangle = new Phaser.Geom.Rectangle(obj.x, obj.y, obj.width, obj.height);
       rectangle.index = obj.properties.find((item) => item.name === 'value').value;
       this.checkpoints.push(rectangle);
+    });
+  }
+
+  createOils() {
+    this.tilemap.findObject('oils', (obj) => {
+      const x = obj.x + obj.width / 2;
+      const y = obj.y - obj.height / 2;
+      const sprite = this.scene.matter.add.sprite(x, y, 'objects', obj.name);
+      sprite.setStatic(true);
+      // Делает объект пересекаемым
+      sprite.setSensor(true);
     });
   }
 

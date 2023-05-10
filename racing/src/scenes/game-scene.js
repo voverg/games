@@ -25,7 +25,13 @@ export class GameScene extends Phaser.Scene {
     this.cameras.main.setBounds(0, 0, this.map.tilemap.widthInPixels, this.map.tilemap.heightInPixels);
     this.cameras.main.startFollow(this.player.car);
 
-    this.player.car.on('lap', this.onLapComplete, this)
+    this.player.car.on('lap', this.onLapComplete, this);
+    this.matter.world.on('collisionactive', (event, a, b) => {
+      if (b.gameObject === this.player.car && a.gameObject.frame.name === 'oil') {
+        console.log('Car is overlaping oil');
+        this.player.slide();
+      }
+    });
   }
 
   onLapComplete(lap) {
