@@ -8,18 +8,21 @@ const ROADS_FRICTION = {
 export class MapHandler {
   constructor(scene) {
     this.scene = scene;
+    this.checkpoints = [];
+
     this.init();
-    this.create();
   }
 
   init() {
     this.tilemap = this.scene.make.tilemap({key: 'tilemap'});
     this.tileset = this.tilemap.addTilesetImage('tileset', 'tileset', 64, 64, 0, 1);
+    this.create();
   }
 
   create() {
     this.createLayers();
     this.createCollisions();
+    this.createCheckpoints();
   }
 
   createLayers() {
@@ -40,6 +43,14 @@ export class MapHandler {
     });
   }
 
+  createCheckpoints() {
+    this.tilemap.findObject('checkpoints', (obj) => {
+      const rectangle = new Phaser.Geom.Rectangle(obj.x, obj.y, obj.width, obj.height);
+      rectangle.index = obj.properties.find((item) => item.name === 'value').value;
+      this.checkpoints.push(rectangle);
+    });
+  }
+
   getPlayerPosition() {
     return this.tilemap.findObject('player', (obj) => {
       return obj.name === 'player';
@@ -55,6 +66,11 @@ export class MapHandler {
     }
 
     return GRASS_FRICTION;
+  }
+
+  getCheckpoint(car) {
+    const checkpoint = this.checkpoints.find((checkpoint) => checkpoint.contains(car.x, car.y));
+    return checkpoint ? parseInt(checkpoint.index) : false;
   }
 
 }
