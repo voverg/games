@@ -1,9 +1,11 @@
 import Phaser from 'phaser';
 
-import { MapHandler } from '../utils/map-handler.js';
+import { MapHandler } from '../entities/map-handler.js';
 import { Player } from '../entities/player.js';
+import { Stats } from '../entities/stats.js';
+import { StatsPanel } from '../entities/stats-panel.js';
 
-const LAPS = 1;
+const LAPS = 2;
 
 export class GameScene extends Phaser.Scene {
   constructor() {
@@ -21,6 +23,8 @@ export class GameScene extends Phaser.Scene {
   create() {
     this.map = new MapHandler(this);
     this.player = new Player(this, this.map);
+    this.stats = new Stats(this.scene, LAPS);
+    this.statsPanel = new StatsPanel(this, this.stats);
 
     this.cameras.main.setBounds(0, 0, this.map.tilemap.widthInPixels, this.map.tilemap.heightInPixels);
     this.cameras.main.startFollow(this.player.car);
@@ -28,19 +32,28 @@ export class GameScene extends Phaser.Scene {
     this.player.car.on('lap', this.onLapComplete, this);
     this.matter.world.on('collisionactive', (event, a, b) => {
       if (b.gameObject === this.player.car && a.gameObject.frame.name === 'oil') {
-        console.log('Car is overlaping oil');
         this.player.slide();
       }
     });
   }
 
-  onLapComplete(lap) {
-    if (lap > LAPS) {
+  onLapComplete() {
+    this.stats.onLapComplete();
+
+    if (this.stats.complete) {
       this.scene.restart();
     }
   }
 
-  update() {
+  /**
+   * [update description]
+   * @param  {[number]} time      [Time in miliseconds from start the scene]
+   * @param  {[number]} deltaTime [Time in miliseconds from last call this update method]
+   * @return {[type]}           [description]
+   */
+  update(time, deltaTime) {
+    this.stats.update(deltaTime);
+    this.statsPanel.render();
     this.player.move();
   }
 
