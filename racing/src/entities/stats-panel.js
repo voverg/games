@@ -2,11 +2,28 @@ export class StatsPanel {
   constructor(scene, stats) {
     this.scene = scene;
     this.stats = stats;
+
+    this.x = 15;
+    this.y = 5;
+    this.width = 250;
+    this.height = 150;
+    this.padding = 10;
+    this.bgColor = 0x000000;
+    this.bgOpacity = 0.3;
+
     this.create();
   }
 
   create() {
+    this.createBackground();
     this.createText();
+  }
+
+  createBackground() {
+    const graphics = this.scene.add.graphics();
+    graphics.fillStyle(this.bgColor, this.bgOpacity);
+    graphics.fillRect(this.x, this.y, this.width, this.height);
+    graphics.setScrollFactor(0);
   }
 
   createText() {
@@ -15,12 +32,12 @@ export class StatsPanel {
       fill: '#fff',
     };
 
-    const axios = {x: 20, y: 10, step: 30};
+    const axis = {x: this.x + this.padding, y: this.y + this.padding, step: 30};
 
-    this.lapText = this.scene.add.text(axios.x, axios.y, `Laps: 0/0`, textConfig).setScrollFactor(0);
-    this.timeText = this.scene.add.text(axios.x, axios.y + axios.step, `Time: 0.0`, textConfig).setScrollFactor(0);
-    this.timeLapText = this.scene.add.text(axios.x, axios.y + axios.step * 2, `Lap time: 0.0`, textConfig).setScrollFactor(0);
-    this.timeBestLapText = this.scene.add.text(axios.x, axios.y + axios.step * 3, `Best lap time: 0.0`, textConfig).setScrollFactor(0);
+    this.lapText = this.scene.add.text(axis.x, axis.y, `Laps: 0/0`, textConfig).setScrollFactor(0);
+    this.timeText = this.scene.add.text(axis.x, axis.y + axis.step, `Time: 0.0`, textConfig).setScrollFactor(0);
+    this.timeLapText = this.scene.add.text(axis.x, axis.y + axis.step * 2, `Lap time: 0.0`, textConfig).setScrollFactor(0);
+    this.timeBestLapText = this.scene.add.text(axis.x, axis.y + axis.step * 3, `Best lap time: 0.0`, textConfig).setScrollFactor(0);
   }
 
   render() {

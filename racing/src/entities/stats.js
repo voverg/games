@@ -14,7 +14,7 @@ export class Stats {
   }
 
   onLapComplete() {
-    if (this.timeBestLap && this.timeBestLap > this.timeLap) {
+    if (!this.timeBestLap || this.timeBestLap > this.timeLap) {
       this.timeBestLap = this.timeLap;
     }
 
