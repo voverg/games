@@ -27,17 +27,17 @@ export class StatsPanel {
   }
 
   createText() {
+    const textNames = ['lapText', 'timeText', 'timeLapText', 'timeBestLapText'];
+    const axis = {x: this.x + this.padding, y: this.y + this.padding, step: 30};
     const textConfig = {
       font: '24px Arial',
       fill: '#fff',
     };
 
-    const axis = {x: this.x + this.padding, y: this.y + this.padding, step: 30};
-
-    this.lapText = this.scene.add.text(axis.x, axis.y, `Laps: 0/0`, textConfig).setScrollFactor(0);
-    this.timeText = this.scene.add.text(axis.x, axis.y + axis.step, `Time: 0.0`, textConfig).setScrollFactor(0);
-    this.timeLapText = this.scene.add.text(axis.x, axis.y + axis.step * 2, `Lap time: 0.0`, textConfig).setScrollFactor(0);
-    this.timeBestLapText = this.scene.add.text(axis.x, axis.y + axis.step * 3, `Best lap time: 0.0`, textConfig).setScrollFactor(0);
+    textNames.forEach((textName, index) => {
+      this[textName] = this.scene.add.text(axis.x, axis.y + axis.step * index, '', textConfig);
+      this[textName].setScrollFactor(0);
+    });
   }
 
   render() {
