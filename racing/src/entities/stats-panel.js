@@ -3,11 +3,11 @@ export class StatsPanel {
     this.scene = scene;
     this.stats = stats;
 
-    this.x = 15;
+    this.x = 10;
     this.y = 5;
-    this.width = 250;
+    this.width = 300;
     this.height = 150;
-    this.padding = 10;
+    this.padding = 15;
     this.bgColor = 0x000000;
     this.bgOpacity = 0.3;
 
@@ -41,10 +41,10 @@ export class StatsPanel {
   }
 
   render() {
-    this.lapText.setText(`Laps: ${this.stats.lap} / ${this.stats.laps}`);
-    this.timeText.setText(`Time: ${this.stats.time.toFixed(2)}`);
-    this.timeLapText.setText(`Lap time: ${this.stats.timeLap.toFixed(2)}`);
-    this.timeBestLapText.setText(`Best lap time: ${this.stats.timeBestLap.toFixed(2)}`);
+    this.lapText.setText(`Круги: ${this.stats.lap} / ${this.stats.laps}`);
+    this.timeText.setText(`Общее время: ${this.stats.time.toFixed(2)}`);
+    this.timeLapText.setText(`Текущий круг: ${this.stats.timeLap.toFixed(2)}`);
+    this.timeBestLapText.setText(`Лучшее время: ${this.stats.timeBestLap.toFixed(2)}`);
   }
 
 }

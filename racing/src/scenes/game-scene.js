@@ -4,6 +4,7 @@ import { MapHandler } from '../entities/map-handler.js';
 import { Player } from '../entities/player.js';
 import { Stats } from '../entities/stats.js';
 import { StatsPanel } from '../entities/stats-panel.js';
+import { StatsPopup } from '../entities/stats-popup.js';
 
 const LAPS = 2;
 
@@ -13,6 +14,8 @@ export class GameScene extends Phaser.Scene {
   }
 
   init() {
+    this.width = this.sys.game.config.width;
+    this.height = this.sys.game.config.height;
     this.cursors = this.input.keyboard.createCursorKeys();
   }
 
@@ -41,7 +44,7 @@ export class GameScene extends Phaser.Scene {
     this.stats.onLapComplete();
 
     if (this.stats.complete) {
-      this.scene.restart();
+      this.statsPopup = new StatsPopup(this, this.stats);
     }
   }
 
