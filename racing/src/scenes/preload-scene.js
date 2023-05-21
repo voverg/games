@@ -22,7 +22,7 @@ export class PreloadScene extends Phaser.Scene {
   }
 
   create() {
-    this.scene.start('Game');
+    this.scene.start('Start');
   }
 
 }

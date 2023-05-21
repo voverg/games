@@ -9,7 +9,7 @@ const config = {
   type: Phaser.AUTO,
   width: 1280,
   height: 720,
-  scene: [BootScene, PreloadScene, GameScene],
+  scene: [BootScene, PreloadScene, StartScene, GameScene],
   scale: {
     mode: Phaser.Scale.FIT,
     autoCenter: Phaser.Scale.CENTER_BOTH,
