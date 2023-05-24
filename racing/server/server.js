@@ -1,10 +1,11 @@
 import http from 'http';
 import path from 'path';
 import express from 'express';
+import { Server } from 'socket.io';
 
 // Configuration
 const PORT = 3000;
-const DOCROOT = '../dist/';
+const DOCROOT = './dist/';
 
 // Create server with express and http
 const app = express();
@@ -19,4 +20,10 @@ app.use(staticFiles);
 // Run server
 server.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
+});
+
+const io = new Server(server);
+io.on('connection', (socket) => {
+  socket.emit('gameStart');
+  console.log(`New user server connected ${socket.id}`);
 });

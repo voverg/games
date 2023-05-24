@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import { Client } from '../entities/client.js';
 
 export class StartScene extends Phaser.Scene {
   constructor() {
@@ -73,7 +74,9 @@ export class StartScene extends Phaser.Scene {
   }
 
   requestGame() {
-    console.log('Request enemy from server');
+    this.client = new Client();
+    this.client.init();
+    this.client.on('game', this.startGame, this);
   }
 
 
