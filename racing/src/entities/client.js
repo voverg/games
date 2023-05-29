@@ -5,6 +5,7 @@ export class Client extends Phaser.Events.EventEmitter {
   constructor() {
     super();
     this.host = 'http://localhost:3000';
+    this.master = false;
   }
 
   init() {
@@ -18,8 +19,11 @@ export class Client extends Phaser.Events.EventEmitter {
       console.log('Client disconnected');
     });
 
-    socket.on('gameStart', () => {
-      console.log(`game start`);
+    socket.on('gameStart', (props) => {
+      if (props && props.master) {
+        this.master = props.master;
+      }
+      
       this.emit('game');
     });
   }

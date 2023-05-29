@@ -7,13 +7,24 @@ import { StatsPanel } from '../entities/stats-panel.js';
 import { StatsPopup } from '../entities/stats-popup.js';
 
 const LAPS = 2;
+const CARS = {
+  BLUE: {
+    sprite: 'car_blue_1',
+    position: 'player'
+  },
+  RED: {
+    sprite: 'car_red_1',
+    position: 'enemy'
+  },
+};
 
 export class GameScene extends Phaser.Scene {
   constructor() {
     super('Game');
   }
 
-  init() {
+  init(props) {
+    this.client = props ? props.client : null;
     this.width = this.sys.game.config.width;
     this.height = this.sys.game.config.height;
     this.cursors = this.input.keyboard.createCursorKeys();
@@ -25,7 +36,13 @@ export class GameScene extends Phaser.Scene {
 
   create() {
     this.map = new MapHandler(this);
-    this.player = new Player(this, this.map);
+    this.car = this.getCarConfig();
+    this.player = new Player(this, this.map, this.car.player);
+
+    if (this.client) {
+      this.enemy = new Player(this, this.map, this.car.enemy);
+    }
+
     this.stats = new Stats(this.scene, LAPS);
     this.statsPanel = new StatsPanel(this, this.stats);
 
@@ -38,6 +55,17 @@ export class GameScene extends Phaser.Scene {
         this.player.slide();
       }
     });
+  }
+
+  getCarConfig() {
+    // The first player config
+    let config = {player: CARS.BLUE, enemy: CARS.RED};
+    // The second player config
+    if (this.client && !this.client.master) {
+      config = {player: CARS.RED, enemy: CARS.BLUE};
+    }
+
+    return config;
   }
 
   onLapComplete() {

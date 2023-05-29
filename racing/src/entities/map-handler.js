@@ -64,9 +64,9 @@ export class MapHandler {
     });
   }
 
-  getPlayerPosition() {
-    return this.tilemap.findObject('player', (obj) => {
-      return obj.name === 'player';
+  getPlayerPosition(positionName) {
+    return this.tilemap.findObject(positionName, (obj) => {
+      return obj.name === positionName;
     });
   }
 

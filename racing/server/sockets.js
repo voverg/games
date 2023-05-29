@@ -24,7 +24,7 @@ export class Sockets {
   }
 
   startGame(session) {
-    session.player.emit('gameStart');
+    session.player.emit('gameStart', {master: true});
     session.enemy.emit('gameStart');
   }
 
