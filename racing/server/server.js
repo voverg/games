@@ -1,7 +1,8 @@
 import http from 'http';
 import path from 'path';
 import express from 'express';
-import { Server } from 'socket.io';
+// import { Server } from 'socket.io';
+import { Sockets } from './sockets.js';
 
 // Configuration
 const PORT = 3000;
@@ -22,8 +23,10 @@ server.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
 
-const io = new Server(server);
-io.on('connection', (socket) => {
-  socket.emit('gameStart');
-  console.log(`New user server connected ${socket.id}`);
-});
+// Create sockets
+const sockets = new Sockets(server);
+// const io = new Server(server);
+// io.on('connection', (socket) => {
+//   socket.emit('gameStart');
+//   console.log(`New user server connected ${socket.id}`);
+// });

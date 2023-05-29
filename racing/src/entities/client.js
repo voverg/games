@@ -19,6 +19,7 @@ export class Client extends Phaser.Events.EventEmitter {
     });
 
     socket.on('gameStart', () => {
+      console.log(`game start`);
       this.emit('game');
     });
   }
