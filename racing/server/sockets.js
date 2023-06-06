@@ -10,8 +10,20 @@ export class Sockets {
 
   init() {
     this.io.on('connection', (socket) => {
+      socket.on('playerMove', (data) => {
+        this.onPlayerMove(socket, data);
+      });
       this.onConnection(socket);
     });
+  }
+
+  onPlayerMove(socket, data) {
+    const session = this.sessions.find((session) => session.player === socket || session.enemy === socket);
+
+    if (session) {
+      const opponentSocket = socket === session.player ? session.enemy : session.player;
+      opponentSocket.emit('enemyMove', data);
+    }
   }
 
   getSession() {

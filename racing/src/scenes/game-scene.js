@@ -24,7 +24,7 @@ export class GameScene extends Phaser.Scene {
   }
 
   init(props) {
-    this.client = props ? props.client : null;
+    this.client = props.client ? props.client : null;
     this.width = this.sys.game.config.width;
     this.height = this.sys.game.config.height;
     this.cursors = this.input.keyboard.createCursorKeys();
@@ -41,6 +41,11 @@ export class GameScene extends Phaser.Scene {
 
     if (this.client) {
       this.enemy = new Player(this, this.map, this.car.enemy);
+      this.client.on('newData', (data) => {
+        this.enemy.car.setX(data.x);
+        this.enemy.car.setY(data.y);
+        this.enemy.car.setAngle(data.angle);
+      });
     }
 
     this.stats = new Stats(this.scene, LAPS);
@@ -77,15 +82,26 @@ export class GameScene extends Phaser.Scene {
   }
 
   /**
-   * [update description]
+   * [update the game scene]
    * @param  {[number]} time      [Time in miliseconds from start the scene]
    * @param  {[number]} deltaTime [Time in miliseconds from last call this update method]
-   * @return {[type]}           [description]
+   * @return {[void]}
    */
   update(time, deltaTime) {
     this.stats.update(deltaTime);
     this.statsPanel.render();
     this.player.move();
+    this.sync();
+  }
+
+  sync() {
+    if (this.client) {
+      this.client.send({
+        x: this.player.car.x,
+        y: this.player.car.y,
+        angle: this.player.car.angle
+      });
+    }
   }
 
 
